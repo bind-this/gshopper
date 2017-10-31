@@ -49,7 +49,7 @@ router.delete("/:id", (req, res, next) => {
 
 //updates one category (by id)
 router.put("/:id", (req, res, next) => {
-  Category.update(req.body)
+  req.category.update(req.body)
     .then(category => res.json(category))
     .catch(next);
 });
