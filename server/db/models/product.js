@@ -12,11 +12,7 @@ const Product = db.define('product', {
   },
   price: {
     type: Sequelize.DECIMAL(2),
-    allowNull: false,
-    get() {
-      const price = this.getDataValue('price')
-      return this.getDataValue('price', '$' + price)
-    }
+    allowNull: false
   },
   quantity: {
     type: Sequelize.INTEGER,
