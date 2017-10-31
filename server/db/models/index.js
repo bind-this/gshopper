@@ -28,7 +28,8 @@ Order_Product.belongsTo(Product)
 Review.belongsTo(User)
 Review.belongsTo(Product)
 
-Product.hasMany(Category, { through: 'ProductCategories' })
+Product.belongsToMany(Category)
+
 
 module.exports = {
   User,
