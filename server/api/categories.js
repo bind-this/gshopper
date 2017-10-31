@@ -53,3 +53,5 @@ router.put("/:id", (req, res, next) => {
     .then(category => res.json(category))
     .catch(next);
 });
+
+module.exports = router;
