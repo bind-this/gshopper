@@ -11,7 +11,7 @@ const Product = db.define('product', {
     allowNull: false
   },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.DECIMAL(2),
     allowNull: false,
     get() {
       const price = this.getDataValue('price')
@@ -31,7 +31,7 @@ const Product = db.define('product', {
     isUrl: true
   },
   availability: {
-    type: Selection.BOOLEAN,
+    type: Sequelize.BOOLEAN,
     defaultValue: false
   }
 });
