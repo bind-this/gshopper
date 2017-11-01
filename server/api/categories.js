@@ -3,15 +3,12 @@ const { Category } = require("../db/models");
 
 //Set variable to category instance
 router.param("id", (req, res, next, id) => {
-  Category.findOne({
-    where: { id: id },
-    include: [{ all: true }]
-  })
+  Category.findById(id, { include: [{ all: true }] })
     .then(category => {
       if (!category) {
         const err = Error("category not found");
         err.status = 404;
-        next(err);
+        throw err;
       } else {
         req.category = category;
         next();
@@ -36,7 +33,7 @@ router.post("/", (req, res, next) => {
 
 //get one category (by id) - (and eager load associated products - see router.param)
 router.get("/:id", (req, res, next) => {
-  res.json(req.category).catch(next);
+  res.json(req.category);
 });
 
 //deletes one category (by id)
@@ -49,7 +46,8 @@ router.delete("/:id", (req, res, next) => {
 
 //updates one category (by id)
 router.put("/:id", (req, res, next) => {
-  req.category.update(req.body)
+  req.category
+    .update(req.body)
     .then(category => res.json(category))
     .catch(next);
 });
