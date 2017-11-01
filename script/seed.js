@@ -15,7 +15,7 @@ const db = require('../server/db')
 const { User, Product, Category } = require('../server/db/models')
 
 const appData = require('../data/appData.json')
-const Op = require('sequelize').Op
+const Sequelize = require('sequelize')
 
 async function seed() {
   await db.sync({ force: true })
@@ -59,29 +59,22 @@ async function seed() {
   console.log(`seeded ${products.length} products`)
 
   /*--------------------------------------------------------*\
-  Product Category Association
+  Product Category Associations
   \*--------------------------------------------------------*/
-  // const cats = await Category.findAll()
-  // for (let i = 0; i < cats.length; i++) {
-  //   // category.addProducts(prod)
-  // })
-
-  Product.findAll({
-    where: {
-      name: {
-        [Op.in]: appDataSanitized
-          .filter(app => app.category === 'Finance')
-          .map(app => app.name)
+  const cats = await Category.findAll()
+  for (let i = 0; i < cats.length; i++) {
+    const prods = await Product.findAll({
+      where: {
+        name: {
+          $in: appDataSanitized
+            .filter(app => app.category === cats[i].name)
+            .map(app => app.name)
+        }
       }
-    }
-  }).then(products => console.log(products))
-  console.log(prods)
-
-  // const cat = await Category.findById(1)
-  // const prod = await Product.findById(1)
-  // await cat.addProduct(prod)
-
-  // console.log(`seeded ${cat.length} association`)
+    })
+    await cats[i].setProducts(prods)
+  }
+  console.log(`${cats.length} product_category associations made`)
   console.log(`seeded successfully`)
 }
 
