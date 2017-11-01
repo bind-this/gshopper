@@ -49,7 +49,6 @@ router.get("/me", (req, res, next) => {
 });
 
 // creates new user - admin only
-//WORKS
 router.post("/", function(req, res, next) {
   User.create(req.body)
     .then(user => res.status(201).json(user))
@@ -57,7 +56,6 @@ router.post("/", function(req, res, next) {
 });
 
 //Signup / user themselves 'creates new user' and also 'auto' logs in
-//Works - can't test if 'logged in'
 router.post("/signup", (req, res, next) => {
   User.create(req.body)
     .then(user => {
@@ -70,7 +68,6 @@ router.post("/signup", (req, res, next) => {
 });
 
 // updates user
-//Works
 router.put("/:id", function(req, res, next) {
   User.update(req.body, {
     where: {
@@ -82,7 +79,6 @@ router.put("/:id", function(req, res, next) {
 });
 
 // delete user
-//Works
 router.delete("/:id", function(req, res, next) {
   User.destroy({
     where: {
@@ -94,7 +90,6 @@ router.delete("/:id", function(req, res, next) {
 });
 
 //Login
-//Works
 router.post("/login", (req, res, next) => {
   User.findOne({
     where: {
@@ -116,7 +111,6 @@ router.post("/login", (req, res, next) => {
 });
 
 //Logout
-//Works
 router.post("/logout", (req, res, next) => {
   req.logout();
   res.sendStatus(200);
