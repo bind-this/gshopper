@@ -9,28 +9,75 @@
  *
  * Now that you've got the main idea, check it out in practice below!
  */
+
 const db = require('../server/db')
-const {User} = require('../server/db/models')
 
-async function seed () {
-  await db.sync({force: true})
+const { User, Product, Category } = require('../server/db/models')
+
+const appData = require('../data/appData.json')
+const Sequelize = require('sequelize')
+
+async function seed() {
+  await db.sync({ force: true })
   console.log('db synced!')
-  // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
-  // executed until that promise resolves!
 
+  /*--------------------------------------------------------*\
+  Users
+  \*--------------------------------------------------------*/
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({ email: 'cody@email.com', password: '123' }),
+    User.create({ email: 'murphy@email.com', password: '123' })
   ])
-  // Wowzers! We can even `await` on the right-hand side of the assignment operator
-  // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded ${users.length} users`)
+
+  /*--------------------------------------------------------*\
+  Categories
+  \*--------------------------------------------------------*/
+  const uniqueCategoryTypes = appData
+    .map(app => app.category)
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .map(category => ({ name: category }))
+  const categories = await Category.bulkCreate(uniqueCategoryTypes)
+  console.log(`seeded ${categories.length} categories`)
+
+  /*--------------------------------------------------------*\
+  Products
+  \*--------------------------------------------------------*/
+  const appDataSanitized = appData.map(app => ({
+    name: app.name,
+    img: app.img,
+    author: app.author,
+    version: app.version,
+    category: app.category,
+    scrapeSource: app.scrapeSource,
+    description: app.description,
+    price: app.price === 'Free' ? 1000 : app.price * 100,
+    quantity: Math.floor(Math.random() * 100) + 20,
+    availability: true
+  }))
+  const products = await Product.bulkCreate(appDataSanitized)
+  console.log(`seeded ${products.length} products`)
+
+  /*--------------------------------------------------------*\
+  Product Category Associations
+  \*--------------------------------------------------------*/
+  const cats = await Category.findAll()
+  for (let i = 0; i < cats.length; i++) {
+    const prods = await Product.findAll({
+      where: {
+        name: {
+          $in: appDataSanitized
+            .filter(app => app.category === cats[i].name)
+            .map(app => app.name)
+        }
+      }
+    })
+    await cats[i].setProducts(prods)
+  }
+  console.log(`${cats.length} product_category associations made`)
   console.log(`seeded successfully`)
 }
 
-// Execute the `seed` function
-// `Async` functions always return a promise, so we can use `catch` to handle any errors
-// that might occur inside of `seed`
 seed()
   .catch(err => {
     console.error(err.message)
@@ -43,9 +90,4 @@ seed()
     console.log('db connection closed')
   })
 
-/*
- * note: everything outside of the async function is totally synchronous
- * The console.log below will occur before any of the logs that occur inside
- * of the async function
- */
 console.log('seeding...')
