@@ -6,12 +6,16 @@ const Product = db.define('product', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  author: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   description: {
     type: Sequelize.TEXT,
     allowNull: false
   },
   price: {
-    type: Sequelize.DECIMAL(2),
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   quantity: {
