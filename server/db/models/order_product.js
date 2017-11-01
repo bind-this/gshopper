@@ -9,7 +9,7 @@ const Order_Product = db.define('order_product', {
     }
   },
   purchasePrice: {
-    type: Sequelize.DECIMAL(2)
+    type: Sequelize.INTEGER
   }
 })
 
