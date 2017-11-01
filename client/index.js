@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import store from './store'
 import Routes from './routes'
+import 'semantic-ui-css/semantic.min.css'
 
 // establishes socket connection
 import './socket'

@@ -1,5 +1,6 @@
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 const isDev = process.env.NODE_ENV === 'development'
+const path = require('path')
 
 module.exports = {
   entry: './client/index.js',
@@ -16,7 +17,7 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
-        test: /\.scss$/,
+        test: /\.(scss|css)$/,
         use: [
           'style-loader',
           'css-loader',
@@ -24,10 +25,17 @@ module.exports = {
         ]
       },
       {
-        test: /\.svg$|\.ttf?|\.woff$|\.woff2|\.eof|\.eot/,
+        test: /\.(svg|png|ttf?|woff|woff2|eof|eot)$/,
         loader: 'file-loader'
       }
     ]
+  },
+  resolve: {
+    modules: [
+      path.resolve('client'),
+      'node_modules'
+    ],
+    extensions: [ '.js', '.jsx', '.css', '.scss', '.png', '*' ]
   },
   // When we're in development, we can use this handy live-reload plugin
   // to refresh the page for us every time we make a change to our client-side
