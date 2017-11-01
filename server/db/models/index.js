@@ -20,16 +20,18 @@ const Category = require('./category')
  */
 
 Order.belongsTo(User)
-Order.hasMany(Product)
-
-Order_Product.belongsTo(Order)
-Order_Product.belongsTo(Product)
 
 Review.belongsTo(User)
 Review.belongsTo(Product)
 
-Product.belongsToMany(Category, { through: 'product_categories' })
+User.hasMany(Review)
+Product.hasMany(Review)
 
+Order.belongsToMany(Product, { through: 'order_products' })
+Product.belongsToMany(Order, { through: 'order_products' })
+
+Product.belongsToMany(Category, { through: 'product_categories' })
+Category.belongsToMany(Product, { through: 'product_categories' })
 
 module.exports = {
   User,
