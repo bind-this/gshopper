@@ -33,7 +33,7 @@ const Product = db.define('product', {
   altImages: {
     type: Sequelize.ARRAY(Sequelize.STRING)
   },
-  availability: {
+  available: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
