@@ -17,24 +17,27 @@ class AllProducts extends Component {
 
   render() {
 
-    const title = 'DUMMY TITLE'
-    const products = [{
-      id: 1,
-      name: 'Best App',
-      price: 1000,
-      category: 'Game',
-      image: '/product-placeholder-image.jpg',
-      description: 'All the best!'
-    },
-    {
-      id: 2,
-      name: 'Best App',
-      price: 1000,
-      category: 'Game',
-      image: '/product-placeholder-image.jpg',
-      description: 'All the best!'
-    },
-  ]
+  //   const title = 'DUMMY TITLE'
+  //   const products = [{
+  //     id: 1,
+  //     name: 'Best App',
+  //     price: 1000,
+  //     category: 'Game',
+  //     image: '/product-placeholder-image.jpg',
+  //     description: 'All the best!'
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Best App',
+  //     price: 1000,
+  //     category: 'Game',
+  //     image: '/product-placeholder-image.jpg',
+  //     description: 'All the best!'
+  //   },
+  // ]
+
+    const title = 'All Products'
+    const products = this.props.products
 
     return (
       <div>
