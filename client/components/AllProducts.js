@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import CardList from './CardList'
-import { Card, Rating } from 'semantic-ui-react'
+import { Card, Rating, Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 class AllProducts extends Component {
@@ -17,16 +17,23 @@ class AllProducts extends Component {
     const categories = this.props.categories
 
     return (
-      <div>
-        <Card fluid>
-          <h2>Filters</h2>
-          <h3>Minimum rating</h3>
-          <Rating maxRating={5} clearable />
-          <h3>Categories</h3>
-          Here will be the categories
-        </Card>
-        <CardList products={ products } title={ title } />
-      </div>
+
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={3}>
+          {/* <Card fluid> */}
+            <h2>Filters</h2>
+            <h3>Minimum rating</h3>
+            <Rating maxRating={5} clearable />
+            <h3>Categories</h3>
+            Here will be the categories
+          {/* </Card> */}
+          </Grid.Column>
+          <Grid.Column width={13}>
+            <CardList products={ products } title={ title } />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     )
   }
 }
