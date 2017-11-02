@@ -30,6 +30,9 @@ const Product = db.define('product', {
     defaultValue: 'product-placeholder-image.jpg',
     isUrl: true
   },
+  altImages: {
+    type: Sequelize.ARRAY(Sequelize.STRING)
+  },
   availability: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
