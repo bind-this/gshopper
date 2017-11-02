@@ -15,7 +15,8 @@ const db = require('../server/db')
 const { User, Product, Category } = require('../server/db/models')
 
 const appData = require('../data/appData.json')
-const Sequelize = require('sequelize')
+const faker = require('faker')
+
 
 async function seed() {
   await db.sync({ force: true })
@@ -24,10 +25,23 @@ async function seed() {
   /*--------------------------------------------------------*\
   Users
   \*--------------------------------------------------------*/
-  const users = await Promise.all([
-    User.create({ email: 'cody@email.com', password: '123' }),
-    User.create({ email: 'murphy@email.com', password: '123' })
-  ])
+  const userData = []
+  for(let i = 0; i < 200; i++) {
+    const user = {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      password: faker.internet.password(),
+      phone: faker.phone.phoneNumber(),
+      address: faker.address.streetAddress(),
+      city: faker.address.city(),
+      zip: faker.address.zipCode(),
+      img: faker.image.avatar()
+    }
+    user.email = user.firstName + user.lastName + '@' + faker.internet.domainWord() + '.com'
+    user.salt = User.generateSalt()
+    userData.push(user)
+  }
+  let users = await User.bulkCreate(userData)
   console.log(`seeded ${users.length} users`)
 
   /*--------------------------------------------------------*\
@@ -74,7 +88,7 @@ async function seed() {
     })
     await cats[i].setProducts(prods)
   }
-  console.log(`${cats.length} product_category associations made`)
+  console.log(`${products.length} product_category associations made`)
   console.log(`seeded successfully`)
 }
 
