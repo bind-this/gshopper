@@ -12,11 +12,20 @@
 
 const db = require('../server/db')
 
-const { User, Product, Category } = require('../server/db/models')
+const {
+  User,
+  Product,
+  Category,
+  Review,
+  Order,
+  Order_Product
+} = require('../server/db/models')
 
 const appData = require('../data/appData.json')
-const Sequelize = require('sequelize')
+const imgData = require('../data/imgData.json')
+const faker = require('faker')
 
+//eslint-disable-next-line
 async function seed() {
   await db.sync({ force: true })
   console.log('db synced!')
@@ -24,10 +33,28 @@ async function seed() {
   /*--------------------------------------------------------*\
   Users
   \*--------------------------------------------------------*/
-  const users = await Promise.all([
-    User.create({ email: 'cody@email.com', password: '123' }),
-    User.create({ email: 'murphy@email.com', password: '123' })
-  ])
+  const userData = []
+  for (let i = 0; i < 200; i++) {
+    const user = {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      password: faker.internet.password(),
+      phone: faker.phone.phoneNumber(),
+      address: faker.address.streetAddress(),
+      city: faker.address.city(),
+      zip: faker.address.zipCode(),
+      img: faker.image.avatar()
+    }
+    user.email =
+      user.firstName +
+      user.lastName +
+      '@' +
+      faker.internet.domainWord() +
+      '.com'
+    user.salt = User.generateSalt()
+    userData.push(user)
+  }
+  let users = await User.bulkCreate(userData)
   console.log(`seeded ${users.length} users`)
 
   /*--------------------------------------------------------*\
@@ -43,20 +70,69 @@ async function seed() {
   /*--------------------------------------------------------*\
   Products
   \*--------------------------------------------------------*/
+  const imgDataSanitized = imgData.map(img => ({
+    appName: img['name'],
+    url: img['images-src']
+  }))
   const appDataSanitized = appData.map(app => ({
     name: app.name,
     img: app.img,
+    altImages: imgDataSanitized.filter(img => img.appName === app.name).map(img => img.url),
     author: app.author,
     version: app.version,
     category: app.category,
     scrapeSource: app.scrapeSource,
     description: app.description,
-    price: app.price === 'Free' ? 1000 : app.price * 100,
+    price: app.price === 'Free' ? 0 : app.price * 100,
     quantity: Math.floor(Math.random() * 100) + 20,
     availability: true
   }))
   const products = await Product.bulkCreate(appDataSanitized)
   console.log(`seeded ${products.length} products`)
+
+  /*--------------------------------------------------------*\
+  Reviews
+  \*--------------------------------------------------------*/
+  const NUM_REVIEWS = 200
+  for (let i = 0; i < NUM_REVIEWS; i++) {
+    const reviewData = {
+      rating: Math.floor(Math.random() * 5) + 1,
+      comment: faker.lorem.paragraph()
+    }
+    let review = await Review.create(reviewData)
+    let user = await User.findById(Math.floor(Math.random() * users.length))
+    let product = await Product.findById(
+      Math.floor(Math.random() * products.length)
+    )
+    review.setProduct(product)
+    review.setUser(user)
+  }
+  console.log(`seeded ${NUM_REVIEWS} reviews`)
+
+  /*--------------------------------------------------------*\
+  Orders
+  \*--------------------------------------------------------*/
+  const NUM_ORDERS = 200
+  for (let i = 0; i < NUM_ORDERS; i++) {
+    const orderData = { status: 'completed' }
+    let order = await Order.create(orderData)
+    let user = await User.findById(Math.floor(Math.random() * users.length))
+    order.setUser(user)
+    const NUM_PRODUCTS = 5
+    for (let j = 0; j < NUM_PRODUCTS; j++) {
+      let product = await Product.findById(
+        Math.floor(Math.random() * products.length)
+      )
+      if (!product) break
+      let order_product = await Order_Product.create({
+        quantity: Math.floor(Math.random() * 3) + 1,
+        purchasePrice: product.price
+      })
+      order_product.setProduct(product)
+      order_product.setOrder(order)
+    }
+  }
+  console.log(`seeded ${NUM_ORDERS} orders`)
 
   /*--------------------------------------------------------*\
   Product Category Associations
@@ -74,7 +150,7 @@ async function seed() {
     })
     await cats[i].setProducts(prods)
   }
-  console.log(`${cats.length} product_category associations made`)
+  console.log(`${products.length} product_category associations made`)
   console.log(`seeded successfully`)
 }
 
