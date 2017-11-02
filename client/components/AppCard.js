@@ -11,7 +11,7 @@ const AppCard = (props) => (
         </Card.Header>
         <Card.Meta>
           <span className='card-category'>
-            {props.product.categories[0].name} <Rating defaultRating={3} maxRating={5} disabled />
+            {props.product.categories[0].name} <Rating icon='star' defaultRating={3} maxRating={5} disabled />
           </span>
         </Card.Meta>
         <Card.Description>
@@ -19,7 +19,7 @@ const AppCard = (props) => (
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-          <Icon name='home' />
+          <Icon name='tag' />
           ${ props.product.price / 100 }
       </Card.Content>
   </Card>
