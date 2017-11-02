@@ -6,22 +6,12 @@ import AppCard from './AppCard'
 
 const src = '/product-placeholder-image.jpg'
 
-const CardList = () => (
+
+const CardList = (props) => (
   <div>
-    <h1>APPS</h1>
+    <h1>{props.title} <small>({props.products.length})</small></h1>
     <Card.Group>
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
+      { props.products.map(product => <AppCard raised key={product.id} product={product} />) }
     </Card.Group>
   </div>
 )
