@@ -16,7 +16,7 @@ const Main = props => {
 
   return (
     <div>
-      <Menu size="big">
+      <Menu size="large">
         <Menu.Item name="Logo goes here" href="/" />
         <Menu.Item>
           <Input placeholder="Search..." />
