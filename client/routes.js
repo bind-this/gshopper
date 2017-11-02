@@ -6,6 +6,8 @@ import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome} from './components'
 import {me} from './store'
+import CardList from './components/CardList'
+import Home from './components/views/Home'
 
 /**
  * COMPONENT
@@ -22,6 +24,7 @@ class Routes extends Component {
       <Router history={history}>
         <Main>
           <Switch>
+            <Route exact path="/" component={Home}/>
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
@@ -35,6 +38,7 @@ class Routes extends Component {
             {/* Displays our Login component as a fallback */}
             <Route component={Login} />
           </Switch>
+            <CardList />
         </Main>
       </Router>
     )
