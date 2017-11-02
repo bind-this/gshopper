@@ -12,12 +12,19 @@
 
 const db = require('../server/db')
 
-const { User, Product, Category } = require('../server/db/models')
+const {
+  User,
+  Product,
+  Category,
+  Review,
+  Order,
+  Order_Product
+} = require('../server/db/models')
 
 const appData = require('../data/appData.json')
 const faker = require('faker')
 
-
+//eslint-disable-next-line
 async function seed() {
   await db.sync({ force: true })
   console.log('db synced!')
@@ -26,7 +33,7 @@ async function seed() {
   Users
   \*--------------------------------------------------------*/
   const userData = []
-  for(let i = 0; i < 200; i++) {
+  for (let i = 0; i < 200; i++) {
     const user = {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
@@ -37,7 +44,12 @@ async function seed() {
       zip: faker.address.zipCode(),
       img: faker.image.avatar()
     }
-    user.email = user.firstName + user.lastName + '@' + faker.internet.domainWord() + '.com'
+    user.email =
+      user.firstName +
+      user.lastName +
+      '@' +
+      faker.internet.domainWord() +
+      '.com'
     user.salt = User.generateSalt()
     userData.push(user)
   }
@@ -71,6 +83,50 @@ async function seed() {
   }))
   const products = await Product.bulkCreate(appDataSanitized)
   console.log(`seeded ${products.length} products`)
+
+  /*--------------------------------------------------------*\
+  Reviews
+  \*--------------------------------------------------------*/
+  const NUM_REVIEWS = 200
+  for (let i = 0; i < NUM_REVIEWS; i++) {
+    const reviewData = {
+      rating: Math.floor(Math.random() * 5) + 1,
+      comment: faker.lorem.paragraph()
+    }
+    let review = await Review.create(reviewData)
+    let user = await User.findById(Math.floor(Math.random() * users.length))
+    let product = await Product.findById(
+      Math.floor(Math.random() * products.length)
+    )
+    review.setProduct(product)
+    review.setUser(user)
+  }
+  console.log(`seeded ${NUM_REVIEWS} reviews`)
+
+  /*--------------------------------------------------------*\
+  Orders
+  \*--------------------------------------------------------*/
+  const NUM_ORDERS = 200
+  for (let i = 0; i < NUM_ORDERS; i++) {
+    const orderData = { status: 'completed' }
+    let order = await Order.create(orderData)
+    let user = await User.findById(Math.floor(Math.random() * users.length))
+    order.setUser(user)
+    const NUM_PRODUCTS = 5
+    for (let j = 0; j < NUM_PRODUCTS; j++) {
+      let product = await Product.findById(
+        Math.floor(Math.random() * products.length)
+      )
+      if (!product) break
+      let order_product = await Order_Product.create({
+        quantity: Math.floor(Math.random() * 3) + 1,
+        purchasePrice: product.price
+      })
+      order_product.setProduct(product)
+      order_product.setOrder(order)
+    }
+  }
+  console.log(`seeded ${NUM_ORDERS} orders`)
 
   /*--------------------------------------------------------*\
   Product Category Associations
