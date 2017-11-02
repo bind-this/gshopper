@@ -23,7 +23,7 @@ class Routes extends Component {
       <Router history={history}>
         <Main>
           <Switch>
-            <Route exact path='/product/:productId' component={SingleProduct}/>
+            <Route path="/product/:productId" component={SingleProduct} />
             <Route exact path="/" component={CardList} />
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />

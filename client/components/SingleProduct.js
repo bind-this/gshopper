@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import { Advertisement } from 'semantic-ui-react'
 import { fetchProduct, changeProduct, removeProduct } from '../store'
 
 class SingleProduct extends Component {
@@ -10,10 +11,16 @@ class SingleProduct extends Component {
 
   render() {
     const product = this.props.product
-
+console.log('HAHAAHAHHAAAHAHAHAHA', this.props.product)
     return (
       <div>
-        {product}
+        <div>
+          <div>
+          <Advertisement unit='half page' test='HELLO' />
+          </div>
+          <div>name etc.</div>
+        </div>
+        <div>reviews</div>
       </div>
     )
   }
@@ -28,3 +35,20 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
+
+
+/*
+<div>
+        <h1>{product.name}</h1>
+        <img href={product.img} text="img" />
+        <ul>
+          <li>author: { product.author }</li>
+          <li>availability: { product.availability && product.availability ? 'yes' : 'no' }</li>
+          <li>categorie(s): { product.category && product.category.join(', ') }</li>
+          <li>description: { product.description }</li>
+          <li>price: ${ product.price }</li>
+          <li>quantity availabile: { product.quantity }</li>
+          <li>reviews: { product.review && product.review.map(review => <div key={review.id}>{ review.comment }</div>) }</li>
+        </ul>
+      </div>
+*/
