@@ -2,34 +2,15 @@ const router = require("express").Router();
 const { User } = require("../db/models");
 module.exports = router;
 
-// match product id
+//router.param
 /*
 - This route was creating errors for 'id' routes below...
 - Error referenced ../server/index.js 'promise being create without response given...
 - Eliminated this route, used findById in 'id' routes below, error no longer thrown...
 */
-// router.param("id", (req, res, next, id) => {
-//   User.findOne({
-//     where: {
-//       id: id,
-//       include: [
-//         {
-//           all: true
-//         }
-//       ]
-//     }
-//   })
-//     .then(user => {
-//       if (!user) {
-//         throw HttpError(404);
-//       }
-//       req.user = user;
-//       next();
-//     })
-//     .catch(next);
-// });
 
-//Get all users
+
+//Get - all users, eager loads associations
 router.get("/", (req, res, next) => {
   User.findAll(
     {
@@ -43,19 +24,19 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
-//Goes here or in index.js?
+//Get - sends current logged in user's information
 router.get("/me", (req, res, next) => {
   res.json(req.user);
 });
 
-// creates new user - admin only
+//POST - creates new user
 router.post("/", function(req, res, next) {
   User.create(req.body)
     .then(user => res.status(201).json(user))
     .catch(next);
 });
 
-//Signup / user themselves 'creates new user' and also 'auto' logs in
+//Post - creates new user, logs new user in
 router.post("/signup", (req, res, next) => {
   User.create(req.body)
     .then(user => {
@@ -67,7 +48,7 @@ router.post("/signup", (req, res, next) => {
     .catch(next);
 });
 
-// updates user
+//PUT - updates user by id
 router.put("/:id", function(req, res, next) {
   User.update(req.body, {
     where: {
@@ -78,7 +59,7 @@ router.put("/:id", function(req, res, next) {
     .catch(next);
 });
 
-// delete user
+//DELETE - delets user by id
 router.delete("/:id", function(req, res, next) {
   User.destroy({
     where: {
@@ -89,7 +70,7 @@ router.delete("/:id", function(req, res, next) {
     .catch(next);
 });
 
-//Login
+//POST - logs user in
 router.post("/login", (req, res, next) => {
   User.findOne({
     where: {
@@ -110,7 +91,7 @@ router.post("/login", (req, res, next) => {
     .catch(next);
 });
 
-//Logout
+//POST - logs user out
 router.post("/logout", (req, res, next) => {
   req.logout();
   res.sendStatus(200);

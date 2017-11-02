@@ -4,7 +4,7 @@ const Category = require("../db/models/category");
 
 //Fuzzy search is has not been created/implemented within these routes
 
-// match product id
+//PARAM - sets product instance to req.product
 router.param("id", (req, res, next, id) => {
   Product.findById(id, { include: [{ all: true }] })
     .then(product => {
@@ -20,7 +20,7 @@ router.param("id", (req, res, next, id) => {
     .catch(next);
 });
 
-// find all products
+//GET - finds all products
 router.get("/", (req, res, next) => {
   Product.findAll({
     include: [
@@ -33,12 +33,12 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
-// get a product by id
+//GET - finds one product by id
 router.get("/:id", (req, res, next) => {
   res.json(req.product);
 });
 
-// delete a product by id
+//DELETE - deletes one product by id
 router.delete("/:id", (req, res, next) => {
   req.product
     .destroy()
@@ -46,7 +46,7 @@ router.delete("/:id", (req, res, next) => {
     .catch(next);
 });
 
-// update a product by id
+//PUT - updates one product by id
 router.put("/:id", (req, res, next) => {
   req.product
     .update(req.body)
@@ -54,9 +54,7 @@ router.put("/:id", (req, res, next) => {
     .catch(next);
 });
 
-// create a new product and associate with categories
-//req.body.product - contains all necessary product info to create a new product
-//req.body.categories - contains an array with category ids (1 or more)
+//POST - creates new product, assigns categories to product
 router.post("/", (req, res, next) => {
   let product;
   Product.create(req.body.product)
