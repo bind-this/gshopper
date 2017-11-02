@@ -3,10 +3,16 @@
 import React, { Component } from 'react'
 import CardList from './CardList'
 import { Card, Rating } from 'semantic-ui-react'
+import { connect } from 'react-redux'
+import { fetchProducts } from '../store'
 
-export default class AllProducts extends Component {
+class AllProducts extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.props.fetchProducts()
   }
 
   render() {
@@ -21,7 +27,7 @@ export default class AllProducts extends Component {
       description: 'All the best!'
     },
     {
-      id: 1,
+      id: 2,
       name: 'Best App',
       price: 1000,
       category: 'Game',
@@ -44,3 +50,17 @@ export default class AllProducts extends Component {
     )
   }
 }
+
+const mapDispatch = (dispatch) => {
+  return {
+    fetchProducts: () => dispatch(fetchProducts())
+  }
+}
+
+const mapState = (state) => {
+  return {
+    products: state.products
+  }
+}
+
+export default connect(mapState, mapDispatch)(AllProducts)
