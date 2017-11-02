@@ -20,7 +20,14 @@ console.log('HAHAAHAHHAAAHAHAHAHA', this.props.product)
           </div>
           <div>name etc.</div>
         </div>
-        <div>reviews</div>
+        <div>reviews
+          <ul>
+          {
+            product.reviews &&
+            product.reviews.map(review => <li key={review.id} >{ review.rating }</li>)
+          }
+          </ul>
+        </div>
       </div>
     )
   }
