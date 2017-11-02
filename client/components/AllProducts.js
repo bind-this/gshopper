@@ -4,21 +4,17 @@ import React, { Component } from 'react'
 import CardList from './CardList'
 import { Card, Rating } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { fetchProducts } from '../store'
 
 class AllProducts extends Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() {
-    this.props.fetchProducts()
-  }
-
   render() {
 
     const title = 'All Products'
     const products = this.props.products
+    const categories = this.props.categories
 
     return (
       <div>
@@ -35,16 +31,11 @@ class AllProducts extends Component {
   }
 }
 
-const mapDispatch = (dispatch) => {
-  return {
-    fetchProducts: () => dispatch(fetchProducts())
-  }
-}
-
 const mapState = (state) => {
   return {
-    products: state.products
+    products: state.products,
+    categories: state.categories
   }
 }
 
-export default connect(mapState, mapDispatch)(AllProducts)
+export default connect(mapState)(AllProducts)
