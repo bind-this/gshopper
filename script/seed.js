@@ -100,9 +100,9 @@ async function seed() {
       comment: faker.lorem.paragraph()
     }
     let review = await Review.create(reviewData)
-    let user = await User.findById(Math.floor(Math.random() * users.length))
+    let user = await User.findById(Math.floor(Math.random() * users.length) + 1)
     let product = await Product.findById(
-      Math.floor(Math.random() * products.length)
+      Math.floor(Math.random() * products.length) + 1
     )
     review.setProduct(product)
     review.setUser(user)
@@ -116,14 +116,13 @@ async function seed() {
   for (let i = 0; i < NUM_ORDERS; i++) {
     const orderData = { status: 'completed' }
     let order = await Order.create(orderData)
-    let user = await User.findById(Math.floor(Math.random() * users.length))
+    let user = await User.findById(Math.floor(Math.random() * users.length) + 1)
     order.setUser(user)
     const NUM_PRODUCTS = 5
     for (let j = 0; j < NUM_PRODUCTS; j++) {
       let product = await Product.findById(
-        Math.floor(Math.random() * products.length)
+        Math.floor(Math.random() * products.length) + 1
       )
-      if (!product) break
       let order_product = await Order_Product.create({
         quantity: Math.floor(Math.random() * 3) + 1,
         purchasePrice: product.price
