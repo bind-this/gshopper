@@ -1,26 +1,26 @@
 import React from 'react'
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card, Icon, Image, Rating } from 'semantic-ui-react'
 
-const AppCard = () => (
+const AppCard = (props) => (
   <Card raised>
     <Image src='/product-placeholder-image.jpg' />
     <Card.Content>
       <Card.Header>
-        Matthew
+        {props.product.name}
       </Card.Header>
       <Card.Meta>
-        <span className='date'>
-          Joined in 2015
+        <span className='card-category'>
+          {props.product.category} <Rating defaultRating={3} maxRating={5} disabled />
         </span>
       </Card.Meta>
       <Card.Description>
-        Matthew is a musician living in Nashville.
+        { props.product.description }
       </Card.Description>
     </Card.Content>
     <Card.Content extra>
       <a>
         <Icon name='user' />
-        22 Friends
+        ${ props.product.price / 100 }
       </a>
     </Card.Content>
   </Card>
