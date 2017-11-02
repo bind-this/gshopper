@@ -19,6 +19,7 @@ const Category = require('./category')
  * instead of: const User = require('../db/models/user')
  */
 
+User.hasMany(Order)
 Order.belongsTo(User)
 
 Review.belongsTo(User)
@@ -27,8 +28,11 @@ Review.belongsTo(Product)
 User.hasMany(Review)
 Product.hasMany(Review)
 
-Order.belongsToMany(Product, { through: 'order_products' })
-Product.belongsToMany(Order, { through: 'order_products' })
+Order.hasMany(Order_Product)
+Order_Product.belongsTo(Order)
+
+Product.hasMany(Order_Product)
+Order_Product.belongsTo(Product)
 
 Product.belongsToMany(Category, { through: 'product_categories' })
 Category.belongsToMany(Product, { through: 'product_categories' })

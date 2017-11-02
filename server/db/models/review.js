@@ -11,9 +11,9 @@ const Review = db.define('review', {
     }
   },
   comment: {
-    type: Sequelize.STRING(200),
+    type: Sequelize.TEXT,
     allowNull: true
   }
 })
 
-module.exports = Review;
+module.exports = Review
