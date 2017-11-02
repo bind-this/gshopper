@@ -22,6 +22,7 @@ const {
 } = require('../server/db/models')
 
 const appData = require('../data/appData.json')
+const imgData = require('../data/imgData.json')
 const faker = require('faker')
 
 //eslint-disable-next-line
@@ -69,15 +70,20 @@ async function seed() {
   /*--------------------------------------------------------*\
   Products
   \*--------------------------------------------------------*/
+  const imgDataSanitized = imgData.map(img => ({
+    appName: img['name'],
+    url: img['images-src']
+  }))
   const appDataSanitized = appData.map(app => ({
     name: app.name,
     img: app.img,
+    altImages: imgDataSanitized.filter(img => img.appName === app.name).map(img => img.url),
     author: app.author,
     version: app.version,
     category: app.category,
     scrapeSource: app.scrapeSource,
     description: app.description,
-    price: app.price === 'Free' ? 1000 : app.price * 100,
+    price: app.price === 'Free' ? 0 : app.price * 100,
     quantity: Math.floor(Math.random() * 100) + 20,
     availability: true
   }))
