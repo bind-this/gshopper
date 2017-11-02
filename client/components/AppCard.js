@@ -4,9 +4,7 @@ import { Card, Icon, Image, Rating } from 'semantic-ui-react'
 
 const AppCard = (props) => (
   <Card raised>
-      <NavLink to={`/products/${props.product.id}`}>
         <Image height="290px" src={props.product.img} />
-      </NavLink>
       <Card.Content>
         <Card.Header>
           {props.product.name}
@@ -21,10 +19,10 @@ const AppCard = (props) => (
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-          <Icon name='user' />
+          <Icon name='home' />
           ${ props.product.price / 100 }
       </Card.Content>
-    </Card>
+  </Card>
 )
 
 export default AppCard
