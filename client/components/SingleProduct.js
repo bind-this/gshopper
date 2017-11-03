@@ -58,8 +58,7 @@ class SingleProduct extends Component {
             {productReviews &&
               productReviews.map(review => (
                 <div key={review.id}>
-                  <div>{ review.user.firstName }</div>
-                  <div>{ review.user.lastName }</div>
+                  <div>{ `${review.user.firstName} ${review.user.lastName}` }</div>
                 <Comment>{ review.comment }</Comment>
                 </div>
               ))}
