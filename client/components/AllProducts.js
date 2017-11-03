@@ -27,18 +27,18 @@ class AllProducts extends Component {
     const category = params.get('category')
     const query = params.get('search')
 
+    // filtering by... filters
     let filteredProducts = products.filter(product => {
       if (!category) return true
       const categoriesOfProduct = product.categories.map(category => category.id)
       return categoriesOfProduct.includes(+category)
     })
 
+    // Search filtering by query
     const re = new RegExp(_.escapeRegExp(query), 'i')
     const isMatch = result => re.test(result.name)
 
     filteredProducts = _.filter(filteredProducts, isMatch)
-
-    // console.log(filteredProducts)
 
     return (
 
