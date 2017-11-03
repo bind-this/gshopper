@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { logout, fetchCategories, fetchProducts } from '../store'
 import { Input, Menu } from 'semantic-ui-react'
+
+import SearchBar from './SearchBar'
 /**
  * COMPONENT
  *  The Main component is our 'picture frame' - it displays the navbar and anything
@@ -11,51 +13,29 @@ import { Input, Menu } from 'semantic-ui-react'
  *  rendered out by the component's `children`.
  */
 class Main extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.fetchProducts()
     this.props.fetchCategories()
   }
 
-  render () {
+  render() {
     const { children, handleClick, isLoggedIn } = this.props
     return (
       <div>
         <Menu size="large">
           <Menu.Item name="Logo goes here" href="/" />
-          <Menu.Item>
-            <Input placeholder="Search..." />
-          </Menu.Item>
-          {isLoggedIn ? (
-            <Menu.Menu position="right">
-              {/* The navbar will show these links after you log in */}
-              <Menu.Item name="Cart" href="/cart" />
-              <Menu.Item name="Home" href="/home" />
+          <Menu.Menu position="right">
+            <Menu.Item>
+              <SearchBar />
+            </Menu.Item>
+            <Menu.Item name="Cart" href="/cart" />
+            {isLoggedIn ? (
               <Menu.Item name="Logout" onClick={handleClick} />
-            </Menu.Menu>
-          ) : (
-            <Menu.Menu position="right">
-              {/* The navbar will show these links before you log in */}
-              <Menu.Item name="Cart" href="/cart" />
+            ) : (
               <Menu.Item name="Login" href="/login" />
-              <Menu.Item name="Sign Up" href="/signup" />
-            </Menu.Menu>
-          )}
-        </Menu>
-        <Menu size="mini">
-          <Menu.Item name="category" href="/category" />
-          <Menu.Item name="category" href="/category" />
-          <Menu.Item name="category" href="/category" />
-          <Menu.Item name="category" href="/category" />
-          <Menu.Item name="category" href="/category" />
-          <Menu.Item name="category" href="/category" />
-          <Menu.Item name="category" href="/category" />
-          <Menu.Item name="category" href="/category" />
-          <Menu.Item name="category" href="/category" />
-          <Menu.Item name="category" href="/category" />
+            )}
+            {!isLoggedIn && <Menu.Item name="Sign Up" href="/signup" />}
+          </Menu.Menu>
         </Menu>
         <hr />
         {children}
