@@ -2,24 +2,28 @@ import _ from 'lodash'
 import React, { Component } from 'react'
 import { Search, Label, Image } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import history from '../history'
 
-const resultRenderer = ({ img, price, name, description }) => [
-  <Image key={img} src={img} />,
-  <div key={name} className="content">
-    {' '}
-    {price && <div className="price">{price}</div>}{' '}
-    {name && <div className="name">{name}</div>}{' '}
-    {description && (
-      <div className="description">{description.slice(0, 20) + '...'}</div>
-    )}{' '}
+const resultRenderer = ({ img, price, name, description }) => (
+  <div>
+    <Image key={img} src={img} />
+    <div key={name} className="content">
+      {' '}
+      {price && <div className="price">{price}</div>}{' '}
+      {name && <div className="name">{name}</div>}{' '}
+      {description && (
+        <div className="description">{description.slice(0, 20) + '...'}</div>
+      )}{' '}
+    </div>
   </div>
-]
+)
 
 const customSearchBar = props => {
   const products = props.products.map(product =>
     Object.assign(
       {},
       {
+        id: product.id,
         name: product.name,
         description: product.description,
         img: product.img,
@@ -39,7 +43,13 @@ class SearchBar extends Component {
   resetComponent = () =>
     this.setState({ isLoading: false, results: [], value: '' })
 
-  handleResultSelect = (e, { result }) => this.setState({ value: result.name })
+  handleResultSelect = (e, { result }) => history.push(`/product/${result.id}`)
+
+  handleKeyPress = target => {
+    if (target.charCode === 13) {
+      history.push(`/products?search=${this.state.value}`)
+    }
+  }
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
@@ -69,6 +79,7 @@ class SearchBar extends Component {
         value={value}
         resultRenderer={resultRenderer}
         placeholder="Search..."
+        onKeyPress={this.handleKeyPress}
       />
     )
   }
