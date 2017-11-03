@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { logout, fetchCategories, fetchProducts } from '../store'
-import { Input, Menu, Icon, Label } from 'semantic-ui-react'
+import { Input, Menu, Icon, Label, Image } from 'semantic-ui-react'
 
 import SearchBar from './SearchBar'
 /**

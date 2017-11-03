@@ -2,17 +2,13 @@
 
 import React from 'react'
 import { Card, Label } from 'semantic-ui-react'
-import AppCard from './AppCard'
+import Order from '../components/Cart'
 
-const src = '/product-placeholder-image.jpg'
-
-const CardList = (props) => (
+const Cart = () => (
   <div>
-    <h1>Displaying { props.category || 'All Products'} {props.search ? ', matching \'' + props.search + '\'' : '' } <Label circular color="red">{props.products.length}</Label></h1>
-    <Card.Group>
-      { props.products.map(product => <AppCard raised key={product.id} product={product} />) }
-    </Card.Group>
+    <h1>Here lies the cart!</h1>
+    <Order />
   </div>
 )
 
-export default CardList
+export default Cart

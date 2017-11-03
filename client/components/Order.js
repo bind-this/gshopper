@@ -1,89 +1,66 @@
 'use strict'
 
-import React, { Component } from 'react'
-import CardList from './CardList'
-import { Card, Rating, Grid, Sticky, Checkbox, Input, Label } from 'semantic-ui-react'
-import { connect } from 'react-redux'
-import _ from 'lodash'
+import React from 'react'
+import { Label, Item } from 'semantic-ui-react'
 
-class AllProducts extends Component {
-  constructor(props) {
-    super(props);
-  }
+const Order = (props) => (
+  <div>
+    <h1>ORDER PLACEHOLDER</h1>
+    <Item.Group divided>
+    <Item>
+      <Item.Image src='/product-placeholder-image.jpg' />
 
-  state = {}
-  handleContextRef = contextRef => this.setState({ contextRef })
+      <Item.Content>
+        <Item.Header as='a'>12 Years a Slave</Item.Header>
+        <Item.Meta>
+          <span className='cinema'>Union Square 14</span>
+        </Item.Meta>
+        <Item.Description>{paragraph}</Item.Description>
+        <Item.Extra>
+          <Label>IMAX</Label>
+          <Label icon='globe' content='Additional Languages' />
+        </Item.Extra>
+      </Item.Content>
+    </Item>
 
-  render() {
+    <Item>
+      <Item.Image src='product-placeholder-image.jpg' />
 
-    const title = 'All Products'
-    const products = this.props.products
-    const categories = this.props.categories
-    const { contextRef } = this.state
+      <Item.Content>
+        <Item.Header as='a'>My Neighbor Totoro</Item.Header>
+        <Item.Meta>
+          <span className='cinema'>IFC Cinema</span>
+        </Item.Meta>
+        <Item.Description>{paragraph}</Item.Description>
+        <Item.Extra>
+          <Button primary floated='right'>
+            Buy tickets
+            <Icon name='right chevron' />
+          </Button>
+          <Label>Limited</Label>
+        </Item.Extra>
+      </Item.Content>
+    </Item>
 
-    // Let's get our search filters from the URL
-    const { search } = this.props.location
-    const params = new URLSearchParams(search)
-    const category = params.get('category')
-    const query = params.get('search')
+    <Item>
+      <Item.Image src='/product-placeholder-image.jpg' />
 
+      <Item.Content>
+        <Item.Header as='a'>Watchmen</Item.Header>
+        <Item.Meta>
+          <span className='cinema'>IFC</span>
+        </Item.Meta>
+        <Item.Description>{paragraph}</Item.Description>
+        <Item.Extra>
+          <Button primary floated='right'>
+            Buy tickets
+            <Icon name='right chevron' />
+          </Button>
+        </Item.Extra>
+      </Item.Content>
+    </Item>
+  </Item.Group>
+  </div>
+)
 
-    // filtering by... filters
-    // let categoryNames;
-    let filteredProducts = products.filter(product => {
-      if (!category) return true
-      const categoryOfProduct = product.categories.map(category => category.id)
-      // categoryNames = categories.filter(cat => categoryOfProduct.includes(cat.id) ).map(cat => cat.name).join(', ')
-      return categoryOfProduct.includes(+category)
-    })
-
-    // Search filtering by query
-    const re = new RegExp(_.escapeRegExp(query), 'i')
-    const isMatch = result => re.test(result.name)
-
-    filteredProducts = _.filter(filteredProducts, isMatch)
-
-    // console.log(categoryNames)
-
-
-    return (
-
-    <div ref={this.handleContextRef}>
-      <Grid divided padded relaxed columns='equal'>
-        <Grid.Row>
-          <Grid.Column>
-            <Sticky context={contextRef} offset={40}>
-              <h1>Filters</h1>
-              <h3>Minimum rating</h3>
-              <Rating maxRating={5} clearable />
-              <h3>Price</h3>
-              <Input labelPosition='right' type='text' placeholder='Minimum'>
-                <Label basic>$</Label>
-                <input />
-              </Input>
-              <Input labelPosition='right' type='text' placeholder='Maximum'>
-                <Label basic>$</Label>
-                <input />
-              </Input>
-              <h3>Categories</h3>
-                  { categories.map(category => <div key={category.id}><Checkbox defaultChecked toggle /> {category.name}</div>) }
-            </Sticky>
-          </Grid.Column>
-          <Grid.Column width={13}>
-            <CardList products={ filteredProducts } search={query} title={ title } />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </div>
-    )
-  }
-}
-
-const mapState = (state) => {
-  return {
-    products: state.products,
-    categories: state.categories
-  }
-}
-
-export default connect(mapState)(AllProducts)
+export default Order
