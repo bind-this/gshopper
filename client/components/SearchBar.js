@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import { Search, Label, Image } from 'semantic-ui-react'
+import { Search, Image } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import history from '../history'
 
@@ -53,7 +53,6 @@ class SearchBar extends Component {
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
-
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent()
 
