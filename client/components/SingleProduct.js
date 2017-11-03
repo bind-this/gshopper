@@ -11,6 +11,7 @@ class SingleProduct extends Component {
 
   render() {
     const product = this.props.product;
+    const review = this.props.review
     const averageRating =
       product.reviews &&
       (product.reviews.reduce((accum, review) => {

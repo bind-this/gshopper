@@ -1,58 +1,46 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { logout } from '../store'
-
+import { logout, fetchCategories, fetchProducts } from '../store'
 import { Input, Menu } from 'semantic-ui-react'
+
+import SearchBar from './SearchBar'
 /**
  * COMPONENT
  *  The Main component is our 'picture frame' - it displays the navbar and anything
  *  else common to our entire app. The 'picture' inside the frame is the space
  *  rendered out by the component's `children`.
  */
-const Main = props => {
-  const { children, handleClick, isLoggedIn } = props
+class Main extends Component {
+  componentDidMount() {
+    this.props.fetchProducts()
+    this.props.fetchCategories()
+  }
 
-  return (
-    <div>
-      <Menu size="large">
-        <Menu.Item name="Logo goes here" href="/" />
-        <Menu.Item>
-          <Input placeholder="Search..." />
-        </Menu.Item>
-        {isLoggedIn ? (
+  render() {
+    const { children, handleClick, isLoggedIn } = this.props
+    return (
+      <div>
+        <Menu size="large">
+          <Menu.Item name="Logo goes here" href="/products" />
           <Menu.Menu position="right">
-            {/* The navbar will show these links after you log in */}
+            <Menu.Item>
+              <SearchBar />
+            </Menu.Item>
             <Menu.Item name="Cart" href="/cart" />
-            <Menu.Item name="Home" href="/home" />
-            <Menu.Item name="Logout" onClick={handleClick} />
+            {isLoggedIn ? (
+              <Menu.Item name="Logout" onClick={handleClick} />
+            ) : (
+              <Menu.Item name="Login" href="/login" />
+            )}
+            {!isLoggedIn && <Menu.Item name="Sign Up" href="/signup" />}
           </Menu.Menu>
-        ) : (
-          <Menu.Menu position="right">
-            {/* The navbar will show these links before you log in */}
-            <Menu.Item name="Cart" href="/cart" />
-            <Menu.Item name="Login" href="/login" />
-            <Menu.Item name="Sign Up" href="/signup" />
-          </Menu.Menu>
-        )}
-      </Menu>
-      <Menu size="mini">
-        <Menu.Item name="category" href="/category" />
-        <Menu.Item name="category" href="/category" />
-        <Menu.Item name="category" href="/category" />
-        <Menu.Item name="category" href="/category" />
-        <Menu.Item name="category" href="/category" />
-        <Menu.Item name="category" href="/category" />
-        <Menu.Item name="category" href="/category" />
-        <Menu.Item name="category" href="/category" />
-        <Menu.Item name="category" href="/category" />
-        <Menu.Item name="category" href="/category" />
-      </Menu>
-      <hr />
-      {children}
-    </div>
-  )
+        </Menu>
+        {children}
+      </div>
+    )
+  }
 }
 
 /**
@@ -60,7 +48,9 @@ const Main = props => {
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    products: state.products,
+    categories: state.categories
   }
 }
 
@@ -68,7 +58,9 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
-    }
+    },
+    fetchProducts: () => dispatch(fetchProducts()),
+    fetchCategories: () => dispatch(fetchCategories())
   }
 }
 

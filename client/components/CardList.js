@@ -1,27 +1,16 @@
 'use strict'
 
 import React from 'react'
-import { Card } from 'semantic-ui-react'
+import { Card, Label } from 'semantic-ui-react'
 import AppCard from './AppCard'
 
 const src = '/product-placeholder-image.jpg'
 
-const CardList = () => (
+const CardList = (props) => (
   <div>
-    <h1>APPS</h1>
+    <h1>Displaying { props.category || 'All Products'} {props.search ? ', matching \'' + props.search + '\'' : '' } <Label circular color="red">{props.products.length}</Label></h1>
     <Card.Group>
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
-      <AppCard raised image={src} />
+      { props.products.map(product => <AppCard raised key={product.id} product={product} />) }
     </Card.Group>
   </div>
 )

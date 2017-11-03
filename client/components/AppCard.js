@@ -1,27 +1,36 @@
 import React from 'react'
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { NavLink } from 'react-router-dom'
+import { Card, Icon, Image, Rating } from 'semantic-ui-react'
+import history from '../history'
 
-const AppCard = () => (
+const AppCard = props => (
   <Card raised>
-    <Image src='/product-placeholder-image.jpg' />
+    <Image
+      height="290px"
+      src={props.product.img}
+      onClick={() => history.push(`/product/${props.product.id}`)}
+      style={{ cursor: 'pointer' }}
+    />
     <Card.Content>
-      <Card.Header>
-        Matthew
+      <Card.Header
+        onClick={() => history.push(`/product/${props.product.id}`)}
+        style={{ cursor: 'pointer' }}
+      >
+        {props.product.name}
       </Card.Header>
       <Card.Meta>
-        <span className='date'>
-          Joined in 2015
+        <span className="card-category">
+          {props.product.categories[0].name}{' '}
+          <Rating icon="star" defaultRating={3} maxRating={5} disabled />
         </span>
       </Card.Meta>
       <Card.Description>
-        Matthew is a musician living in Nashville.
+        {props.product.description.slice(0, 70)}...
       </Card.Description>
     </Card.Content>
     <Card.Content extra>
-      <a>
-        <Icon name='user' />
-        22 Friends
-      </a>
+      <Icon name="tag" />
+      {props.product.price ? '$' + props.product.price / 100 : 'Free'}
     </Card.Content>
   </Card>
 )
