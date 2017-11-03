@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { logout, fetchCategories, fetchProducts } from '../store'
-import { Input, Menu } from 'semantic-ui-react'
+import { Input, Menu, Image } from 'semantic-ui-react'
 
 import SearchBar from './SearchBar'
 /**
@@ -23,7 +23,9 @@ class Main extends Component {
     return (
       <div>
         <Menu size="large">
-          <Menu.Item name="Logo goes here" href="/products" />
+          <Menu.Item fitted href="/products">
+            <Image src="/logo.png" size="medium" />
+          </Menu.Item>
           <Menu.Menu position="right">
             <Menu.Item>
               <SearchBar />
@@ -50,7 +52,8 @@ const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
     products: state.products,
-    categories: state.categories
+    categories: state.categories,
+    user: state.user
   }
 }
 

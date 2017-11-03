@@ -25,8 +25,10 @@ router.get("/", (req, res, next) => {
 });
 
 //Get - sends current logged in user's information
-router.get("/me", (req, res, next) => {
-  res.json(req.user);
+router.get("/:id", (req, res, next) => {
+  User.findById(req.params.id, { include: [{ all: true, nested: true }]})
+  .then(user => res.json(user))
+  .catch(next)
 });
 
 //POST - creates new user
