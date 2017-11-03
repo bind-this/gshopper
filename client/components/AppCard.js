@@ -20,7 +20,7 @@ const AppCard = (props) => (
       </Card.Content>
       <Card.Content extra>
           <Icon name='tag' />
-          ${ props.product.price / 100 }
+          { props.product.price ? '$' + props.product.price / 100 : 'Free' }
       </Card.Content>
   </Card>
 )
