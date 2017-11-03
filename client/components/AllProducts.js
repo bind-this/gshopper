@@ -27,11 +27,14 @@ class AllProducts extends Component {
     const category = params.get('category')
     const query = params.get('search')
 
+
     // filtering by... filters
+    // let categoryNames;
     let filteredProducts = products.filter(product => {
       if (!category) return true
-      const categoriesOfProduct = product.categories.map(category => category.id)
-      return categoriesOfProduct.includes(+category)
+      const categoryOfProduct = product.categories.map(category => category.id)
+      // categoryNames = categories.filter(cat => categoryOfProduct.includes(cat.id) ).map(cat => cat.name).join(', ')
+      return categoryOfProduct.includes(+category)
     })
 
     // Search filtering by query
@@ -39,6 +42,9 @@ class AllProducts extends Component {
     const isMatch = result => re.test(result.name)
 
     filteredProducts = _.filter(filteredProducts, isMatch)
+
+    console.log(categoryNames)
+
 
     return (
 
@@ -64,7 +70,7 @@ class AllProducts extends Component {
             </Sticky>
           </Grid.Column>
           <Grid.Column width={13}>
-            <CardList products={ filteredProducts } title={ title } />
+            <CardList products={ filteredProducts } search={query} category={categoryNames} title={ title } />
           </Grid.Column>
         </Grid.Row>
       </Grid>
