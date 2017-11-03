@@ -37,7 +37,6 @@ class Main extends Component {
             {!isLoggedIn && <Menu.Item name="Sign Up" href="/signup" />}
           </Menu.Menu>
         </Menu>
-        <hr />
         {children}
       </div>
     )
