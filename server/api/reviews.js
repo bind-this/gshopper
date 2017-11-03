@@ -8,6 +8,13 @@ router.post('/', (req, res, next) => {
   .catch(next)
 })
 
+// GET - get all reviews associated with product id
+router.get('/product-review/:id', (req, res, next) => {
+  Review.findAll({ where: { productId: req.params.id }})
+    .then(reviews => res.json(reviews))
+    .catch(next)
+})
+
 // router.param to catch :Id
 router.param('id', (req, res, next, reviewId) => {
   Review.findOne({

@@ -1,53 +1,86 @@
-import React, { Component } from 'react'
-import {connect} from 'react-redux'
-import { Advertisement } from 'semantic-ui-react'
-import { fetchProduct, changeProduct, removeProduct } from '../store'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Image, Container, Card, Comment } from 'semantic-ui-react';
+import { fetchReview, fetchProduct, changeProduct, removeProduct } from '../store';
 
 class SingleProduct extends Component {
-
   componentDidMount() {
     this.props.fetchProduct(+this.props.match.params.productId)
+    this.props.fetchReview(this.props.review)
   }
 
   render() {
-    const product = this.props.product
-console.log('HAHAAHAHHAAAHAHAHAHA', this.props.product)
+    const product = this.props.product;
+    const averageRating =
+      product.reviews &&
+      (product.reviews.reduce((accum, review) => {
+        return accum + review.rating;
+      }, 0) / product.reviews.length
+      ).toFixed(2)
+      console.log('this is product', product)
     return (
       <div>
-        <div>
-          <div>
-          <Advertisement unit='half page' test='HELLO' />
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div style={{ display: 'flex' }}>
+            <Image src={product.altImages && product.altImages[0]} />
+            {/*
+              product.altImages &&
+              product.altImages.map(image => (
+                <div key={ image } >
+                  <Image src={ image } />
+                </div>
+                ))
+            */}
           </div>
-          <div>name etc.</div>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <Container style={{ display: 'flex', flexDirection: 'column' }}>
+              <div>{product.name}</div>
+              <div>{product.author}</div>
+              <div>{product.reviews && averageRating}</div>
+              <div>{ product.category && product.category.join(', ') }</div>
+              <div>{product.description}</div>
+            </Container>
+            <Card style={{ display: 'flex', flexDirection: 'column' }}>
+              <div>{ product.availability && product.availability ? 'yes' : 'no' }</div>
+              <div>{product.price ? `$${product.price}` : 'free' }</div>
+              <div>{product.quantity}</div>
+            </Card>
+          </div>
         </div>
-        <div>reviews
-          <ul>
-          {
-            product.reviews &&
-            product.reviews.map(review => <li key={review.id} >{ review.rating }</li>)
-          }
-          </ul>
+        <div>
+          reviews
+          <div>
+            {product.reviews &&
+              product.reviews.map(review => (
+                <Comment key={review.id}>{ review.comment }</Comment>
+              ))}
+          </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => ({ product: state.product })
+// on reviews use 'Elements/List/Animated' in semantic-ui
 
-const mapDispatchToProps = (dispatch) => ({
+const mapStateToProps = state => ({
+  product: state.product,
+  review: state.review
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchReview: reviewId => dispatch(fetchReview(reviewId)),
   fetchProduct: productId => dispatch(fetchProduct(productId)),
   changeProduct: product => dispatch(changeProduct(product)),
   removeProduct: productId => dispatch(removeProduct(productId))
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
-
+export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct);
 
 /*
 <div>
         <h1>{product.name}</h1>
-        <img href={product.img} text="img" />
+        <img href={product.img} text='img' />
         <ul>
           <li>author: { product.author }</li>
           <li>availability: { product.availability && product.availability ? 'yes' : 'no' }</li>
