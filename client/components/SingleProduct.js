@@ -6,25 +6,29 @@ import { fetchReview, fetchProduct, changeProduct, removeProduct } from '../stor
 class SingleProduct extends Component {
   componentDidMount() {
     this.props.fetchProduct(+this.props.match.params.productId)
-    this.props.fetchReview(this.props.review)
+    this.props.fetchReview(+this.props.match.params.productId)
   }
 
   render() {
     const product = this.props.product;
-    const review = this.props.review
+    const productReviews = this.props.review
+    if (!product || !productReviews) return ''
     const averageRating =
       product.reviews &&
       (product.reviews.reduce((accum, review) => {
         return accum + review.rating;
       }, 0) / product.reviews.length
       ).toFixed(2)
-      console.log('this is product', product)
+
     return (
+
       <div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div style={{ display: 'flex' }}>
-            <Image src={product.altImages && product.altImages[0]} />
-            {/*
+            <Image src={ product.altImages && product.altImages[0] } />
+            {
+              console.log('reviews', productReviews)
+              /*
               product.altImages &&
               product.altImages.map(image => (
                 <div key={ image } >
@@ -35,27 +39,31 @@ class SingleProduct extends Component {
           </div>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <Container style={{ display: 'flex', flexDirection: 'column' }}>
-              <div>{product.name}</div>
-              <div>{product.author}</div>
-              <div>{product.reviews && averageRating}</div>
+              <div>{ product.name }</div>
+              <div>{ product.author }</div>
+              <div>{ product.reviews && averageRating }</div>
               <div>{ product.category && product.category.join(', ') }</div>
-              <div>{product.description}</div>
+              <div>{ product.description }</div>
             </Container>
             <Card style={{ display: 'flex', flexDirection: 'column' }}>
               <div>{ product.availability && product.availability ? 'yes' : 'no' }</div>
-              <div>{product.price ? `$${product.price}` : 'free' }</div>
-              <div>{product.quantity}</div>
+              <div>{ product.price ? `$${product.price}` : 'free' }</div>
+              <div>{ product.quantity }</div>
             </Card>
           </div>
         </div>
         <div>
           reviews
-          <div>
-            {product.reviews &&
-              product.reviews.map(review => (
-                <Comment key={review.id}>{ review.comment }</Comment>
+          {<div>
+            {productReviews &&
+              productReviews.map(review => (
+                <div key={review.id}>
+                  <div>{ review.user.firstName }</div>
+                  <div>{ review.user.lastName }</div>
+                <Comment>{ review.comment }</Comment>
+                </div>
               ))}
-          </div>
+          </div>}
         </div>
       </div>
     );
@@ -77,19 +85,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct);
-
-/*
-<div>
-        <h1>{product.name}</h1>
-        <img href={product.img} text='img' />
-        <ul>
-          <li>author: { product.author }</li>
-          <li>availability: { product.availability && product.availability ? 'yes' : 'no' }</li>
-          <li>categorie(s): { product.category && product.category.join(', ') }</li>
-          <li>description: { product.description }</li>
-          <li>price: ${ product.price }</li>
-          <li>quantity availabile: { product.quantity }</li>
-          <li>reviews: { product.review && product.review.map(review => <div key={review.id}>{ review.comment }</div>) }</li>
-        </ul>
-      </div>
-*/

@@ -10,8 +10,10 @@ router.post('/', (req, res, next) => {
 
 // GET - get all reviews associated with product id
 router.get('/product-review/:id', (req, res, next) => {
-  Review.findAll({ where: { productId: req.params.id }})
-    .then(reviews => res.json(reviews))
+  Review.findAll({ where: { productId: req.params.id }, include: [{ all: true }] })
+    .then(reviews => {
+      res.json(reviews)
+    })
     .catch(next)
 })
 

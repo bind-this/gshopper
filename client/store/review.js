@@ -12,20 +12,19 @@ const GET_REVIEW = 'GET_REVIEW'
  */
 const getReview = review => ({type: GET_REVIEW, review})
 
-
 /**
  * THUNK CREATORS
  */
-export const fetchReview = (reviewId) =>
+export const fetchReview = (productId) =>
   dispatch =>
-    axios.get(`/api/review/${reviewId}`)
+    axios.get(`/api/reviews/product-review/${productId}`)
       .then(res => dispatch(getReview(res.data)))
       .catch(err => console.log(err))
 
 /**
  * REDUCER
  */
-export default (state = {}, action) => {
+export default (state = [], action) => {
   switch (action.type) {
 
     case GET_REVIEW:
