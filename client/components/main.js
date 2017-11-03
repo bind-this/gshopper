@@ -23,7 +23,7 @@ class Main extends Component {
     return (
       <div>
         <Menu size="large">
-          <Menu.Item name="Logo goes here" href="/" />
+          <Menu.Item name="Logo goes here" href="/products" />
           <Menu.Menu position="right">
             <Menu.Item>
               <SearchBar />
