@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import CardList from './CardList'
 import { Card, Rating, Grid, Sticky, Checkbox, Input, Label } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 
 class AllProducts extends Component {
   constructor(props) {
@@ -20,14 +21,32 @@ class AllProducts extends Component {
     const categories = this.props.categories
     const { contextRef } = this.state
 
+    // Let's get our search filters from the URL
+    const { search } = this.props.location
+    const params = new URLSearchParams(search)
+    const category = params.get('category')
+    const query = params.get('search')
+
+    let filteredProducts = products.filter(product => {
+      if (!category) return true
+      const categoriesOfProduct = product.categories.map(category => category.id)
+      return categoriesOfProduct.includes(+category)
+    })
+
+    const re = new RegExp(_.escapeRegExp(query), 'i')
+    const isMatch = result => re.test(result.name)
+
+    filteredProducts = _.filter(filteredProducts, isMatch)
+
+    // console.log(filteredProducts)
+
     return (
 
-
-        <div ref={this.handleContextRef}>
+    <div ref={this.handleContextRef}>
       <Grid divided padded relaxed columns='equal'>
         <Grid.Row>
           <Grid.Column>
-            <Sticky context={contextRef}>
+            <Sticky context={contextRef} offset={40}>
               <h1>Filters</h1>
               <h3>Minimum rating</h3>
               <Rating maxRating={5} clearable />
@@ -41,15 +60,15 @@ class AllProducts extends Component {
                 <input />
               </Input>
               <h3>Categories</h3>
-                  { categories.map(category => <div><Checkbox key={category.id} defaultChecked toggle /> {category.name}</div>) }
+                  { categories.map(category => <div key={category.id}><Checkbox defaultChecked toggle /> {category.name}</div>) }
             </Sticky>
           </Grid.Column>
           <Grid.Column width={13}>
-            <CardList products={ products } title={ title } />
+            <CardList products={ filteredProducts } title={ title } />
           </Grid.Column>
         </Grid.Row>
       </Grid>
-        </div>
+    </div>
     )
   }
 }
