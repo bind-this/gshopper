@@ -23,7 +23,9 @@ class Main extends Component {
     return (
       <div>
         <Menu size="large">
-          <Menu.Item name="Logo goes here" href="/products" />
+          <Menu.Item fitted href="/products">
+            <Image src="/logo.png" size="medium" />
+          </Menu.Item>
           <Menu.Menu position="right">
             <Menu.Item>
               <SearchBar />
@@ -53,7 +55,8 @@ const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
     products: state.products,
-    categories: state.categories
+    categories: state.categories,
+    user: state.user
   }
 }
 

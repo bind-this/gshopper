@@ -26,7 +26,7 @@ const AuthForm = props => {
         verticalAlign="middle"
       >
         <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h2" color="teal" textAlign="center">
+          <Header as="h2" textAlign="center">
             {displayName}
           </Header>
           <Form size="large" onSubmit={handleSubmit} name={name}>
@@ -45,7 +45,7 @@ const AuthForm = props => {
                 name="password"
               />
               {error && error.response && <div> {error.response.data} </div>}
-              <Button color="teal" fluid size="large" type="submit">
+              <Button color="yellow" fluid size="large" type="submit">
                 {displayName}
               </Button>
               Or
