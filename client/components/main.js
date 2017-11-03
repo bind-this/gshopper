@@ -23,7 +23,7 @@ class Main extends Component {
     return (
       <div>
         <Menu size="large">
-          <Menu.Item fitted href="/products">
+          <Menu.Item fitted href="/">
             <Image src="/logo.png" size="medium" />
           </Menu.Item>
           <Menu.Menu position="right">
