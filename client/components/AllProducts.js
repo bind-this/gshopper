@@ -43,7 +43,7 @@ class AllProducts extends Component {
 
     filteredProducts = _.filter(filteredProducts, isMatch)
 
-    console.log(categoryNames)
+    // console.log(categoryNames)
 
 
     return (
@@ -70,7 +70,7 @@ class AllProducts extends Component {
             </Sticky>
           </Grid.Column>
           <Grid.Column width={13}>
-            <CardList products={ filteredProducts } search={query} category={categoryNames} title={ title } />
+            <CardList products={ filteredProducts } search={query} title={ title } />
           </Grid.Column>
         </Grid.Row>
       </Grid>
