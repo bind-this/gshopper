@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import CardList from './CardList'
-import { Card, Rating, Grid, Sticky, Checkbox, Input, Label, Image } from 'semantic-ui-react'
+import { Card, Rating, Grid, Sticky, Checkbox, Input, Label, Image, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
@@ -47,18 +47,29 @@ class UserPage extends Component {
     const user = this.props.user
     return (
 
-    <Grid celled>
+    <Grid celled padded >
     <Grid.Row>
       <Grid.Column width={3}>
         <Image size='small' centered src={user.img} />
       </Grid.Column>
-      <Grid.Column width={13}>
+      <Grid.Column width={8}>
         <h3> User Name: {user.firstName} {user.lastName} </h3>
         <h3> Email: {user.email} </h3>
         <h3> Address: {user.address} </h3>
         <h3> City: {user.city} </h3>
         <h3> Zip: {user.zip} </h3>
-        <button>Edit User Info</button>
+        <Button>Edit User Info</Button>
+      </Grid.Column>
+      <Grid.Column width={4}>
+        <h2> SHOPPING CART HERE</h2>
+        <Button size="tiny">SOME FUNCTIONS</Button>
+      </Grid.Column>
+    </Grid.Row>
+    <Grid.Row>
+      <Grid.Column width={13}>
+        <h3> Order History</h3>
+        <h3> Email: {user.email} </h3>
+        <Button size="tiny" >SOME FUNCTIONS</Button>
       </Grid.Column>
     </Grid.Row>
     </Grid >
