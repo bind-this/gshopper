@@ -4,7 +4,7 @@ import React from 'react'
 import { Step, Icon } from 'semantic-ui-react'
 
 const Steps = () => (
-  <Step.Group>
+  <Step.Group fluid>
     <Step>
       <Icon name='shop' />
       <Step.Content>
