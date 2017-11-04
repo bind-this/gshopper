@@ -48,6 +48,7 @@ class SearchBar extends Component {
   handleKeyPress = target => {
     if (target.charCode === 13) {
       history.push(`/products?search=${this.state.value}`)
+      this.resetComponent()
     }
   }
 
