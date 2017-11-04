@@ -5,7 +5,6 @@ import { Label, Item, Button, Icon, Segment, Grid } from 'semantic-ui-react'
 
 const Order = props => {
   const order = props.order
-  console.log(order[0])
   return (
     <div>
       <Segment>
@@ -20,7 +19,7 @@ const Order = props => {
                 </Item.Meta>
                 <Item.Description>{item.product.description.slice(0, 140).trim() + '...'}</Item.Description>
                 <Item.Extra>
-                  <Label>$3</Label>
+                  <Label>{item.product.price ? '$' + item.product.price / 100 : 'Free'}</Label>
                   <Button.Group floated="right">
                     <Button icon="minus" />
                     <Button>{item.quantity}</Button>
@@ -30,11 +29,11 @@ const Order = props => {
                   <Label color="red"><Icon name='pin' />Records your location</Label>
                 </Item.Extra>
               </Item.Content>
-            </Item>  
+            </Item>
           ))}
         </Item.Group>
       </Segment>
-  
+
     </div>
   )
 }
