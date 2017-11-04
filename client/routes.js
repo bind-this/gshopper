@@ -7,11 +7,8 @@ import history from './history'
 import { Main, Login, Signup, UserHome } from './components'
 import { me } from './store'
 import AllProducts from './components/AllProducts'
-<<<<<<< HEAD
 import LandingPage from './components/LandingPage'
-=======
 import Cart from './components/Cart'
->>>>>>> master
 import User from './components/UserPage'
 
 /**
