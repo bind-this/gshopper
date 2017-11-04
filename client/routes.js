@@ -8,7 +8,7 @@ import { Main, Login, Signup, UserHome } from './components'
 import { me } from './store'
 import AllProducts from './components/AllProducts'
 import Cart from './components/Cart'
-import User from './components/UserPage'
+import User from './components/User-Page/UserPage'
 
 /**
  * COMPONENT
