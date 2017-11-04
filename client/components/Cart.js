@@ -1,14 +1,17 @@
 'use strict'
 
 import React from 'react'
-import { Card, Label } from 'semantic-ui-react'
+import { Card, Label, Grid } from 'semantic-ui-react'
 import Order from './Order'
+import Steps from './Steps'
 
 const Cart = () => (
-  <div>
-    <h1>Here lies the cart!</h1>
-    <Order />
-  </div>
+  <Grid centered columns={3}>
+    <Grid.Column width={10}>
+      <Steps />
+      <Order />
+    </Grid.Column>
+  </Grid>
 )
 
 export default Cart
