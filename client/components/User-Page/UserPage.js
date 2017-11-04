@@ -1,5 +1,3 @@
-"use strict";
-
 import React, { Component } from "react";
 import { Card, Grid, Image } from "semantic-ui-react";
 import { connect } from "react-redux";

@@ -27,7 +27,6 @@ class UserCard extends Component {
   }
 
   onSubmit(evt) {
-    console.log("HEREERE")
     evt.preventDefault()
     this.props.updatingUser(tempUser, this.props.user.id)
   }
@@ -36,7 +35,7 @@ class UserCard extends Component {
     const user = this.props.user;
     return (
       <Card fluid raised>
-        <Card.Content>
+          {this.state.bool ? <UserEdit userCard={this} /> : <Card.Content>
           <h3>User Profile</h3>
           <h4>
             User Name: {user.firstName} {user.lastName}
@@ -45,11 +44,11 @@ class UserCard extends Component {
           <h4> Address: {user.address} </h4>
           <h4> City: {user.city} </h4>
           <h4> Zip: {user.zip} </h4>
-          <Button onClick={this.onToggle}>Edit Profile</Button>
           <br />
           <br />
-          {this.state.bool ? <UserEdit userCard={this} /> : ""}
-        </Card.Content>
+          </Card.Content>
+          }
+          <Button onClick={this.onToggle}>Toggle Profile Edit</Button>
       </Card>
     );
   }
