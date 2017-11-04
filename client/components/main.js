@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { logout, fetchCategories, fetchProducts } from '../store'
-import { Input, Menu, Image } from 'semantic-ui-react'
+import { Input, Menu, Icon, Label, Image } from 'semantic-ui-react'
 
 import SearchBar from './SearchBar'
 /**
@@ -30,7 +30,10 @@ class Main extends Component {
             <Menu.Item>
               <SearchBar />
             </Menu.Item>
-            <Menu.Item name="Cart" href="/cart" />
+            <Menu.Item name="Cart" href="/cart">
+              <Icon size='big' name='shop' />
+              <Label color='teal'>99+</Label>
+            </Menu.Item>
             {isLoggedIn ? (
               <Menu.Item name="Logout" onClick={handleClick} />
             ) : (
