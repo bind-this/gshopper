@@ -6,6 +6,8 @@ import { logout, fetchCategories, fetchProducts } from '../store'
 import { Input, Menu, Icon, Label, Image } from 'semantic-ui-react'
 
 import SearchBar from './SearchBar'
+import history from '../history'
+
 /**
  * COMPONENT
  *  The Main component is our 'picture frame' - it displays the navbar and anything
@@ -14,8 +16,8 @@ import SearchBar from './SearchBar'
  */
 class Main extends Component {
   componentDidMount() {
-    this.props.fetchProducts()
-    this.props.fetchCategories()
+    !this.props.products.length && this.props.fetchProducts()
+    !this.props.categories.length && this.props.fetchCategories()
   }
 
   render() {
@@ -23,23 +25,28 @@ class Main extends Component {
     return (
       <div>
         <Menu size="large">
-          <Menu.Item fitted href="/">
+          <Menu.Item fitted onClick={() => history.push('/')}>
             <Image src="/logo.png" size="medium" />
           </Menu.Item>
           <Menu.Menu position="right">
             <Menu.Item>
               <SearchBar />
             </Menu.Item>
-            <Menu.Item name="Cart" href="/cart">
-              <Icon size='big' name='shop' />
-              <Label color='teal'>99+</Label>
+            <Menu.Item name="Cart" onClick={() => history.push('/cart')}>
+              <Icon size="big" name="shop" />
+              <Label color="teal">99+</Label>
             </Menu.Item>
             {isLoggedIn ? (
               <Menu.Item name="Logout" onClick={handleClick} />
             ) : (
-              <Menu.Item name="Login" href="/login" />
+              <Menu.Item name="Login" onClick={() => history.push('/login')} />
             )}
-            {!isLoggedIn && <Menu.Item name="Sign Up" href="/signup" />}
+            {!isLoggedIn && (
+              <Menu.Item
+                name="Sign Up"
+                onClick={() => history.push('/signup')}
+              />
+            )}
           </Menu.Menu>
         </Menu>
         {children}

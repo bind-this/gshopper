@@ -12,7 +12,9 @@ router.post('/login', (req, res, next) => {
       } else {
         req.login(
           user,
-          err => console.log(err) || (err ? next(err) : res.json(user))
+          err =>
+            console.log('ERROREERROEERROR: ', err) ||
+            (err ? next(err) : res.json(user))
         )
       }
     })
@@ -39,11 +41,12 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
-  if (req.user) {
-    User.findById(req.user.id, {
-      include: [{ all: true, nested: true }]
-    }).then(userData => res.json(userData))
-  }
+  res.json(req.user)
+  // if (req.user) {
+  //   User.findById(req.user.id, {
+  //     include: [{ all: true, nested: true }]
+  //   }).then(userData => res.json(userData))
+  // }
 })
 
 router.use('/google', require('./google'))

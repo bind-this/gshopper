@@ -20,7 +20,9 @@ function LandingPage(props) {
         <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide5" />
         <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide6" />
       </Carousel>
-      <ul>{products25.map(product => <li>{product.name}</li>)}</ul>
+      <ul>
+        {products25.map(product => <li key={product.id}>{product.name}</li>)}
+      </ul>
     </div>
   )
 }
