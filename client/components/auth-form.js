@@ -39,20 +39,22 @@ const AuthForm = props => {
           </Header>
           <Form size="large" onSubmit={handleSubmit} name={name}>
             <Segment raised>
-              <Form.Input
-                icon="user"
-                iconPosition="left"
-                placeholder="E-mail"
-                name="email"
-              />
-              <Form.Input
-                icon="lock"
-                iconPosition="left"
-                placeholder="Password"
-                type="password"
-                name="password"
-              />
               {error && error.response && <div> {error.response.data} </div>}
+              <div>
+                <Form.Input
+                  icon="user"
+                  iconPosition="left"
+                  placeholder="E-mail"
+                  name="email"
+                />
+                <Form.Input
+                  icon="lock"
+                  iconPosition="left"
+                  placeholder="Password"
+                  type="password"
+                  name="password"
+                />
+              </div>
               <Button color="yellow" fluid size="large" type="submit">
                 {displayName}
               </Button>

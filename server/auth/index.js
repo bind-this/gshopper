@@ -37,16 +37,15 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/logout', (req, res) => {
   req.logout()
-  res.redirect('/')
+  res.redirect('/login')
 })
 
 router.get('/me', (req, res) => {
-  res.json(req.user)
-  // if (req.user) {
-  //   User.findById(req.user.id, {
-  //     include: [{ all: true, nested: true }]
-  //   }).then(userData => res.json(userData))
-  // }
+  if (req.user) {
+    User.findById(req.user.id, {
+      include: [{ all: true, nested: true }]
+    }).then(userData => res.json(userData))
+  }
 })
 
 router.use('/google', require('./google'))
