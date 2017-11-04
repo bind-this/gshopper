@@ -9,7 +9,7 @@ import { me } from './store'
 import AllProducts from './components/AllProducts'
 import LandingPage from './components/LandingPage'
 import Cart from './components/Cart'
-import User from './components/UserPage'
+import User from './components/User-Page/UserPage'
 
 /**
  * COMPONENT
