@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Dropdown, Icon } from 'semantic-ui-react'
+import { Menu, Dropdown, Icon, Image } from 'semantic-ui-react'
 
 const UserDropdown = ({ user, tryLogout }) => (
   <Menu.Item>
