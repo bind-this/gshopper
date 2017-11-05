@@ -7,7 +7,7 @@ import AppCard from './AppCard'
 const CardList = props => (
   <div>
     <h1>
-      Displaying {props.category || 'All Products'}{' '}
+      Displaying {props.title || 'All Products'}{' '}
       {props.search ? ", matching '" + props.search + "'" : ''}{' '}
       <Label circular color="red">
         {props.products.length}
