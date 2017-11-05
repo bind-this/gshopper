@@ -10,6 +10,8 @@ import AllProducts from './components/AllProducts'
 import LandingPage from './components/LandingPage'
 import Cart from './components/Cart'
 import User from './components/User-Page/UserPage'
+import OrderAdminMain from './components/Order-Page/OrderAdminMain'
+import OrderPage from './components/Order-Page/OrderPage'
 
 /**
  * COMPONENT
@@ -31,7 +33,9 @@ class Routes extends Component {
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route exact path="/user" component={User} />
+            <Route path="/user" component={User} />
+            <Route path="/orders" component={OrderPage} />
+            <Route path="/orders-admin" component={OrderAdminMain} />
             {isLoggedIn && (
               <Switch>
                 {/* Routes placed here are only available after logging in */}
