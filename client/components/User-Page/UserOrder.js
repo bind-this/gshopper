@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 const tempUser = {}
 
-class UserCard extends Component {
+class UserOrder extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -32,7 +32,8 @@ class UserCard extends Component {
   }
 
   render() {
-    const user = this.props.user
+    const userOrders = this.props.user.orders && this.props.user.orders[0].id
+    console.log('HERE', userOrders)
     return (
       <Card fluid raised>
         {this.state.bool ? (
@@ -47,19 +48,20 @@ class UserCard extends Component {
                 <Grid.Column width={9}>
                   <h2>User Profile</h2>
                   <h4>
-                    User Name : {user.firstName} {user.lastName}
+                    User Name : {this.props.user.firstName}{' '}
+                    {this.props.user.lastName}
                   </h4>
                   <h2>Mailing Address</h2>
-                  <h4> Address : {user.address} </h4>
-                  <h4> City : {user.city} </h4>
-                  <h4> Zip : {user.zip} </h4>
+                  <h4> Address : {this.props.user.address} </h4>
+                  <h4> City : {this.props.user.city} </h4>
+                  <h4> Zip : {this.props.user.zip} </h4>
                   <br />
                   <br />
                 </Grid.Column>
                 <Grid.Column width={4}>
                   <h2>Contact Information</h2>
-                  <h4> Email Address : {user.email} </h4>
-                  <h4> Phone Number : {user.phone} </h4>
+                  <h4> Email Address : {this.props.user.email} </h4>
+                  <h4> Phone Number : {this.props.user.phone} </h4>
                   <br />
                   <br />
                 </Grid.Column>
@@ -87,4 +89,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(UserCard)
+export default connect(mapState, mapDispatch)(UserOrder)
