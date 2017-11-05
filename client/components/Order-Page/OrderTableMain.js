@@ -19,9 +19,13 @@ class OrderEdit extends Component {
   }
 
   render() {
-    const filteredList = this.props.orders.filter(
+    const grabUserOrders = this.props.orders.filter(
       order => order.userId === this.props.user.id
     )
+    const filteredList = grabUserOrders.filter(
+      order => order.status !== 'created'
+    )
+
     return (
       <div>
         {filteredList.length < 1 ? (
