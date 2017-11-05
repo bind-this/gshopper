@@ -14,7 +14,7 @@ class Cart extends Component {
   render() {
     let order = ''
     console.log(this.props.user.orders)
-    if (this.props.user.orders && this.props.user.orders.length) order = this.props.user.orders.filter(order => order.status === 'created')[0].order_products
+    if (this.props.user.orders && this.props.user.orders.filter(order => order.status === 'created').length) order = this.props.user.orders.filter(order => order.status === 'created')[0].order_products
     console.log(order)
     return (
       <Grid centered columns={3}>
