@@ -9,10 +9,30 @@ import _ from 'lodash'
 class Order extends Component {
   constructor (props) {
     super(props)
+
+    this.increase = this.increase.bind(this)
   }
 
-  increase () {
-    console.log('hello')
+  componentDidMount() {
+    console.log('componend mounting!')
+  }
+
+  increase (item) {
+    const cartItem = {
+      productId: item.product.id,
+      quantity: item.quantity + 1,
+      userId: this.props.user.id
+    }
+    this.props.debouncedUpdateCartItem(cartItem);
+  }
+  
+  decrease (item) {
+    const cartItem = {
+      productId: item.product.id,
+      quantity: item.quantity - 1,
+      userId: this.props.user.id
+    }
+    this.props.debouncedUpdateCartItem(cartItem);
   }
   
   render () {
@@ -33,9 +53,9 @@ class Order extends Component {
                   <Item.Extra>
                     <Label>{item.product.price ? '$' + item.product.price / 100 : 'Free'}</Label>
                     <Button.Group floated="right">
-                      <Button icon="minus" />
+                      <Button icon="minus" onClick={() => this.decrease(item)} />
                       <Button>{item.quantity}</Button>
-                      <Button icon="plus" onClick={this.increase} />
+                      <Button icon="plus" onClick={() => this.increase(item)} />
                     </Button.Group>
                     <Label color="red"><Icon name='dollar' /> Sells your data</Label>
                     <Label color="red"><Icon name='pin' /> Records your location</Label>
@@ -52,23 +72,25 @@ class Order extends Component {
 
 }
 
-// const mapState = ({ users, stories, currentUser }, ownProps) => {
-//   const story = stories.find(aStory => aStory.id === +ownProps.match.params.id);
-//   const storyId = ownProps.storyId;
-//   return { story, users, storyId, currentUser };
-// };
+const mapState = (state, ownProps) => {
+  // const story = stories.find(aStory => aStory.id === +ownProps.match.params.id);
+  // const storyId = ownProps.storyId;
+  console.log(state)
+  return state;
+};
 
 const mapDispatch = (dispatch, ownProps) => {
-  console.log(ownProps)
+  console.log('ownProps', ownProps)
   return {
     debouncedUpdateCartItem: _.debounce((...args) => {
-      dispatch(updateStory(...args));
+      dispatch(sendCartItem(...args));
     }, 500),
 
-    updateCartItem: () => {
-      const storyId = ownProps;
-      dispatch(fetchStory(storyId));
-    }
+    // updateCartItem: () => {
+    //   console.log('ownProps', ownProps)
+    //   const cartItem = ownProps;
+    //   dispatch(sendCartItem(cartItem));
+    // }
   };
 };
 
