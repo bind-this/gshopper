@@ -12,7 +12,7 @@ class Order extends Component {
   }
 
   componentDidMount() {
-    console.log('componend mounting!')
+    // console.log('componend mounting!')
   }
 
   increase (item) {
@@ -73,12 +73,12 @@ class Order extends Component {
 const mapState = (state, ownProps) => {
   // const story = stories.find(aStory => aStory.id === +ownProps.match.params.id);
   // const storyId = ownProps.storyId;
-  console.log(state)
+  // console.log(state)
   return state;
 };
 
 const mapDispatch = (dispatch, ownProps) => {
-  console.log('ownProps', ownProps)
+  // console.log('ownProps', ownProps)
   return {
     debouncedUpdateCartItem: _.debounce((...args) => {
       dispatch(sendCartItem(...args));

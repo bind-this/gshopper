@@ -59,14 +59,10 @@ class AppCard extends Component {
 }
 
 const mapState = (state, ownProps) => {
-  // const story = stories.find(aStory => aStory.id === +ownProps.match.params.id);
-  // const storyId = ownProps.storyId;
-  console.log(state)
   return state;
 };
 
 const mapDispatch = (dispatch, ownProps) => {
-  console.log('ownProps', ownProps)
   return {
     debouncedUpdateCartItem: _.debounce((...args) => {
       dispatch(sendCartItem(...args));
