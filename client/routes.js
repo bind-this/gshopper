@@ -7,6 +7,7 @@ import history from './history'
 import { Main, Login, Signup, UserHome } from './components'
 import { me } from './store'
 import AllProducts from './components/AllProducts'
+import LandingPage from './components/LandingPage'
 import Cart from './components/Cart'
 import User from './components/User-Page/UserPage'
 
@@ -25,6 +26,7 @@ class Routes extends Component {
       <Router history={history}>
         <Main>
           <Switch>
+            <Route exact path="/" component={LandingPage} />
             <Route path="/products" component={AllProducts} />
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
