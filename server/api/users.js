@@ -51,7 +51,8 @@ router.post("/signup", (req, res, next) => {
 });
 
 //PUT - updates user by id
-router.put("/:id", function(req, res, next) {
+router.put("/update/:id", function(req, res, next) {
+  console.log('here------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------')
   User.update(req.body, {
     where: {
       id: req.params.id

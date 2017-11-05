@@ -1,41 +1,41 @@
-import React, { Component } from "react";
-import { Card, Button } from "semantic-ui-react";
-import { UserEdit } from "./UserEdit";
-import { updatingUser } from "../../store";
+import React, { Component } from 'react'
+import { Card, Button } from 'semantic-ui-react'
+import { UserEdit } from './UserEdit'
+import { updatingUser } from '../../store'
 import { connect } from 'react-redux'
 
-const tempUser = {};
+const tempUser = {}
 
 class UserCard extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       bool: false
-    };
-    this.onToggle = this.onToggle.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    }
+    this.onToggle = this.onToggle.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   onToggle = () => {
-    this.setState({ bool: !this.state.bool });
-  };
-
-  onChange(evt) {
-    tempUser[evt.target.name] = evt.target.value;
-    console.log(tempUser);
+    this.setState({ bool: !this.state.bool })
   }
 
-  onSubmit(evt) {
+  handleChange(evt) {
+    tempUser[evt.target.name] = evt.target.value
+  }
+
+  handleSubmit(evt) {
     evt.preventDefault()
-    this.props.updatingUser(tempUser, this.props.user.id)
+    this.props.updatingUser(this.props.user.id, tempUser)
+    window.location.reload()
   }
 
   render() {
-    const user = this.props.user;
+    const user = this.props.user
     return (
       <Card fluid raised>
-          {this.state.bool ? <UserEdit userCard={this} /> : <Card.Content>
+          {this.state.bool ? <UserEdit handleSubmit={this.handleSubmit.bind(this)} handleChange={this.handleChange.bind(this)} /> : <Card.Content>
           <h3>User Profile</h3>
           <h4>
             User Name: {user.firstName} {user.lastName}
@@ -48,24 +48,22 @@ class UserCard extends Component {
           <br />
           </Card.Content>
           }
-          <Button onClick={this.onToggle}>Toggle Profile Edit</Button>
+          <Button onClick={this.onToggle}>{this.state.bool ? 'Return to User Profile' : 'Edit Profile'}</Button>
       </Card>
-    );
+    )
   }
 }
 
 const mapState = (state) => {
   return {
-    products: state.products,
-    categories: state.categories,
     user: state.user
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    updatingUser: user => dispatch(updatingUser(user))
-  };
-};
+    updatingUser: (id, updates) => dispatch(updatingUser(id, updates))
+  }
+}
 
-export default connect(mapState, mapDispatch)(UserCard);
+export default connect(mapState, mapDispatch)(UserCard)
