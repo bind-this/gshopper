@@ -39,6 +39,7 @@ class UserCard extends Component {
           <UserEdit
             handleSubmit={this.handleSubmit.bind(this)}
             handleChange={this.handleChange.bind(this)}
+            user={this.props.user}
           />
         ) : (
           <Card.Content>
