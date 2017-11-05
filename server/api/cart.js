@@ -20,14 +20,12 @@ router.delete('/cart', (req, res, next) => {
         id: req.body.order_product_id
       }
     })
+    .then(ord2 => ord2.destroy())
+    .then(message => {
+      res.json(message)
+    })
+    .catch(next)
   })
-  .then(ord2 => ord2.destroy())
-  .then(message => {
-    res.json(message)
-  })
-  .catch(next)
-
-})
 
 // POST - add an item to cart
 router.post('/cart', (req, res, next) => {
