@@ -13,7 +13,7 @@ export const UserEdit = props => {
                 <input
                   type="text"
                   name="firstName"
-                  placeholder="optional"
+                  placeholder={props.user.firstName}
                   onChange={props.handleChange}
                 />
               </h3>
@@ -22,7 +22,7 @@ export const UserEdit = props => {
                 <input
                   type="text"
                   name="lastName"
-                  placeholder="optional"
+                  placeholder={props.user.lastName}
                   onChange={props.handleChange}
                 />
               </h3>
@@ -31,7 +31,7 @@ export const UserEdit = props => {
                 <input
                   type="text"
                   name="address"
-                  placeholder="optional"
+                  placeholder={props.user.address.slice(0, 11) + '...'}
                   onChange={props.handleChange}
                 />
               </h3>
@@ -40,7 +40,7 @@ export const UserEdit = props => {
                 <input
                   type="text"
                   name="city"
-                  placeholder="optional"
+                  placeholder={props.user.city}
                   onChange={props.handleChange}
                 />
               </h3>
@@ -49,7 +49,7 @@ export const UserEdit = props => {
                 <input
                   type="text"
                   name="zip"
-                  placeholder="optional"
+                  placeholder={props.user.zip}
                   onChange={props.handleChange}
                 />
               </h3>
@@ -60,7 +60,7 @@ export const UserEdit = props => {
                 <input
                   type="text"
                   name="img"
-                  placeholder="optional"
+                  placeholder={props.user.img.slice(0, 19) + '...'}
                   onChange={props.handleChange}
                 />
               </h3>
@@ -69,7 +69,7 @@ export const UserEdit = props => {
                 <input
                   type="text"
                   name="phone"
-                  placeholder="optional"
+                  placeholder={props.user.phone}
                   onChange={props.handleChange}
                 />
               </h3>
@@ -78,7 +78,7 @@ export const UserEdit = props => {
                 <input
                   type="text"
                   name="email"
-                  placeholder="optional"
+                  placeholder={props.user.email}
                   onChange={props.handleChange}
                 />
               </h3>
@@ -87,7 +87,7 @@ export const UserEdit = props => {
                 <input
                   type="text"
                   name="password"
-                  placeholder="optional"
+                  placeholder="*******"
                   onChange={props.handleChange}
                 />
               </h3>

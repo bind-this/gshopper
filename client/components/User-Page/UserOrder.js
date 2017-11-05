@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Button, Grid } from 'semantic-ui-react'
-import { UserEdit } from './UserEdit'
 import { updatingUser } from '../../store'
 import { connect } from 'react-redux'
-
-const tempUser = {}
 
 class UserOrder extends Component {
   constructor(props) {
