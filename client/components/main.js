@@ -3,9 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { logout, fetchCategories, fetchProducts } from '../store'
-import { Input, Menu, Icon, Label, Image } from 'semantic-ui-react'
+import { Button, Menu, Icon, Label, Image } from 'semantic-ui-react'
 
 import SearchBar from './SearchBar'
+import UserDropdown from './UserDropdown.js'
+import history from '../history'
+
 /**
  * COMPONENT
  *  The Main component is our 'picture frame' - it displays the navbar and anything
@@ -14,32 +17,38 @@ import SearchBar from './SearchBar'
  */
 class Main extends Component {
   componentDidMount() {
-    this.props.fetchProducts()
-    this.props.fetchCategories()
+    !this.props.products.length && this.props.fetchProducts()
+    !this.props.categories.length && this.props.fetchCategories()
   }
 
   render() {
-    const { children, handleClick, isLoggedIn } = this.props
+    const { children, tryLogout, isLoggedIn, user } = this.props
     return (
       <div>
-        <Menu size="large">
-          <Menu.Item fitted href="/products">
-            <Image src="/logo.png" size="medium" />
+        <Menu size="large" borderless>
+          <Menu.Item fitted onClick={() => history.push('/')}>
+            <Image src="/logo.png" size="medium" style={{ padding: '5px' }} />
           </Menu.Item>
           <Menu.Menu position="right">
             <Menu.Item>
               <SearchBar />
             </Menu.Item>
-            <Menu.Item name="Cart" href="/cart">
-              <Icon size='big' name='shop' />
-              <Label color='teal'>99+</Label>
+            <Menu.Item name="Cart" onClick={() => history.push('/cart')}>
+              <Icon size="big" name="shop" />
+              <Label color="teal">99+</Label>
             </Menu.Item>
             {isLoggedIn ? (
-              <Menu.Item name="Logout" onClick={handleClick} />
+              <UserDropdown user={user} tryLogout={tryLogout} />
             ) : (
-              <Menu.Item name="Login" href="/login" />
+              <Menu.Item name="Login" onClick={() => history.push('/login')} />
             )}
-            {!isLoggedIn && <Menu.Item name="Sign Up" href="/signup" />}
+            {!isLoggedIn && (
+              <Menu.Item>
+                <Button color="yellow" onClick={() => history.push('/signup')}>
+                  Sign Up
+                </Button>
+              </Menu.Item>
+            )}
           </Menu.Menu>
         </Menu>
         {children}
@@ -62,7 +71,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    handleClick() {
+    tryLogout() {
       dispatch(logout())
     },
     fetchProducts: () => dispatch(fetchProducts()),
@@ -79,6 +88,6 @@ export default withRouter(connect(mapState, mapDispatch)(Main))
  */
 Main.propTypes = {
   children: PropTypes.object,
-  handleClick: PropTypes.func.isRequired,
+  tryLogout: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }

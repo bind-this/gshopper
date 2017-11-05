@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Card, Label } from 'semantic-ui-react'
-import Order from '../components/Cart'
+import Order from './Order'
 
 const Cart = () => (
   <div>
