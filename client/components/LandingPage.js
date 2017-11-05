@@ -7,6 +7,7 @@ import history from '../history'
 
 function LandingPage(props) {
   const products25 = props.products.slice(27, 52)
+  const categories = props.categories
   return (
     <div>
       <Carousel
@@ -34,67 +35,72 @@ function LandingPage(props) {
           All
         </Menu.Item>
         <Menu.Item
-          onClick={() => history.push(`/products?category=${'games'}`)}
+          onClick={() => history.push(`/products?category=${categories[3].id}`)}
         >
           <Icon name="game" />
-          games
+          Games
         </Menu.Item>
         <Menu.Item
-          onClick={() => history.push(`/products?category=${'Photo & Video'}`)}
+          onClick={() => history.push(`/products?category=${categories[0].id}`)}
         >
           <Icon name="photo" />
           Photo & Video
         </Menu.Item>
         <Menu.Item
-          onClick={() =>
-            history.push(`/products?category=${'Health & Fitness'}`)}
+          onClick={() => history.push(`/products?category=${categories[1].id}`)}
         >
           <Icon name="heartbeat" />
           Health & Fitness
         </Menu.Item>
         <Menu.Item
-          onClick={() => history.push(`/products?category=${'Shopping'}`)}
+          onClick={() => history.push(`/products?category=${categories[3].id}`)}
         >
           <Icon name="shopping bag" />
           Shopping
         </Menu.Item>
         <Menu.Item
-          onClick={() => history.push(`/products?category=${'Weather'}`)}
+          onClick={() => history.push(`/products?category=${categories[5].id}`)}
         >
           <Icon name="sun" />
           Weather
         </Menu.Item>
         <Menu.Item
-          onClick={() => history.push(`/products?category=${'Sports'}`)}
+          onClick={() => history.push(`/products?category=${categories[7].id}`)}
         >
           <Icon name="soccer" />
           Sports
         </Menu.Item>
         <Menu.Item
-          onClick={() => history.push(`/products?category=${'Music'}`)}
+          onClick={() =>
+            history.push(`/products?category=${categories[18].id}`)}
         >
           <Icon name="music" />
           Music
         </Menu.Item>
         <Menu.Item
           onClick={() =>
-            history.push(`/products?category=${'Social Netowrking'}`)}
+            history.push(`/products?category=${categories[11].id}`)}
         >
           <Icon name="comments" />
           Social
         </Menu.Item>
-        <Menu.Item onClick={() => history.push(`/products?category=${'News'}`)}>
+        <Menu.Item
+          onClick={() =>
+            history.push(`/products?category=${categories[19].id}`)}
+        >
           <Icon name="newspaper" />
           News
         </Menu.Item>
         <Menu.Item
-          onClick={() => history.push(`/products?category=${'Travel'}`)}
+          onClick={() =>
+            history.push(`/products?category=${categories[16].id}`)}
         >
           <Icon name="plane" />
           Travel
         </Menu.Item>
         <Menu.Item
-          onClick={() => history.push(`/products?category=${'Education'}`)}
+          onClick={() =>
+            history.push(`/products?category=${categories[10].id}`)}
         >
           <Icon name="book" />
           Education
@@ -106,6 +112,7 @@ function LandingPage(props) {
 
 const mapState = state => ({
   products: state.products,
+  categories: state.categories,
   user: state.user
 })
 export default connect(mapState)(LandingPage)
