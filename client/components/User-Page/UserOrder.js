@@ -33,7 +33,6 @@ class UserOrder extends Component {
 
   render() {
     const userOrders = this.props.user.orders && this.props.user.orders[0].id
-    console.log('HERE', userOrders)
     return (
       <Card fluid raised>
         {this.state.bool ? (

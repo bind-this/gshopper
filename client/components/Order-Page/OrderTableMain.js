@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Table } from 'semantic-ui-react'
 import { fetchOrders } from '../../store'
 import OrderTable from './OrderTable'
+import TableHeader from './TableHeader'
 
 let total = 0
 
@@ -21,17 +22,7 @@ class OrderEdit extends Component {
           return (
             <div key={order.id}>
               <Table celled padded>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell singleLine>
-                      Order ID: {order.id}
-                    </Table.HeaderCell>
-                    <Table.HeaderCell>Product Name</Table.HeaderCell>
-                    <Table.HeaderCell>Quantity Purchased</Table.HeaderCell>
-                    <Table.HeaderCell>Price Per Item</Table.HeaderCell>
-                    <Table.HeaderCell>Purchase Date</Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
+                <TableHeader order={order} />
                 {order.order_products.map(orderProd => {
                   return this.props.products.map(product => {
                     if (product.id === orderProd.productId) {
