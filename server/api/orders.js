@@ -15,32 +15,25 @@ router.post('/', (req, res, next) => {
   .catch(next)
 })
 
-// GET - gets all orders associate with a user
-router.get('/single/:id', (req, res, next) => {
-  Order.findAll({where: { userId: req.params.id}})
-  .then(orders => res.json(orders))
-  .catch(next)
-})
-
 // routes with Id required are going to use router.param
 // router.param to catch :Id
-// router.param('id', (req, res, next, orderId) => {
-//   Order.findOne({
-//     where: { id: orderId },
-//     include: [{ all: true }]
-//   })
-//     .then(order => {
-//       if (!order) {
-//         const err = Error('Order not found');
-//         err.status = 404;
-//         next(err);
-//       } else {
-//         req.order = order;
-//         next();
-//       }
-//     })
-//     .catch(next)
-// });
+router.param('id', (req, res, next, orderId) => {
+  Order.findOne({
+    where: { id: orderId },
+    include: [{ all: true }]
+  })
+    .then(order => {
+      if (!order) {
+        const err = Error('Order not found');
+        err.status = 404;
+        next(err);
+      } else {
+        req.order = order;
+        next();
+      }
+    })
+    .catch(next)
+});
 
 // GET - find by Id /api/orders/:id
 router.get('/:id', (req, res, next) => {
