@@ -59,7 +59,7 @@ class Order extends Component {
                   <Item.Extra>
                     <Label>{item.product.price ? '$' + item.product.price / 100 : 'Free'}</Label>
                     <Button.Group floated="right">
-                      <Button icon="minus" onClick={() => this.decrease(item)} />
+                      { item.quantity > 1 ? <Button icon="minus" onClick={() => this.decrease(item)} /> : '' }
                       <Button>{item.quantity}</Button>
                       <Button icon="plus" onClick={() => this.increase(item)} />
                     </Button.Group>
