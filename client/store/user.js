@@ -6,7 +6,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
-const UPDATE_USER = 'UPDAT_USER'
+const LOGIN_ATTEMPT = 'LOGIN_ATTEMPTED'
 
 /**
  * INITIAL STATE
@@ -18,8 +18,6 @@ const defaultUser = {}
  */
 const getUser = user => ({ type: GET_USER, user })
 const removeUser = () => ({ type: REMOVE_USER })
-const updateUser = user => ({ type: UPDATE_USER, user })
-
 /**
  * THUNK CREATORS
  */
@@ -33,8 +31,9 @@ export const auth = (email, password, method) => dispatch =>
   axios
     .post(`/auth/${method}`, { email, password })
     .then(res => {
+      console.log('RESDATA: ', res.data)
       dispatch(getUser(res.data))
-      history.push('/home')
+      history.push('/')
     })
     .catch(error => dispatch(getUser({ error })))
 
