@@ -10,13 +10,8 @@ const UserPage = () => {
         <Grid.Column width={9}>
           <UserCard />
         </Grid.Column>
-        <Grid.Column width={4}>
+        <Grid.Column width={6}>
           <UserOrder />
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={15}>
-          <Button href="/orders">View Order History</Button>
         </Grid.Column>
       </Grid.Row>
     </Grid>

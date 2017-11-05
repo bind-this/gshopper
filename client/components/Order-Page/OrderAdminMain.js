@@ -39,6 +39,9 @@ class OrderAdmin extends Component {
               <h3>Order Total: ${total / 100}</h3>
               <h4>Order Status : {order.status}</h4>
               <h5>Order Placed : {order.createdAt.slice(0, 10)}</h5>
+              <br />
+              <br />
+              <br />
             </div>
           )
         })}
