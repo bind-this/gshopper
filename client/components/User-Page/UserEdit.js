@@ -1,94 +1,96 @@
-import React, { Component } from "react";
-import { Button } from "semantic-ui-react";
+import React from 'react'
+import { Button } from 'semantic-ui-react'
 
 
 export const UserEdit = props => {
   return (
-    <form>
+    <form onSubmit={props.handleSubmit}>
+    <h3>Edit Profile</h3>
       <h4>
-        First Name:{" "}
+        First Name:{' '}
         <input
-          type="text"
-          name="firstName"
-          placeholder="optional"
-          onChange={props.onChange}
+          type='text'
+          name='firstName'
+          placeholder='optional'
+          onChange={props.handleChange}
         />
       </h4>
       <h4>
-        Last Name:{" "}
+        Last Name:{' '}
         <input
-          type="text"
-          name="lastName"
-          placeholder="optional"
-          onChange={props.onChange}
+          type='text'
+          name='lastName'
+          placeholder='optional'
+          onChange={props.handleChange}
         />
       </h4>
       <h4>
-        Phone:{" "}
+        Phone:{' '}
         <input
-          type="text"
-          name="phone"
-          placeholder="optional"
-          onChange={props.onChange}
+          type='text'
+          name='phone'
+          placeholder='optional'
+          onChange={props.handleChange}
         />
       </h4>
       <h4>
-        Address:{" "}
+        Address:{' '}
         <input
-          type="text"
-          name="address"
-          placeholder="optional"
-          onChange={props.onChange}
+          type='text'
+          name='address'
+          placeholder='optional'
+          onChange={props.handleChange}
         />
       </h4>
       <h4>
-        City:{" "}
+        City:{' '}
         <input
-          type="text"
-          name="city"
-          placeholder="optional"
-          onChange={props.onChange}
+          type='text'
+          name='city'
+          placeholder='optional'
+          onChange={props.handleChange}
         />
       </h4>
       <h4>
-        Zip:{" "}
+        Zip:{' '}
         <input
-          type="text"
-          name="zip"
-          placeholder="optional"
-          onChange={props.onChange}
+          type='text'
+          name='zip'
+          placeholder='optional'
+          onChange={props.handleChange}
         />
       </h4>
       <h4>
-        Image URL:{" "}
+        Image URL:{' '}
         <input
-          type="text"
-          name="img"
-          placeholder="optional"
-          onChange={props.onChange}
+          type='text'
+          name='img'
+          placeholder='optional'
+          onChange={props.handleChange}
         />
       </h4>
       <h4>
-        email:{" "}
+        email:{' '}
         <input
-          type="text"
-          name="email"
-          placeholder="optional"
-          onChange={props.onChange}
+          type='text'
+          name='email'
+          placeholder='optional'
+          onChange={props.handleChange}
         />
       </h4>
       <h4>
-        password:{" "}
+        password:{' '}
         <input
-          type="text"
-          name="password"
-          placeholder="optional"
-          onChange={props.onChange}
+          type='text'
+          name='password'
+          placeholder='optional'
+          onChange={props.handleChange}
         />
       </h4>
-      <Button type="submit" onSubmit={props.onSubmit}>
+      <Button type='submit' >
         Submit Info
       </Button>
+      <br /><br />
     </form>
-  );
-};
+  )
+}
