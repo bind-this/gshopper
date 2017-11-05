@@ -26,7 +26,7 @@ const Order = props => {
                     <Button icon="plus" />
                   </Button.Group>
                   <Label color="red"><Icon name='dollar' /> Sells your data</Label>
-                  <Label color="red"><Icon name='pin' />Records your location</Label>
+                  <Label color="red"><Icon name='pin' /> Records your location</Label>
                 </Item.Extra>
               </Item.Content>
             </Item>
