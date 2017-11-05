@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { Order_Product } = require('../db/models')
+const { Order } = require('../db/models')
 
 
 // POST - create a new order /api/order-products/
@@ -8,6 +9,37 @@ router.post('/', (req, res, next) => {
   .then(order_product => res.json(order_product))
   .catch(next)
 })
+
+// POST - add an item to cart
+router.post('/cart', (req, res, next) => {
+
+  Order.findOrCreate({
+    where: {
+      status: 'created',
+      userId: 201
+    }
+  })
+  .spread(order => {
+    const order_product = Order_Product.build(req.body);
+    order_product.setOrder(order, { save: false });
+    return order_product.save()
+      .then(order_product => {
+        order_product = order_product.toJSON();
+        order_product.orderId = order;
+        return order_product;
+      });
+  })
+  .then(message => {
+    res.json(message);
+  })
+  .catch(next);
+
+  // Order.findOrCreate()
+  // Order_Product.create(req.body)
+  // .then(order_product => res.json(order_product))
+  // .catch(next)
+})
+
 
 // router.param to catch :Id
 router.param('id', (req, res, next, orderProductId) => {
