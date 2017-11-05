@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Card, Icon, Image, Rating } from 'semantic-ui-react'
 import history from '../history'
-import { sendCartItem } from '../store'
+import { sendCartItem, me } from '../store'
 import { connect } from 'react-redux'
 
 
@@ -17,7 +17,7 @@ class AppCard extends Component {
       quantity: 1,
       userId: this.props.user.id
     }
-    this.props.debouncedUpdateCartItem(cartItem);
+    this.props.updateCartItem(cartItem)
   }
 
   render () {
@@ -64,15 +64,12 @@ const mapState = (state, ownProps) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
-    debouncedUpdateCartItem: _.debounce((...args) => {
-      dispatch(sendCartItem(...args));
-    }, 500),
-
-    // updateCartItem: () => {
-    //   console.log('ownProps', ownProps)
-    //   const cartItem = ownProps;
-    //   dispatch(sendCartItem(cartItem));
-    // }
+    updateCartItem: (cartItem) => {
+      dispatch(sendCartItem(cartItem))
+        .then(() => {
+          dispatch(me())
+        })
+    }
   };
 };
 

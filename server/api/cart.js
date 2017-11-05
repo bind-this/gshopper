@@ -10,17 +10,35 @@ router.post('/', (req, res, next) => {
   .catch(next)
 })
 
+
+// DELETE - delete an item from cart
+router.delete('/cart', (req, res, next) => {
+
+  console.log(req.body)
+  Order_Product.find({
+      where: {
+        id: req.body.order_product_id
+      }
+    })
+  })
+  .then(ord2 => ord2.destroy())
+  .then(message => {
+    res.json(message)
+  })
+  .catch(next)
+
+})
+
 // POST - add an item to cart
 router.post('/cart', (req, res, next) => {
 
   Order.findOrCreate({
     where: {
-      userId: req.body.userId
+      userId: req.body.userId,
+      status: 'created'
     }
   })
   .spread(order => {
-
-    // Order_Product.findOrBuild()
 
     const order_product = Order_Product.build(req.body);
     order_product.setOrder(order, { save: false });
@@ -36,6 +54,7 @@ router.post('/cart', (req, res, next) => {
   })
   .catch(next);
 })
+
 
 
 // router.param to catch :Id
