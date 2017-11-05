@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import { getUser } from './user'
 
 /**
  * ACTION TYPES
@@ -16,9 +17,10 @@ const updateCartItem = cartItem => ({type: UPDATE_CART_ITEM, cartItem})
  */
 export const sendCartItem = (cartItem) =>
   dispatch =>
-    axios.post('/api/order-products/cart')
+    axios.post('/api/order-products/cart', cartItem)
       .then(res =>
-        dispatch(getCart(res.data || defaultCart)))
+        dispatch(getUser()))
+        // dispatch(getUser(res.data || defaultCart)))
       .catch(err => console.log(err))
 
 /**
