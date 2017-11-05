@@ -11,7 +11,6 @@ const TableHeader = props => {
         <Table.HeaderCell>Product Name</Table.HeaderCell>
         <Table.HeaderCell>Quantity Purchased</Table.HeaderCell>
         <Table.HeaderCell>Price Per Item</Table.HeaderCell>
-        <Table.HeaderCell>Purchase Date</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
   )

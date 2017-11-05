@@ -21,9 +21,6 @@ const OrderAdminTable = props => {
         <Table.Cell textAlign="right">
           {props.product.price ? '$' + props.product.price / 100 : 'Free'}
         </Table.Cell>
-        <Table.Cell>
-          {props.product.price ? '$' + props.product.price / 100 : 'Free'}
-        </Table.Cell>
       </Table.Row>
     </Table.Body>
   )

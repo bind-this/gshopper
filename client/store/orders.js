@@ -25,6 +25,13 @@ export const fetchOrders = () => dispatch =>
     .then(res => dispatch(getOrders(res.data || defaultOrders)))
     .catch(err => console.log(err))
 
+export const changingStatus = (orderId, status) => () => {
+  console.log('store-side', orderId, status)
+  axios
+    .put(`/api/orders/${orderId}`, status)
+    .then()
+    .catch(err => console.log(err))
+}
 /**
  * REDUCER
  */
