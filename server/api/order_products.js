@@ -16,21 +16,33 @@ router.post('/cart', (req, res, next) => {
   Order.findOrCreate({
     where: {
       status: 'created',
-      userId: 201
+      userId: req.body.userId
     }
   })
   .spread(order => {
-    const order_product = Order_Product.build(req.body);
-    order_product.setOrder(order, { save: false });
-    return order_product.save()
-      .then(order_product => {
-        order_product = order_product.toJSON();
-        order_product.orderId = order;
-        return order_product;
-      });
-  })
-  .then(message => {
-    res.json(message);
+    req.body.orderId = order.id
+    const order_product = Order_Product.findOne({where: {
+      productId: req.body.productId,
+      orderId: order.id
+    }}).then(oproduct => {
+      if (!oproduct) {
+        return Order_Product.create(req.body)
+          .then(result => {
+            result = result.toJSON()
+            console.log(result)
+            return result
+          })
+      } else {
+        return oproduct.update(req.body)
+          .then(result => {
+            result = result.toJSON()
+            return result
+          })
+      }
+    })
+    .then(result => {
+      res.json(result);
+    })
   })
   .catch(next);
 
