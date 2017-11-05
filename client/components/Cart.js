@@ -152,8 +152,8 @@ class Cart extends Component {
   }
 
   render() {
-    // const order = this.props.user.orders[0].order_products || fakeOrder
-    const order = fakeOrder
+    const order = this.props.user.orders[0].order_products || fakeOrder
+    // const order = fakeOrder
     return (
       <Grid centered columns={3}>
         <Grid.Column width={10}>
