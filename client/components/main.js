@@ -35,7 +35,11 @@ class Main extends Component {
             </Menu.Item>
             <Menu.Item name="Cart" onClick={() => history.push('/cart')}>
               <Icon size="big" name="shop" />
-              <Label color="teal">{user.id && user.orders.filter(order => order.status === 'created')[0].order_products.length}</Label>
+              {
+                user.id && user.orders && user.orders.length ?
+                <Label color="teal">{user.orders.filter(order => order.status === 'created')[0].order_products.length}</Label> :
+                ''
+              }
             </Menu.Item>
             {isLoggedIn ? (
               <UserDropdown user={user} tryLogout={tryLogout} />

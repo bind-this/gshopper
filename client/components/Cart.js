@@ -152,15 +152,24 @@ class Cart extends Component {
   }
 
   render() {
-    const order = this.props.user.orders[0].order_products || fakeOrder
-    // const order = fakeOrder
+    let order = ''
+    console.log(this.props.user.orders)
+    if (this.props.user.orders && this.props.user.orders.length) order = this.props.user.orders.filter(order => order.status === 'created')[0].order_products
+    console.log(order)
     return (
       <Grid centered columns={3}>
         <Grid.Column width={10}>
-          <Steps />
-          <h1><Icon name="shop" />Your Order <Label circular color="red">{order.length}</Label></h1>
-          <Order order={order} />
-          <Button attached='bottom' color="green" icon='dollar' content='Confirm order and pay' />
+          {
+            order ?
+            <div>
+              <Steps />
+              <h1><Icon name="shop" />Your Order <Label circular color="red">{order.length}</Label></h1>
+              <Order order={order} />
+              <Button attached='bottom' color="green" icon='dollar' content='Confirm order and pay' />
+            </div>
+            :
+            'Your cart is empty.'
+          }
         </Grid.Column>
       </Grid>
     )
