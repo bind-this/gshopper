@@ -20,7 +20,7 @@ router.post('/', (req, res, next) => {
 router.param('id', (req, res, next, orderId) => {
   Order.findOne({
     where: { id: orderId },
-    include: [{ all: true }]
+    include: [{ all: true, nested: true }]
   })
     .then(order => {
       if (!order) {
