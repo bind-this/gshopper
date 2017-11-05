@@ -9,8 +9,6 @@ import _ from 'lodash'
 class Order extends Component {
   constructor (props) {
     super(props)
-
-    this.increase = this.increase.bind(this)
   }
 
   componentDidMount() {
