@@ -20,14 +20,20 @@ class SingleProduct extends Component {
       }, 0) / product.reviews.length
       ).toFixed(2)
 
-    return (
+console.log('product', product)
+console.log('reviews', productReviews)
 
+    return (
       <div>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }} >
+          <img style={{ borderRadius: '15%' }} src={ product.img } />
+          <h1 style={{ fontSize: '3em' }} >{ product.name }</h1>
+          <div>{ product.reviews && averageRating }</div>
+        </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div style={{ display: 'flex' }}>
             <Image src={ product.altImages && product.altImages[0] } />
             {
-              console.log('reviews', productReviews)
               /*
               product.altImages &&
               product.altImages.map(image => (
@@ -39,30 +45,58 @@ class SingleProduct extends Component {
           </div>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <Container style={{ display: 'flex', flexDirection: 'column' }}>
-              <div>{ product.name }</div>
               <div>{ product.author }</div>
-              <div>{ product.reviews && averageRating }</div>
-              <div>{ product.category && product.category.join(', ') }</div>
+              <div>{ product.categories && product.categories.map(cat => cat.name).join(', ') }</div>
               <div>{ product.description }</div>
             </Container>
-            <Card style={{ display: 'flex', flexDirection: 'column' }}>
-              <div>{ product.availability && product.availability ? 'yes' : 'no' }</div>
-              <div>{ product.price ? `$${product.price}` : 'free' }</div>
-              <div>{ product.quantity }</div>
-            </Card>
+
+            <div className="ui cards">
+              <div className="card">
+                <div className="content">
+                  <div className="header">Elliot Fu</div>
+                    <div className="description">Elliot Fu is a film-maker from New York.</div>
+                    <div>{ product.availability && product.availability ? '' : <b style={{ fontSize: '1.5em' }} >Currently Unavailable</b> }</div>
+                    <div>Price: { product.price ? `$${product.price}` : 'free' }</div>
+                    <div>Quantity: { product.quantity }</div>
+                  </div>
+                  <div className="ui bottom attached button">
+                    <i className="add icon" />
+                    Add To Cart
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
-        <div>
-          reviews
-          {<div>
-            {productReviews &&
+        <div style={{ display: 'flex', justifyContent: 'center' }} >
+          <div className="ui comments">
+            <h3 className="ui dividing header">Customer Reviews</h3>
+          <div>
+            { productReviews &&
               productReviews.map(review => (
-                <div key={review.id}>
-                  <div>{ `${review.user.firstName} ${review.user.lastName}` }</div>
-                <Comment>{ review.comment }</Comment>
+                <div className="comment" key={review.id} >
+                  <a className="avatar" >
+                    <img src={ review.user.img } />
+                  </a>
+                  <div className="content">
+                    <a className="author">{ `${review.user.firstName} ${review.user.lastName}` }</a>
+                    <div className="metadata">
+                      <span>{ review.rating }</span>
+                      <span className="date">{ new Date(review.createdAt).toString() }</span>
+                    </div>
+                    <div className="text">{ review.comment }</div>
+                  </div>
                 </div>
               ))}
-          </div>}
+          </div>
+            <form className="ui reply form">
+              <div className="field">
+                <textarea />
+              </div>
+              <div className="ui blue labeled submit icon button">
+                <i className="icon edit" /> Add Reply
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );
