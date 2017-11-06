@@ -12,7 +12,8 @@ class AppCard extends Component {
   }
 
   increase (item) {
-    const quantity = this.props.user.orders.find(order => order.status === 'created').order_products.find(line => line.productId === item.product.id) || 1
+    let quantity = 1
+    if (this.props.user.orders.find(order => order.status === 'created')) quantity = this.props.user.orders.find(order => order.status === 'created').order_products.find(line => line.productId === item.product.id)
     const cartItem = {
       productId: item.product.id,
       quantity: quantity,
