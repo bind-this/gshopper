@@ -26,7 +26,6 @@ export const fetchOrders = () => dispatch =>
     .catch(err => console.log(err))
 
 export const changingStatus = (orderId, status) => () => {
-  console.log('store-side', orderId, status)
   axios
     .put(`/api/orders/${orderId}`, status)
     .then()

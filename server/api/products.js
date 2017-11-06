@@ -56,7 +56,6 @@ router.put('/:id', (req, res, next) => {
 
 //POST - creates new product, assigns categories to product
 router.post('/', (req, res, next) => {
-  console.log('SERVER', req.body)
   let product
   Product.create(req.body)
     .then(productInstance => {

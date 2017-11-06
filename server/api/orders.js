@@ -42,7 +42,6 @@ router.get('/:id', (req, res, next) => {
 
 // PUT - update an existing order /api/orders/:id
 router.put('/:id', (req, res, next) => {
-  console.log('server-side', req.body)
   req.order
     .update(req.body)
     .then(order => res.json(order))
