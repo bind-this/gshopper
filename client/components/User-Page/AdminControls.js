@@ -4,6 +4,8 @@ import AddProduct from './AddProduct'
 import AddCategory from './AddCategory'
 import AddAdmin from './AddAdmin'
 import DeleteUser from './DeleteUser'
+import { fetchUsers } from '../../store'
+import { connect } from 'react-redux'
 
 class AdminControls extends Component {
   constructor() {
@@ -18,6 +20,10 @@ class AdminControls extends Component {
     this.onToggle2 = this.onToggle2.bind(this)
     this.onToggle3 = this.onToggle3.bind(this)
     this.onToggle4 = this.onToggle4.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.fetchUsers()
   }
 
   onToggle1 = () => {
@@ -54,4 +60,16 @@ class AdminControls extends Component {
   }
 }
 
-export default AdminControls
+const mapState = state => {
+  return {
+    users: state.users
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    fetchUsers: () => dispatch(fetchUsers())
+  }
+}
+
+export default connect(mapState, mapDispatch)(AdminControls)
