@@ -15,6 +15,7 @@ router.param('id', (req, res, next, id) => {
       } else {
         req.product = product
         next()
+        return null
       }
     })
     .catch(next)
