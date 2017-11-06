@@ -36,15 +36,16 @@ export const deleteUser = userId => () => {
 }
 
 export const updatingUser = (userId, updates) => () => {
+  console.log('hererere')
   axios
-    .put(`/api/users/update/${userId}`, updates)
+    .put(`/api/users/${userId}`, updates)
     .then()
     .catch(err => console.log(err))
 }
 
 export const adminEdit = userId => () => {
   axios
-    .put(`/api/users/update/${userId}`, { admin: true })
+    .put(`/api/users/${userId}`, { admin: true })
     .then()
     .catch(err => console.log(err))
 }
