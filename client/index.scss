@@ -74,7 +74,7 @@ body {
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.025em;
-      background-color: #6772e5;
+      background-color: #10bd00;
       text-decoration: none;
       -webkit-transition: all 150ms ease;
       transition: all 150ms ease;
@@ -84,13 +84,13 @@ body {
     form {
       margin-bottom: 40px;
       padding-bottom: 40px;
-      border-bottom: 3px solid #e6ebf1;
+      text-align: center;
     }
 
     button:hover {
       color: #fff;
       cursor: pointer;
-      background-color: #7795f8;
+      background-color: #3ca101;
       transform: translateY(-1px);
       box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1),
         0 3px 6px rgba(0, 0, 0, 0.08);
@@ -98,7 +98,7 @@ body {
 
     .StripeElement {
       display: block;
-      margin: 10px 0 20px 0;
+      margin: 10px auto 20px auto;
       max-width: 500px;
       padding: 10px 14px;
       box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,

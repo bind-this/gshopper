@@ -25,7 +25,7 @@ function LandingPage(props) {
           <img
             key={product.id}
             src={product.img}
-            onClick={() => history.push(`/product/${product.id}`)}
+            onClick={() => history.push(`/products/${product.id}`)}
             style={{ cursor: 'pointer' }}
           />
         ))}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Button, Grid } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import { addCategory } from '../../store'
 import { connect } from 'react-redux'
 
@@ -16,7 +16,7 @@ class AddCategory extends Component {
     tempCategory[evt.target.name] = evt.target.value
   }
 
-  handleSubmit(evt) {
+  handleSubmit() {
     this.props.addCategory(tempCategory)
   }
 

@@ -12,6 +12,7 @@ router.param('id', (req, res, next, id) => {
       } else {
         req.category = category
         next()
+        return null
       }
     })
     .catch(next)

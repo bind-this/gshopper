@@ -3,15 +3,18 @@
 import React, { Component } from 'react'
 import CardList from './CardList'
 import { Rating, Grid, Sticky, Input, Label, Dropdown } from 'semantic-ui-react'
+
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import history from '../history'
 
 class AllProducts extends Component {
+
   constructor(props) {
     super(props);
     this.handleFilterChange = this.handleFilterChange.bind(this)
   }
+
 
   state = {}
   handleContextRef = contextRef => this.setState({ contextRef })
@@ -21,7 +24,6 @@ class AllProducts extends Component {
   }
 
   render() {
-
     let title = 'All Products'
     const products = this.props.products
     const allCategories = this.props.categories
@@ -34,6 +36,10 @@ class AllProducts extends Component {
     const query = params.get('search')
 
     categoryFilters = categoryFilters.map(cat => +cat)
+    // let's get category name -- this is temporary, one category only
+    if (categories.length && category) {
+      title = categories.filter(cat => cat.id === +category)[0].name
+    }
 
     // filtering by... filters
     let filteredProducts = products.filter(product => {
@@ -65,7 +71,7 @@ class AllProducts extends Component {
 
     return (
       <div ref={this.handleContextRef}>
-        <Grid divided padded relaxed columns='equal'>
+        <Grid divided padded relaxed columns="equal">
           <Grid.Row>
             <Grid.Column>
               <Sticky context={contextRef} offset={40}>
@@ -73,11 +79,11 @@ class AllProducts extends Component {
                 <h3>Minimum rating</h3>
                 <Rating maxRating={5} clearable />
                 <h3>Price</h3>
-                <Input labelPosition='right' type='text' placeholder='Minimum'>
+                <Input labelPosition="right" type="text" placeholder="Minimum">
                   <Label basic>$</Label>
                   <input />
                 </Input>
-                <Input labelPosition='right' type='text' placeholder='Maximum'>
+                <Input labelPosition="right" type="text" placeholder="Maximum">
                   <Label basic>$</Label>
                   <input />
                 </Input>
@@ -86,7 +92,11 @@ class AllProducts extends Component {
               </Sticky>
             </Grid.Column>
             <Grid.Column width={13}>
-              <CardList products={ filteredProducts } search={query} title={ title } />
+              <CardList
+                products={filteredProducts}
+                search={query}
+                title={title}
+              />
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -95,7 +105,7 @@ class AllProducts extends Component {
   }
 }
 
-const mapState = (state) => {
+const mapState = state => {
   return {
     products: state.products,
     categories: state.categories

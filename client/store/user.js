@@ -6,7 +6,6 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
-const LOGIN_ATTEMPT = 'LOGIN_ATTEMPTED'
 
 /**
  * INITIAL STATE
@@ -31,7 +30,6 @@ export const auth = (email, password, method) => dispatch =>
   axios
     .post(`/auth/${method}`, { email, password })
     .then(res => {
-      console.log('RESDATA: ', res.data)
       dispatch(getUser(res.data))
       history.push('/')
     })

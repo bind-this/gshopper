@@ -4,14 +4,14 @@ import { Router } from 'react-router'
 import { Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import { Main, Login, Signup, UserHome } from './components'
+import { Main, Login, Signup, UserHome, SingleProduct } from './components'
 import { me } from './store'
-import AllProducts from './components/AllProducts'
 import LandingPage from './components/LandingPage'
 import Cart from './components/Cart'
 import Billing from './components/Billing'
 import Confirmation from './components/Confirmation'
 import User from './components/User-Page/UserPage'
+import AllProducts from './components/AllProducts'
 import OrderAdminMain from './components/Order-Page/OrderAdminMain'
 import OrderPage from './components/Order-Page/OrderPage'
 
@@ -31,8 +31,12 @@ class Routes extends Component {
         <Main>
           <Switch>
             <Route exact path="/" component={LandingPage} />
+            <Route
+              exact
+              path="/products/:productId"
+              component={SingleProduct}
+            />
             <Route path="/products" component={AllProducts} />
-            {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/user" component={User} />

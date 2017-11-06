@@ -1,18 +1,27 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
-import { Card, Icon, Image, Rating } from 'semantic-ui-react'
+import { Card, Icon, Image, Rating, Button } from 'semantic-ui-react'
 import history from '../history'
 import { sendCartItem, me } from '../store'
 import { connect } from 'react-redux'
 
-
 class AppCard extends Component {
-  constructor (props) {
-    super(props)
-  }
-
-  increase (item) {
-    const quantity = this.props.user.orders.find(order => order.status === 'created').order_products.find(line => line.productId === item.product.id) || 1
+  increase(item) {
+    let quantity = 1
+    let currentCart =
+      this.props.user.orders &&
+      this.props.user.orders.find(order => order.status === 'created')
+    if (
+      currentCart &&
+      currentCart.order_products.find(
+        line => line.productId === item.product.id
+      )
+    ) {
+      quantity =
+        this.props.user.orders
+          .find(order => order.status === 'created')
+          .order_products.find(line => line.productId === item.product.id)
+          .quantity + 1
+    }
     const cartItem = {
       productId: item.product.id,
       quantity: quantity,
@@ -21,18 +30,18 @@ class AppCard extends Component {
     this.props.updateCartItem(cartItem)
   }
 
-  render () {
+  render() {
     return (
       <Card style={{width: 175}} raised>
         <Image
           height="175px"
           src={this.props.product.img}
-          onClick={() => history.push(`/product/${this.props.product.id}`)}
+          onClick={() => history.push(`/products/${this.props.product.id}`)}
           style={{ cursor: 'pointer' }}
         />
         <Card.Content>
           <Card.Header
-            onClick={() => history.push(`/product/${this.props.product.id}`)}
+            onClick={() => history.push(`/products/${this.props.product.id}`)}
             style={{ cursor: 'pointer' }}
           >
             {this.props.product.name}
@@ -49,29 +58,34 @@ class AppCard extends Component {
         </Card.Content>
         <Card.Content extra>
           <Icon name="tag" />
-          {this.props.product.price ? '$' + this.props.product.price / 100 : 'Free'}
-          <Icon circular inverted color='grey' name='shop' floated='right' onClick={() => this.increase(this.props)} />
+          {this.props.product.price
+            ? '$' + this.props.product.price / 100
+            : 'Free'}
+          <Button
+            size="mini"
+            floated="right"
+            onClick={() => this.increase(this.props)}
+          >
+            Add To Cart
+          </Button>
         </Card.Content>
       </Card>
-
     )
   }
-
 }
 
-const mapState = (state, ownProps) => {
-  return state;
-};
+const mapState = state => ({
+  user: state.user
+})
 
-const mapDispatch = (dispatch, ownProps) => {
+const mapDispatch = dispatch => {
   return {
-    updateCartItem: (cartItem) => {
-      dispatch(sendCartItem(cartItem))
-        .then(() => {
-          dispatch(me())
-        })
+    updateCartItem: cartItem => {
+      dispatch(sendCartItem(cartItem)).then(() => {
+        dispatch(me())
+      })
     }
-  };
-};
+  }
+}
 
 export default connect(mapState, mapDispatch)(AppCard)
