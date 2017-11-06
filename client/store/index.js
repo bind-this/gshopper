@@ -5,10 +5,10 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import user from './user'
 import products from './products'
 import categories from './categories'
-import userEdit from './userEdit'
+import users from './userEdit'
 import orders from './orders'
 
-const reducer = combineReducers({ products, categories, user, orders })
+const reducer = combineReducers({ users, products, categories, user, orders })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 )

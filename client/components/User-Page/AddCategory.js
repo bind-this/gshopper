@@ -22,28 +22,20 @@ class AddCategory extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <Card.Content>
-          <Grid padded>
-            <Grid.Row>
-              <Grid.Column width={13}>
-                <h3>
-                  Category:{' '}
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder={'Category'}
-                    onChange={this.handleChange}
-                  />
-                </h3>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Card.Content>
-        <Button type="submit">Submit Info</Button>
+      <h3>
         <br />
         <br />
-      </form>
+        <form onSubmit={this.handleSubmit}>
+          Category:{' '}
+          <input
+            type="text"
+            name="name"
+            placeholder={'Category'}
+            onChange={this.handleChange}
+          />
+          <Button type="submit">Submit Info</Button>
+        </form>
+      </h3>
     )
   }
 }

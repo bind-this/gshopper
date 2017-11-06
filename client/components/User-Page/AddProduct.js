@@ -15,12 +15,10 @@ class AddProduct extends Component {
 
   handleChange(evt) {
     tempProduct[evt.target.name] = evt.target.value
-    console.log(tempProduct)
   }
 
   handleChangeCategories(evt) {
     tempProduct.categories = [evt.target.value]
-    console.log(tempProduct)
   }
 
   handleSubmit(evt) {
@@ -98,24 +96,35 @@ class AddProduct extends Component {
                       onChange={this.handleChange}
                     />
                   </h3>
-                  <select
-                    name="available"
-                    required="required"
-                    onChange={this.handleChange}
-                  >
-                    <option>Available</option>
-                    <option value="true">True</option>
-                    <option value="false">False</option>
-                  </select>
                   <h3>
-                    Quantity :{' '}
-                    <input
+                    Availability:
+                    <br />
+                    <select
+                      name="available"
                       required="required"
-                      type="number"
+                      onChange={this.handleChange}
+                    >
+                      <option>Available</option>
+                      <option value="true">True</option>
+                      <option value="false">False</option>
+                    </select>
+                  </h3>
+                  <h3>
+                    Category:
+                    <select
                       name="categories"
-                      placeholder="Category"
+                      required="required"
                       onChange={this.handleChangeCategories}
-                    />
+                    >
+                      <option>Select Category</option>
+                      {this.props.categories.map(category => {
+                        return (
+                          <option value={category.id} key={category.name}>
+                            {category.name}
+                          </option>
+                        )
+                      })}
+                    </select>
                   </h3>
                 </div>
               </Grid.Column>
@@ -132,7 +141,8 @@ class AddProduct extends Component {
 
 const mapState = state => {
   return {
-    user: state.user
+    user: state.user,
+    categories: state.categories
   }
 }
 
