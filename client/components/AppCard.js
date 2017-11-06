@@ -32,9 +32,9 @@ class AppCard extends Component {
 
   render() {
     return (
-      <Card raised>
+      <Card style={{width: 175}} raised>
         <Image
-          height="290px"
+          height="175px"
           src={this.props.product.img}
           onClick={() => history.push(`/products/${this.props.product.id}`)}
           style={{ cursor: 'pointer' }}
