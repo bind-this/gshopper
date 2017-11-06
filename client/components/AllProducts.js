@@ -2,49 +2,66 @@
 
 import React, { Component } from 'react'
 import CardList from './CardList'
-import { Card, Rating, Grid, Sticky, Checkbox, Input, Label } from 'semantic-ui-react'
+import { Rating, Grid, Sticky, Input, Label, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import history from '../history'
 
 class AllProducts extends Component {
   constructor(props) {
     super(props);
+    this.handleFilterChange = this.handleFilterChange.bind(this)
   }
 
   state = {}
   handleContextRef = contextRef => this.setState({ contextRef })
 
+  handleFilterChange (data) {
+    history.push(location.pathname + '?category=' + data.value.join('&category='))
+  }
+
   render() {
 
     let title = 'All Products'
     const products = this.props.products
-    const categories = this.props.categories
+    const allCategories = this.props.categories
     const { contextRef } = this.state
 
     // Let's get our search filters from the URL
     const { search } = this.props.location
     const params = new URLSearchParams(search)
-    const category = params.get('category')
+    let categoryFilters = params.getAll('category')
     const query = params.get('search')
-    
 
-    // let's get category name -- this is temporary, one category only
-    if (categories.length && category) {
-      title = categories.filter(cat => cat.id === +category)[0].name
-    }
-    
+    categoryFilters = categoryFilters.map(cat => +cat)
+
     // filtering by... filters
     let filteredProducts = products.filter(product => {
-      if (!category) return true
-      const categoryOfProduct = product.categories.map(category => category.id)
-      return categoryOfProduct.includes(+category)
+      if (!categoryFilters) return true
+      let categoriesOfProductId = product.categories.map(category => category.id)
+      categoryFilters = new Set(categoryFilters)
+      categoriesOfProductId = new Set(categoriesOfProductId);
+      let intersection = new Set([...categoryFilters].filter(x => categoriesOfProductId.has(x)))
+      intersection = Array.from(intersection)
+      if (intersection.length > 0) return true
+      else return false
     })
+
+    categoryFilters = Array.from(categoryFilters)
+    if (allCategories.length && categoryFilters.length) {
+      title = allCategories.filter(cat => categoryFilters.includes(cat.id)).map(cate => cate.name).join(', ')
+    }
+    console.log('title', title)
 
     // Search filtering by query
     const re = new RegExp(_.escapeRegExp(query), 'i')
     const isMatch = result => re.test(result.name)
 
     filteredProducts = _.filter(filteredProducts, isMatch)
+
+    // Let's make the options for the dropdown
+    const options = []
+    allCategories.forEach(singleCategory => options.push({key: singleCategory.name, text: singleCategory.name, value: singleCategory.id}))
 
     return (
       <div ref={this.handleContextRef}>
@@ -65,7 +82,7 @@ class AllProducts extends Component {
                   <input />
                 </Input>
                 <h3>Categories</h3>
-                    { categories.map(category => <div key={category.id}><Checkbox defaultChecked toggle /> {category.name}</div>) }
+                    <Dropdown defaultValue={categoryFilters} placeholder='Categories' fluid multiple selection options={options} onChange={(event, data) => this.handleFilterChange(data)} />
               </Sticky>
             </Grid.Column>
             <Grid.Column width={13}>
