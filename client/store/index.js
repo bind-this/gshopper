@@ -15,6 +15,7 @@ import cart from './cart'
 
 const reducer = combineReducers({
   products,
+  product,
   categories,
   user,
   orders,
