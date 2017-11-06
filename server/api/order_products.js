@@ -19,29 +19,27 @@ router.post('/cart', (req, res, next) => {
   })
     .spread(order => {
       req.body.orderId = order.id
-      const order_product = Order_Product.findOne({
+      return Order_Product.findOne({
         where: {
           productId: req.body.productId,
-          orderId: order.id
+          orderId: req.body.orderId
         }
       })
-        .then(oproduct => {
-          if (!oproduct) {
-            return Order_Product.create(req.body).then(result => {
-              result = result.toJSON()
-              console.log(result)
-              return result
-            })
-          } else {
-            return oproduct.update(req.body).then(result => {
-              result = result.toJSON()
-              return result
-            })
-          }
+    })
+    .then(oproduct => {
+      if (!oproduct) {
+        return Order_Product.create(req.body).then(result => {
+          return result.toJSON()
         })
-        .then(result => {
-          res.json(result)
+      } else {
+        return oproduct.update(req.body).then(result => {
+          return result.toJSON()
         })
+      }
+    })
+    .then(result => {
+      res.json(result)
+      return null
     })
     .catch(next)
 
