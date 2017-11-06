@@ -28,7 +28,10 @@ passport.serializeUser((user, done) => done(null, user.id))
 passport.deserializeUser((id, done) =>
   db.models.user
     .findById(id)
-    .then(user => done(null, user))
+    .then(user => {
+      done(null, user)
+      return null
+    })
     .catch(done)
 )
 
@@ -68,8 +71,10 @@ const createApp = () => {
         const err = new Error('Not found')
         err.status = 404
         next(err)
+        return null
       } else {
         next()
+        return null
       }
     })
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Button } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import UserCard from './UserCard'
 import UserOrder from './UserOrder'
 import AdminControls from './AdminControls'

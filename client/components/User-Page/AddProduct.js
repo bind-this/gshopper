@@ -21,7 +21,7 @@ class AddProduct extends Component {
     tempProduct.categories = [evt.target.value]
   }
 
-  handleSubmit(evt) {
+  handleSubmit() {
     this.props.addProduct(tempProduct)
   }
 
