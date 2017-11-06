@@ -19,4 +19,8 @@ function Billing() {
   )
 }
 
-export default Billing
+const mapState = state => ({
+  user: state.user
+})
+
+export default connect(mapState)(Billing)

@@ -4,7 +4,6 @@ import React from 'react'
 import { Step, Icon } from 'semantic-ui-react'
 
 const Steps = () => {
-  console.log(location.pathname)
   return (
     <Step.Group fluid>
       <Step

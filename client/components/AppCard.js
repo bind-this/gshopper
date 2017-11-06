@@ -27,7 +27,6 @@ class AppCard extends Component {
       quantity: quantity,
       userId: this.props.user.id
     }
-    console.log(cartItem)
     this.props.updateCartItem(cartItem)
   }
 
@@ -75,10 +74,6 @@ class AppCard extends Component {
   }
 }
 
-const mapState = state => {
-  return state
-}
-
 const mapDispatch = dispatch => {
   return {
     updateCartItem: cartItem => {
@@ -89,4 +84,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(AppCard)
+export default connect(null, mapDispatch)(AppCard)
