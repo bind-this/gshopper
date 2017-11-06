@@ -24,8 +24,7 @@ export const fetchCategories = () => dispatch =>
     .then(res => dispatch(getCategories(res.data || defaultCategories)))
     .catch(err => console.log(err))
 
-export const addCategory = category => dispatch => {
-  console.log('STORE', category)
+export const addCategory = category => () => {
   axios
     .post('/api/categories', category)
     .then()

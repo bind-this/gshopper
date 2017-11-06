@@ -26,7 +26,6 @@ router.get('/', (req, res, next) => {
 
 //Post - creates new category
 router.post('/', (req, res, next) => {
-  console.log('SERVER: ', req.body)
   Category.create(req.body)
     .then(category => res.json(category))
     .catch(next)
@@ -41,7 +40,7 @@ router.get('/:id', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
   req.category
     .destroy()
-    .then(deleted => res.sendStatus(204))
+    .then(() => res.sendStatus(204))
     .catch(next)
 })
 
