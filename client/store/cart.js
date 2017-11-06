@@ -22,7 +22,10 @@ export const sendCartItem = (cartItemId) =>
     axios.post('/api/order-products/cart', cartItemId)
       .then(res =>
         // dispatch(getUser()))
-        res.json())
+        // res.json())
+        // add something here later
+        console.log('this needs to be replaced!')
+      )
       .catch(err => console.log(err))
 
 export const removeCartItem = (cartItem) =>

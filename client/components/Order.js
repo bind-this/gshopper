@@ -12,14 +12,12 @@ class Order extends Component {
   }
 
   increase (item) {
-    console.log('helo2')
     const cartItem = {
       productId: item.product.id,
       quantity: item.quantity + 1,
       userId: this.props.user.id
     }
     this.props.updateCartItem(cartItem)
-    this.props.fetchUserData()
   }
   
   decrease (item) {
