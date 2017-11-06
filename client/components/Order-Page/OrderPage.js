@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { fetchOrders } from '../../store'
 import OrderTableMain from './OrderTableMain'
 import OrderAdminMain from './OrderAdminMain'
-import CartPage from './CartPage'
 
 class OrderPage extends Component {
   componentDidMount() {
