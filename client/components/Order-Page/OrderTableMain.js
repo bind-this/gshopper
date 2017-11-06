@@ -8,7 +8,6 @@ import TableHeader from './TableHeader'
 class OrderTableMain extends Component {
   constructor(props) {
     super(props)
-    this.total = 0
     this.notice = null
   }
 
@@ -35,6 +34,7 @@ class OrderTableMain extends Component {
         ) : (
           <div>
             {filteredList.map(order => {
+              let orderTotal = 0
               return (
                 <div key={order.id}>
                   <Table celled padded>
@@ -42,7 +42,7 @@ class OrderTableMain extends Component {
                     {order.order_products.map(orderProd => {
                       return this.props.products.map(product => {
                         if (product.id === orderProd.productId) {
-                          this.total +=
+                          orderTotal +=
                             orderProd.quantity * orderProd.purchasePrice
                           return (
                             <OrderTable
@@ -55,7 +55,7 @@ class OrderTableMain extends Component {
                       })
                     })}
                   </Table>
-                  <h3>Order Total: ${this.total / 100}</h3>
+                  <h3>Order Total: ${orderTotal / 100}</h3>
                   <h4>Order Status : {order.status}</h4>
                   <h5>Order Placed : {order.createdAt.slice(0, 10)}</h5>
                 </div>

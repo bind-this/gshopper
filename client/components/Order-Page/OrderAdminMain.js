@@ -14,7 +14,6 @@ class OrderAdmin extends Component {
     this.filterSelect = this.filterSelect.bind(this)
     this.updateStatus = this.updateStatus.bind(this)
     this.submitUpdate = this.submitUpdate.bind(this)
-    this.total = 0
     this.orderStatus = null
     this.filteredList = []
     this.statusSubmit = null
@@ -81,6 +80,7 @@ class OrderAdmin extends Component {
             </div>
             <div>
               {this.filteredList.map(order => {
+                let orderTotal = 0
                 return (
                   <div key={order.id}>
                     <Table celled padded>
@@ -88,7 +88,7 @@ class OrderAdmin extends Component {
                       {order.order_products.map(orderProd => {
                         return this.props.products.map(product => {
                           if (product.id === orderProd.productId) {
-                            this.total +=
+                            orderTotal +=
                               orderProd.quantity * orderProd.purchasePrice
                             return (
                               <OrderTable
@@ -101,7 +101,7 @@ class OrderAdmin extends Component {
                         })
                       })}
                     </Table>
-                    <h3>Order Total: ${this.total / 100}</h3>
+                    <h3>Order Total: ${orderTotal / 100}</h3>
                     <h4>Order Status : {order.status}</h4>
                     <form onSubmit={evt => this.submitUpdate(evt, order.id)}>
                       <label>Update Order Status</label>
