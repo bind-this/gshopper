@@ -19,14 +19,9 @@ const reducer = combineReducers({
   categories,
   user,
   orders,
-<<<<<<< HEAD
   cart,
   users,
   review
-=======
-  users,
-  cart
->>>>>>> master
 })
 
 const middleware = composeWithDevTools(
