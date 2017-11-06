@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { Label, Item, Button, Icon, Segment, Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { sendCartItem } from '../store'
+import { sendCartItem, removeCartItem, me } from '../store'
 import _ from 'lodash'
 
 class Order extends Component {
@@ -11,17 +11,15 @@ class Order extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    // console.log('componend mounting!')
-  }
-
   increase (item) {
+    console.log('helo2')
     const cartItem = {
       productId: item.product.id,
       quantity: item.quantity + 1,
       userId: this.props.user.id
     }
-    this.props.debouncedUpdateCartItem(cartItem);
+    this.props.updateCartItem(cartItem)
+    this.props.fetchUserData()
   }
   
   decrease (item) {
@@ -30,7 +28,15 @@ class Order extends Component {
       quantity: item.quantity - 1,
       userId: this.props.user.id
     }
-    this.props.debouncedUpdateCartItem(cartItem);
+    this.props.updateCartItem(cartItem)
+  }
+
+  remove (item) {
+    const cartItem = {
+      order_product_id: item.id,
+      userId: this.props.user.id
+    }
+    this.props.removeCartItem(item)
   }
   
   render () {
@@ -40,8 +46,10 @@ class Order extends Component {
         <Segment>
           <Item.Group divided>
             {order.map(item => (
-              <Item key={item.id}>
-                <Item.Image src={item.product.img} shape='rounded' />
+              <Item
+                key={item.id}
+              >
+                <Item.Image src={item.product.img} shape='rounded' label={{ as: 'a', color: 'red', corner: 'left', icon: 'trash outline', onClick: () => this.remove(item) }}/>
                 <Item.Content>
                   <Item.Header as="a">{item.product.name}</Item.Header>
                   <Item.Meta>
@@ -51,7 +59,7 @@ class Order extends Component {
                   <Item.Extra>
                     <Label>{item.product.price ? '$' + item.product.price / 100 : 'Free'}</Label>
                     <Button.Group floated="right">
-                      <Button icon="minus" onClick={() => this.decrease(item)} />
+                      { item.quantity > 1 ? <Button icon="minus" onClick={() => this.decrease(item)} /> : '' }
                       <Button>{item.quantity}</Button>
                       <Button icon="plus" onClick={() => this.increase(item)} />
                     </Button.Group>
@@ -61,6 +69,14 @@ class Order extends Component {
                 </Item.Content>
               </Item>
             ))}
+            <Item>
+              <h1>TOTALS</h1>
+              <ul>
+                <li>Number of unique items: {order.length}</li>
+                <li>Total number of items: {order.map(item => item.quantity).reduce((sum, value) => sum + value, 0)}</li>
+                <li>Total cost: {order.reduce((sum, item) => sum + item.quantity * item.product.price / 100, 0).toFixed(2)}</li>
+              </ul>
+            </Item>
           </Item.Group>
         </Segment>
   
@@ -71,24 +87,23 @@ class Order extends Component {
 }
 
 const mapState = (state, ownProps) => {
-  // const story = stories.find(aStory => aStory.id === +ownProps.match.params.id);
-  // const storyId = ownProps.storyId;
-  // console.log(state)
   return state;
 };
 
 const mapDispatch = (dispatch, ownProps) => {
-  // console.log('ownProps', ownProps)
   return {
-    debouncedUpdateCartItem: _.debounce((...args) => {
-      dispatch(sendCartItem(...args));
-    }, 500),
-
-    // updateCartItem: () => {
-    //   console.log('ownProps', ownProps)
-    //   const cartItem = ownProps;
-    //   dispatch(sendCartItem(cartItem));
-    // }
+    updateCartItem: (cartItem) => {
+      dispatch(sendCartItem(cartItem))
+        .then(() => {
+          dispatch(me())
+        })
+    },
+    removeCartItem: (cartItemId) => {
+      dispatch(removeCartItem(cartItemId))
+        .then(() => {
+          dispatch(me())
+        })
+    }
   };
 };
 

@@ -4,7 +4,7 @@ import history from '../history'
 
 const UserDropdown = ({ user, tryLogout }) => (
   <Menu.Item>
-    <Dropdown item text={`Hi${user.firstName && ', ' + user.firstName}`}>
+    <Dropdown item text={`Hi${user.firstName ? ', ' + user.firstName : ''}!`}>
       <Dropdown.Menu>
         <Dropdown.Item onClick={() => history.push('/user')}>
           Account

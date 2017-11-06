@@ -35,7 +35,7 @@ function LandingPage(props) {
           All
         </Menu.Item>
         <Menu.Item
-          onClick={() => history.push(`/products?category=${categories[3].id}`)}
+          onClick={() => history.push(`/products?category=${categories[2].id}`)}
         >
           <Icon name="game" />
           Games
