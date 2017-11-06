@@ -3,26 +3,25 @@ import { Card, Button, Grid } from 'semantic-ui-react'
 import { addProduct } from '../../store'
 import { connect } from 'react-redux'
 
-let tempProduct = {}
-
 class AddProduct extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChangeCategories = this.handleChangeCategories.bind(this)
+    this.tempProduct = {}
   }
 
   handleChange(evt) {
-    tempProduct[evt.target.name] = evt.target.value
+    this.tempProduct[evt.target.name] = evt.target.value
   }
 
   handleChangeCategories(evt) {
-    tempProduct.categories = [evt.target.value]
+    this.tempProduct.categories = [evt.target.value]
   }
 
   handleSubmit(evt) {
-    this.props.addProduct(tempProduct)
+    this.props.addProduct(this.tempProduct)
   }
 
   render() {

@@ -4,8 +4,6 @@ import { UserEdit } from './UserEdit'
 import { updatingUser } from '../../store'
 import { connect } from 'react-redux'
 
-const tempUser = {}
-
 class UserCard extends Component {
   constructor(props) {
     super(props)
@@ -15,6 +13,7 @@ class UserCard extends Component {
     this.onToggle = this.onToggle.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.tempUser = {}
   }
 
   onToggle = () => {
@@ -22,12 +21,12 @@ class UserCard extends Component {
   }
 
   handleChange(evt) {
-    tempUser[evt.target.name] = evt.target.value
+    this.tempUser[evt.target.name] = evt.target.value
   }
 
   handleSubmit(evt) {
     evt.preventDefault()
-    this.props.updatingUser(this.props.user.id, tempUser)
+    this.props.updatingUser(this.props.user.id, this.tempUser)
     window.location.reload()
   }
 

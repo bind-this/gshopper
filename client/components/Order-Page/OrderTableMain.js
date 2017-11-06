@@ -5,17 +5,20 @@ import { fetchOrders } from '../../store'
 import OrderTable from './OrderTable'
 import TableHeader from './TableHeader'
 
-let total = 0
-let notice
+class OrderTableMain extends Component {
+  constructor(props) {
+    super(props)
+    this.total = 0
+    this.notice = null
+  }
 
-class OrderEdit extends Component {
   componentWillMount() {
-    notice = 'Loading...'
+    this.notice = 'Loading...'
   }
 
   componentDidMount() {
     !this.props.orders.length && this.props.fetchOrders()
-    notice = 'No Oders to Display'
+    this.notice = 'No Oders to Display'
   }
 
   render() {
@@ -29,7 +32,7 @@ class OrderEdit extends Component {
     return (
       <div>
         {filteredList.length < 1 ? (
-          <h2>{notice}</h2>
+          <h2>{this.notice}</h2>
         ) : (
           <div>
             {filteredList.map(order => {
@@ -40,7 +43,8 @@ class OrderEdit extends Component {
                     {order.order_products.map(orderProd => {
                       return this.props.products.map(product => {
                         if (product.id === orderProd.productId) {
-                          total += orderProd.quantity * orderProd.purchasePrice
+                          this.total +=
+                            orderProd.quantity * orderProd.purchasePrice
                           return (
                             <OrderTable
                               key={order.id}
@@ -52,7 +56,7 @@ class OrderEdit extends Component {
                       })
                     })}
                   </Table>
-                  <h3>Order Total: ${total / 100}</h3>
+                  <h3>Order Total: ${this.total / 100}</h3>
                   <h4>Order Status : {order.status}</h4>
                   <h5>Order Placed : {order.createdAt.slice(0, 10)}</h5>
                 </div>
@@ -79,4 +83,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(OrderEdit)
+export default connect(mapState, mapDispatch)(OrderTableMain)
