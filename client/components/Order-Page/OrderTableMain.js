@@ -28,7 +28,6 @@ class OrderTableMain extends Component {
     const filteredList = grabUserOrders.filter(
       order => order.status !== 'created'
     )
-
     return (
       <div>
         {filteredList.length < 1 ? (

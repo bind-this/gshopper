@@ -40,6 +40,7 @@ class OrderAdmin extends Component {
   }
 
   submitUpdate(evt, orderId) {
+    evt.preventDefault()
     this.props.changingStatus(orderId, { status: this.statusSubmit })
   }
 

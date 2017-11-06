@@ -21,7 +21,9 @@ class AddProduct extends Component {
   }
 
   handleSubmit(evt) {
+    evt.preventDefault()
     this.props.addProduct(this.tempProduct)
+    this.props.hideForm()
   }
 
   render() {
@@ -118,7 +120,7 @@ class AddProduct extends Component {
                       <option>Select Category</option>
                       {this.props.categories.map(category => {
                         return (
-                          <option value={category.id} key={category.name}>
+                          <option value={category.id} key={category.id}>
                             {category.name}
                           </option>
                         )

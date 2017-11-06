@@ -20,6 +20,7 @@ class AdminControls extends Component {
     this.toggleNewCategory = this.toggleNewCategory.bind(this)
     this.toggleAddAdmin = this.toggleAddAdmin.bind(this)
     this.toggleDeleteUser = this.toggleDeleteUser.bind(this)
+    this.toggleAllFalse = this.toggleAllFalse.bind(this)
   }
 
   componentDidMount() {
@@ -62,6 +63,15 @@ class AdminControls extends Component {
     })
   }
 
+  toggleAllFalse = () => {
+    this.setState({
+      newProductShow: false,
+      newCategoryShow: false,
+      addAdminShow: false,
+      deleteUserShow: false
+    })
+  }
+
   render() {
     return (
       <div>
@@ -73,10 +83,34 @@ class AdminControls extends Component {
           <Button onClick={this.toggleAddAdmin}>Grant Admin Status</Button>
           <Button onClick={this.toggleDeleteUser}>Delete a User</Button>
         </div>
-        <div>{this.state.newProductShow ? <AddProduct /> : ''}</div>
-        <div>{this.state.newCategoryShow ? <AddCategory /> : ''}</div>
-        <div>{this.state.addAdminShow ? <AddAdmin /> : ''}</div>
-        <div>{this.state.deleteUserShow ? <DeleteUser /> : ''}</div>
+        <div>
+          {this.state.newProductShow ? (
+            <AddProduct hideForm={this.toggleAllFalse.bind(this)} />
+          ) : (
+            ''
+          )}
+        </div>
+        <div>
+          {this.state.newCategoryShow ? (
+            <AddCategory hideForm={this.toggleAllFalse.bind(this)} />
+          ) : (
+            ''
+          )}
+        </div>
+        <div>
+          {this.state.addAdminShow ? (
+            <AddAdmin hideForm={this.toggleAllFalse.bind(this)} />
+          ) : (
+            ''
+          )}
+        </div>
+        <div>
+          {this.state.deleteUserShow ? (
+            <DeleteUser hideForm={this.toggleAllFalse.bind(this)} />
+          ) : (
+            ''
+          )}
+        </div>
       </div>
     )
   }

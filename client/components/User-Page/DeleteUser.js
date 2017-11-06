@@ -16,7 +16,9 @@ class DeleteUser extends Component {
   }
 
   handleSubmit(evt) {
+    evt.preventDefault()
     this.props.deleteUser(this.userId)
+    this.props.hideForm()
   }
 
   render() {

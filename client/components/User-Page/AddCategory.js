@@ -16,7 +16,9 @@ class AddCategory extends Component {
   }
 
   handleSubmit(evt) {
+    evt.preventDefault()
     this.props.addCategory(this.tempCategory)
+    this.props.hideForm()
   }
 
   render() {

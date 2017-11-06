@@ -15,8 +15,10 @@ class AddAdmin extends Component {
     this.userId = evt.target.value
   }
 
-  handleSubmit() {
+  handleSubmit(evt) {
+    evt.preventDefault()
     this.props.adminEdit(this.userId)
+    this.props.hideForm()
   }
 
   render() {
