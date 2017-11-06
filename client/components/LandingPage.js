@@ -6,7 +6,9 @@ import { Icon, Menu } from 'semantic-ui-react'
 import history from '../history'
 
 function LandingPage(props) {
-  const products25 = props.products.slice(27, 52)
+  //Pick ten apps starting from random location for carousel
+  const start = Math.floor(Math.random() * 180) + 1
+  const products25 = props.products.slice(start, start + 10)
   const categories = props.categories
   return (
     <div>
