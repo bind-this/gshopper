@@ -62,7 +62,7 @@ async function seed() {
   \*--------------------------------------------------------*/
   const uniqueCategoryTypes = appData
     .map(app => app.category)
-    .filter((v, i, a) => a.indexOf(v) === i)
+    .filter((val, idx, arr) => arr.indexOf(val) === idx)
     .map(category => ({ name: category }))
   const categories = await Category.bulkCreate(uniqueCategoryTypes)
   console.log(`seeded ${categories.length} categories`)
@@ -71,13 +71,15 @@ async function seed() {
   Products
   \*--------------------------------------------------------*/
   const imgDataSanitized = imgData.map(img => ({
-    appName: img['name'],
+    appName: img.name,
     url: img['images-src']
   }))
   const appDataSanitized = appData.map(app => ({
     name: app.name,
     img: app.img,
-    altImages: imgDataSanitized.filter(img => img.appName === app.name).map(img => img.url),
+    altImages: imgDataSanitized
+      .filter(img => img.appName === app.name)
+      .map(img => img.url),
     author: app.author,
     version: app.version,
     category: app.category,

@@ -43,7 +43,7 @@ class SearchBar extends Component {
   resetComponent = () =>
     this.setState({ isLoading: false, results: [], value: '' })
 
-  handleResultSelect = (e, { result }) => history.push(`/product/${result.id}`)
+  handleResultSelect = (__, { result }) => history.push(`/product/${result.id}`)
 
   handleKeyPress = target => {
     if (target.charCode === 13) {
@@ -52,7 +52,7 @@ class SearchBar extends Component {
     }
   }
 
-  handleSearchChange = (e, { value }) => {
+  handleSearchChange = (__, { value }) => {
     this.setState({ isLoading: true, value })
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent()
