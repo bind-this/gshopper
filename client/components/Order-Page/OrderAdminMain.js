@@ -60,7 +60,7 @@ class OrderAdmin extends Component {
                 <option value="created">Created</option>
                 <option value="completed">Completed</option>
                 <option value="processing">Processing</option>
-                <option value="cancelled">cancelled</option>
+                <option value="cancelled">Cancelled</option>
               </select>
             </form>
             <h2> {notice} </h2>
