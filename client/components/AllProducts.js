@@ -26,6 +26,7 @@ class AllProducts extends Component {
     const params = new URLSearchParams(search)
     const category = params.get('category')
     const query = params.get('search')
+    
 
     // let's get category name -- this is temporary, one category only
     if (categories.length && category) {

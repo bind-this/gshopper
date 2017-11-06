@@ -12,9 +12,10 @@ class AppCard extends Component {
   }
 
   increase (item) {
+    const quantity = this.props.user.orders.find(order => order.status === 'created').order_products.find(line => line.productId === item.product.id) || 1
     const cartItem = {
       productId: item.product.id,
-      quantity: 1,
+      quantity: quantity,
       userId: this.props.user.id
     }
     this.props.updateCartItem(cartItem)
