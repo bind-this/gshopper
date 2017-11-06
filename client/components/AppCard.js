@@ -74,6 +74,10 @@ class AppCard extends Component {
   }
 }
 
+const mapState = state => ({
+  user: state.user
+})
+
 const mapDispatch = dispatch => {
   return {
     updateCartItem: cartItem => {
@@ -84,4 +88,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(null, mapDispatch)(AppCard)
+export default connect(mapState, mapDispatch)(AppCard)
