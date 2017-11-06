@@ -14,22 +14,29 @@ const defaultProducts = []
 /**
  * ACTION CREATORS
  */
-const getProducts = products => ({type: GET_PRODUCTS, products})
+const getProducts = products => ({ type: GET_PRODUCTS, products })
 
 /**
  * THUNK CREATORS
  */
-export const fetchProducts = () =>
-  dispatch =>
-    axios.get('/api/products/')
-      .then(res =>
-        dispatch(getProducts(res.data || defaultProducts)))
-      .catch(err => console.log(err))
+export const fetchProducts = () => dispatch =>
+  axios
+    .get('/api/products/')
+    .then(res => dispatch(getProducts(res.data || defaultProducts)))
+    .catch(err => console.log(err))
+
+export const addProduct = product => () => {
+  console.log('STORE', product)
+  axios
+    .post('/api/products', product)
+    .then()
+    .catch(err => console.log(err))
+}
 
 /**
  * REDUCER
  */
-export default function (state = defaultProducts, action) {
+export default function(state = defaultProducts, action) {
   switch (action.type) {
     case GET_PRODUCTS:
       return action.products

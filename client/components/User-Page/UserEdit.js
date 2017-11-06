@@ -31,9 +31,7 @@ export const UserEdit = props => {
                 <input
                   type="text"
                   name="address"
-                  placeholder={
-                    props.user && props.user.address.slice(0, 11) + '...'
-                  }
+                  placeholder={props.user.address}
                   onChange={props.handleChange}
                 />
               </h3>
@@ -62,9 +60,7 @@ export const UserEdit = props => {
                 <input
                   type="text"
                   name="img"
-                  placeholder={
-                    props.user && props.user.img.slice(0, 19) + '...'
-                  }
+                  placeholder={props.user.img}
                   onChange={props.handleChange}
                 />
               </h3>
