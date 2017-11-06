@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Icon, Image, Rating } from 'semantic-ui-react'
+import { Card, Icon, Image, Rating, Button } from 'semantic-ui-react'
 import history from '../history'
 import { sendCartItem, me } from '../store'
 import { connect } from 'react-redux'
@@ -7,16 +7,27 @@ import { connect } from 'react-redux'
 class AppCard extends Component {
   increase(item) {
     let quantity = 1
-    if (this.props.user.orders.find(order => order.status === 'created')) {
-      quantity = this.props.user.orders
-        .find(order => order.status === 'created')
-        .order_products.find(line => line.productId === item.product.id)
+    let currentCart =
+      this.props.user.orders &&
+      this.props.user.orders.find(order => order.status === 'created')
+    if (
+      currentCart &&
+      currentCart.order_products.find(
+        line => line.productId === item.product.id
+      )
+    ) {
+      quantity =
+        this.props.user.orders
+          .find(order => order.status === 'created')
+          .order_products.find(line => line.productId === item.product.id)
+          .quantity + 1
     }
     const cartItem = {
       productId: item.product.id,
       quantity: quantity,
       userId: this.props.user.id
     }
+    console.log(cartItem)
     this.props.updateCartItem(cartItem)
   }
 
@@ -51,14 +62,13 @@ class AppCard extends Component {
           {this.props.product.price
             ? '$' + this.props.product.price / 100
             : 'Free'}
-          <Icon
-            circular
-            inverted
-            color="grey"
-            name="shop"
+          <Button
+            size="mini"
             floated="right"
             onClick={() => this.increase(this.props)}
-          />
+          >
+            Add To Cart
+          </Button>
         </Card.Content>
       </Card>
     )
