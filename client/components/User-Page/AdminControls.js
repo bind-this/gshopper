@@ -11,50 +11,72 @@ class AdminControls extends Component {
   constructor() {
     super()
     this.state = {
-      bool1: false,
-      bool2: false,
-      bool3: false,
-      bool4: false
+      newProductShow: false,
+      newCategoryShow: false,
+      addAdminShow: false,
+      deleteUserShow: false
     }
-    this.onToggle1 = this.onToggle1.bind(this)
-    this.onToggle2 = this.onToggle2.bind(this)
-    this.onToggle3 = this.onToggle3.bind(this)
-    this.onToggle4 = this.onToggle4.bind(this)
+    this.toggleNewProduct = this.toggleNewProduct.bind(this)
+    this.toggleNewCategory = this.toggleNewCategory.bind(this)
+    this.toggleAddAdmin = this.toggleAddAdmin.bind(this)
+    this.toggleDeleteUser = this.toggleDeleteUser.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchUsers()
   }
 
-  onToggle1 = () => {
-    this.setState({ bool1: true, bool2: false, bool3: false, bool4: false })
+  toggleNewProduct = () => {
+    this.setState({
+      newProductShow: true,
+      newCategoryShow: false,
+      addAdminShow: false,
+      deleteUserShow: false
+    })
   }
 
-  onToggle2 = () => {
-    this.setState({ bool1: false, bool2: true, bool3: false, bool4: false })
+  toggleNewCategory = () => {
+    this.setState({
+      newProductShow: false,
+      newCategoryShow: true,
+      addAdminShow: false,
+      deleteUserShow: false
+    })
   }
 
-  onToggle3 = () => {
-    this.setState({ bool1: false, bool2: false, bool3: true, bool4: false })
+  toggleAddAdmin = () => {
+    this.setState({
+      newProductShow: false,
+      newCategoryShow: false,
+      addAdminShow: true,
+      deleteUserShow: false
+    })
   }
 
-  onToggle4 = () => {
-    this.setState({ bool1: false, bool2: false, bool3: false, bool4: true })
+  toggleDeleteUser = () => {
+    this.setState({
+      newProductShow: false,
+      newCategoryShow: false,
+      addAdminShow: false,
+      deleteUserShow: true
+    })
   }
 
   render() {
     return (
       <div>
         <div>
-          <Button onClick={this.onToggle1}>Add New Product</Button>
-          <Button onClick={this.onToggle2}>Add New Product Category</Button>
-          <Button onClick={this.onToggle3}>Grant Admin Status</Button>
-          <Button onClick={this.onToggle4}>Delete a User</Button>
+          <Button onClick={this.toggleNewProduct}>Add New Product</Button>
+          <Button onClick={this.toggleNewCategory}>
+            Add New Product Category
+          </Button>
+          <Button onClick={this.toggleAddAdmin}>Grant Admin Status</Button>
+          <Button onClick={this.toggleDeleteUser}>Delete a User</Button>
         </div>
-        <div>{this.state.bool1 ? <AddProduct /> : ''}</div>
-        <div>{this.state.bool2 ? <AddCategory /> : ''}</div>
-        <div>{this.state.bool3 ? <AddAdmin /> : ''}</div>
-        <div>{this.state.bool4 ? <DeleteUser /> : ''}</div>
+        <div>{this.state.newProductShow ? <AddProduct /> : ''}</div>
+        <div>{this.state.newCategoryShow ? <AddCategory /> : ''}</div>
+        <div>{this.state.addAdminShow ? <AddAdmin /> : ''}</div>
+        <div>{this.state.deleteUserShow ? <DeleteUser /> : ''}</div>
       </div>
     )
   }
