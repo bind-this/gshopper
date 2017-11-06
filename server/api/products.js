@@ -1,27 +1,27 @@
-const router = require("express").Router();
-const Product = require("../db/models/product");
-const Category = require("../db/models/category");
+const router = require('express').Router()
+const Product = require('../db/models/product')
+const Category = require('../db/models/category')
 
 //Fuzzy search is has not been created/implemented within these routes
 
 //PARAM - sets product instance to req.product
-router.param("id", (req, res, next, id) => {
+router.param('id', (req, res, next, id) => {
   Product.findById(id, { include: [{ all: true }] })
     .then(product => {
       if (!product) {
-        const err = Error("product not found");
-        err.status = 404;
-        throw err;
+        const err = Error('product not found')
+        err.status = 404
+        throw err
       } else {
-        req.product = product;
-        next();
+        req.product = product
+        next()
       }
     })
-    .catch(next);
-});
+    .catch(next)
+})
 
 //GET - finds all products
-router.get("/", (req, res, next) => {
+router.get('/', (req, res, next) => {
   Product.findAll({
     include: [
       {
@@ -30,44 +30,45 @@ router.get("/", (req, res, next) => {
     ]
   })
     .then(products => res.json(products))
-    .catch(next);
-});
+    .catch(next)
+})
 
 //GET - finds one product by id
-router.get("/:id", (req, res, next) => {
-  res.json(req.product);
-});
+router.get('/:id', (req, res, next) => {
+  res.json(req.product)
+})
 
 //DELETE - deletes one product by id
-router.delete("/:id", (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
   req.product
     .destroy()
     .then(() => res.sendStatus(204))
-    .catch(next);
-});
+    .catch(next)
+})
 
 //PUT - updates one product by id
-router.put("/:id", (req, res, next) => {
+router.put('/:id', (req, res, next) => {
   req.product
     .update(req.body)
     .then(product => res.status(201).json(product))
-    .catch(next);
-});
+    .catch(next)
+})
 
 //POST - creates new product, assigns categories to product
-router.post("/", (req, res, next) => {
-  let product;
-  Product.create(req.body.product)
+router.post('/', (req, res, next) => {
+  console.log('SERVER', req.body)
+  let product
+  Product.create(req.body)
     .then(productInstance => {
-      product = productInstance;
+      product = productInstance
       return Promise.all(
         req.body.categories.map(id => Category.findById(id))
       ).then(resultArray => {
-        product.setCategories(resultArray);
-        res.sendState(201);
-      });
+        product.setCategories(resultArray)
+        res.sendStatus(201)
+      })
     })
-    .catch(next);
-});
+    .catch(next)
+})
 
-module.exports = router;
+module.exports = router
