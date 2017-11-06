@@ -69,6 +69,14 @@ class Order extends Component {
                 </Item.Content>
               </Item>
             ))}
+            <Item>
+              <h1>TOTALS</h1>
+              <ul>
+                <li>Number of unique items: {order.length}</li>
+                <li>Total number of items: {order.map(item => item.quantity).reduce((sum, value) => sum + value, 0)}</li>
+                <li>Total cost: {order.reduce((sum, item) => sum + item.quantity * item.product.price / 100, 0).toFixed(2)}</li>
+              </ul>
+            </Item>
           </Item.Group>
         </Segment>
   
