@@ -30,13 +30,12 @@ class Routes extends Component {
       <Router history={history}>
         <Main>
           <Switch>
-            {/* <Route
+            <Route exact path="/" component={LandingPage} />
+            <Route
               exact
               path="/products/:productId"
               component={SingleProduct}
-            /> */}
-            <Route exact path="/" component={LandingPage} />
-            {/* Routes placed here are available to all visitors */}
+            />
             <Route path="/products" component={AllProducts} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />

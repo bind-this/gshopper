@@ -36,12 +36,12 @@ class AppCard extends Component {
         <Image
           height="290px"
           src={this.props.product.img}
-          onClick={() => history.push(`/product/${this.props.product.id}`)}
+          onClick={() => history.push(`/products/${this.props.product.id}`)}
           style={{ cursor: 'pointer' }}
         />
         <Card.Content>
           <Card.Header
-            onClick={() => history.push(`/product/${this.props.product.id}`)}
+            onClick={() => history.push(`/products/${this.props.product.id}`)}
             style={{ cursor: 'pointer' }}
           >
             {this.props.product.name}
