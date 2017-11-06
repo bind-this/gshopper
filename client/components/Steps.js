@@ -14,9 +14,7 @@ const Steps = () => {
         <Icon name="shop" />
         <Step.Content>
           <Step.Title>Cart</Step.Title>
-          <Step.Description>
-            Review your cart before proceeding to payment
-          </Step.Description>
+          <Step.Description>Review your cart</Step.Description>
         </Step.Content>
       </Step>
 
