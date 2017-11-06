@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Label, Grid, Icon, Button } from 'semantic-ui-react'
+import { Label, Grid, Icon, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import history from '../history'
 import Order from './Order'

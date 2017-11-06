@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { logout, fetchCategories, fetchProducts } from '../store'
 import { Button, Menu, Icon, Label, Image } from 'semantic-ui-react'
 
@@ -48,11 +48,6 @@ class Main extends Component {
                   ''
                 )}
               </Menu.Item>
-              {isLoggedIn ? (
-                <UserDropdown user={user} tryLogout={tryLogout} />
-              ) : (
-                ''
-              )}
             </Menu.Item>
             {isLoggedIn ? (
               <UserDropdown user={user} tryLogout={tryLogout} />
