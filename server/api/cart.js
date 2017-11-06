@@ -10,47 +10,49 @@ router.post('/', (req, res, next) => {
   .catch(next)
 })
 
+
+// DELETE - delete an item from cart
+router.delete('/cart', (req, res, next) => {
+
+  console.log(req.body)
+  Order_Product.find({
+      where: {
+        id: req.body.order_product_id
+      }
+    })
+    .then(ord2 => ord2.destroy())
+    .then(message => {
+      res.json(message)
+    })
+    .catch(next)
+  })
+
 // POST - add an item to cart
 router.post('/cart', (req, res, next) => {
 
   Order.findOrCreate({
     where: {
-      status: 'created',
-      userId: req.body.userId
+      userId: req.body.userId,
+      status: 'created'
     }
   })
   .spread(order => {
-    req.body.orderId = order.id
-    const order_product = Order_Product.findOne({where: {
-      productId: req.body.productId,
-      orderId: order.id
-    }}).then(oproduct => {
-      if (!oproduct) {
-        return Order_Product.create(req.body)
-          .then(result => {
-            result = result.toJSON()
-            console.log(result)
-            return result
-          })
-      } else {
-        return oproduct.update(req.body)
-          .then(result => {
-            result = result.toJSON()
-            return result
-          })
-      }
-    })
-    .then(result => {
-      res.json(result);
-    })
+
+    const order_product = Order_Product.build(req.body);
+    order_product.setOrder(order, { save: false });
+    return order_product.save()
+      .then(order_product => {
+        order_product = order_product.toJSON();
+        order_product.orderId = order;
+        return order_product;
+      });
+  })
+  .then(message => {
+    res.json(message);
   })
   .catch(next);
-
-  // Order.findOrCreate()
-  // Order_Product.create(req.body)
-  // .then(order_product => res.json(order_product))
-  // .catch(next)
 })
+
 
 
 // router.param to catch :Id

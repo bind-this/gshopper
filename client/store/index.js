@@ -1,6 +1,6 @@
 'use strict'
 
-import {createStore, combineReducers, applyMiddleware} from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -9,14 +9,24 @@ import product from './product'
 import products from './products'
 import categories from './categories'
 import review from './review'
+import users from './userEdit'
+import orders from './orders'
+import cart from './cart'
 
-const reducer = combineReducers({user, product, products, categories, review})
+const reducer = combineReducers({
+  products,
+  categories,
+  user,
+  orders,
+  cart,
+  users,
+  review
+})
 
+const middleware = composeWithDevTools(
+  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+)
 
-const middleware = composeWithDevTools(applyMiddleware(
-  thunkMiddleware,
-  createLogger({collapsed: true})
-))
 
 const store = createStore(reducer, middleware)
 
@@ -27,3 +37,5 @@ export * from './products'
 export * from './categories'
 export * from './review'
 export * from './userEdit'
+export * from './orders'
+export * from './cart'

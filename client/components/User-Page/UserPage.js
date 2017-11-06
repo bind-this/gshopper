@@ -1,47 +1,46 @@
-import React from 'react'
-import { Card, Grid, Image, Button } from 'semantic-ui-react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react'
+import { Grid, Button } from 'semantic-ui-react'
 import UserCard from './UserCard'
-import UserCart from './UserCart'
-import { fetchOrders } from '../../store'
+import UserOrder from './UserOrder'
+import AdminControls from './AdminControls'
+import { fetchUsers } from '../../store'
+import { connect } from 'react-redux'
 
-const UserPage = props => {
+class UserPage extends Component {
+  componentDidMount() {
+    this.props.fetchUsers()
+  }
 
+  render() {
     return (
       <Grid padded>
         <Grid.Row>
-          <Grid.Column width={3}>
-            <Card raised>
-              <Card.Content>
-                <Image centered src={props.user.img} />
-              </Card.Content>
-            </Card>
+          <Grid.Column width={9}>
+            <UserCard />
           </Grid.Column>
-          <Grid.Column width={8}>
-            <UserCard user={props.user} />
-          </Grid.Column>
-          <Grid.Column width={4}>
-            <UserCart />
+          <Grid.Column width={6}>
+            <UserOrder />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column width={15}>
-            <Button href='/orders'>View Order History</Button>
+          <Grid.Column width={16}>
+            <AdminControls />
           </Grid.Column>
         </Grid.Row>
       </Grid>
     )
+  }
 }
 
 const mapState = state => {
   return {
-    user: state.user
+    users: state.users
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    fetchOrders: userId => dispatch(fetchOrders(userId))
+    fetchUsers: () => dispatch(fetchUsers())
   }
 }
 
