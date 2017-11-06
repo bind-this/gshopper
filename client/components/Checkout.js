@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { Elements } from 'react-stripe-elements'
+import React from 'react'
+import CardForm from './CardForm'
 
 function Checkout(props) {
   return (
-    <Elements>
-      <div>Hey</div>
-    </Elements>
+    <div className="checkout-container">
+      <CardForm />
+    </div>
   )
 }
 
