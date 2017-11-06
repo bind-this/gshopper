@@ -21,19 +21,16 @@ export const sendCartItem = (cartItemId) =>
   dispatch =>
     axios.post('/api/order-products/cart', cartItemId)
       .then(res =>
-        // dispatch(getUser()))
-        // res.json())
-        // add something here later
-        console.log('this needs to be replaced!')
+        console.log(res) // let's log for now
       )
       .catch(err => console.log(err))
 
 export const removeCartItem = (cartItem) =>
   dispatch =>
     axios.delete('/api/order-products/' + cartItem.id)
-      // .then(res =>
-      //   // dispatch(getUser()))
-      //   res.json())
+      .then(res =>
+        console.log(res) // let's log for now
+      )
       .catch(err => console.log(err))
 
 /**
