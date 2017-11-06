@@ -36,10 +36,6 @@ class AllProducts extends Component {
     const query = params.get('search')
 
     categoryFilters = categoryFilters.map(cat => +cat)
-    // let's get category name -- this is temporary, one category only
-    if (categories.length && category) {
-      title = categories.filter(cat => cat.id === +category)[0].name
-    }
 
     // filtering by... filters
     let filteredProducts = products.filter(product => {
@@ -57,7 +53,6 @@ class AllProducts extends Component {
     if (allCategories.length && categoryFilters.length) {
       title = allCategories.filter(cat => categoryFilters.includes(cat.id)).map(cate => cate.name).join(', ')
     }
-    console.log('title', title)
 
     // Search filtering by query
     const re = new RegExp(_.escapeRegExp(query), 'i')
