@@ -9,9 +9,8 @@ import product from './product'
 import products from './products'
 import categories from './categories'
 import review from './review'
-import userEdit from './userEdit'
 
-const reducer = combineReducers({user, product, products, categories, review, userEdit})
+const reducer = combineReducers({user, product, products, categories, review})
 
 
 const middleware = composeWithDevTools(applyMiddleware(

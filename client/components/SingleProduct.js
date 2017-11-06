@@ -24,14 +24,14 @@ console.log('product', product)
 console.log('reviews', productReviews)
 
     return (
-      <div>
+      <div style={{ margin: '1.5em' }} >
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }} >
           <img style={{ borderRadius: '15%' }} src={ product.img } />
           <h1 style={{ fontSize: '3em' }} >{ product.name }</h1>
-          <div>{ product.reviews && averageRating }</div>
+          <div>{ product.reviews && `${averageRating} stars` }</div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', flexGrow: '10', width: '100%', height: '100%' }}>
             <Image src={ product.altImages && product.altImages[0] } />
             {
               /*
@@ -43,14 +43,16 @@ console.log('reviews', productReviews)
                 ))
             */}
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <Container style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', flexDirection: 'row', flexGrow: '3' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', margin: '1.5em' }}>
               <div>{ product.author }</div>
               <div>{ product.categories && product.categories.map(cat => cat.name).join(', ') }</div>
-              <div>{ product.description }</div>
-            </Container>
+              <div style={{ margin: '1.5em', flexGrow: '2', display: 'flex', justifyContent: 'center' }} >
+                <div>{ product.description }</div>
+              </div>
+            </div>
 
-            <div className="ui cards">
+            <div className="ui cards" style={{ display: 'flex', flexGrow: '1' }} >
               <div className="card">
                 <div className="content">
                   <div className="header">Elliot Fu</div>
@@ -80,7 +82,7 @@ console.log('reviews', productReviews)
                   <div className="content">
                     <a className="author">{ `${review.user.firstName} ${review.user.lastName}` }</a>
                     <div className="metadata">
-                      <span>{ review.rating }</span>
+                      <span>{ `${review.rating} stars` }</span>
                       <span className="date">{ new Date(review.createdAt).toString() }</span>
                     </div>
                     <div className="text">{ review.comment }</div>
