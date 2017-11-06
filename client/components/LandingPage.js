@@ -6,7 +6,9 @@ import { Icon, Menu } from 'semantic-ui-react'
 import history from '../history'
 
 function LandingPage(props) {
-  const products25 = props.products.slice(27, 52)
+  //Pick ten apps starting from random location for carousel
+  const start = Math.floor(Math.random() * 180) + 1
+  const products25 = props.products.slice(start, start + 10)
   const categories = props.categories
   return (
     <div>
@@ -35,7 +37,7 @@ function LandingPage(props) {
           All
         </Menu.Item>
         <Menu.Item
-          onClick={() => history.push(`/products?category=${categories[3].id}`)}
+          onClick={() => history.push(`/products?category=${categories[2].id}`)}
         >
           <Icon name="game" />
           Games

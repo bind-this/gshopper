@@ -16,7 +16,7 @@ class AllProducts extends Component {
 
   render() {
 
-    const title = 'All Products'
+    let title = 'All Products'
     const products = this.props.products
     const categories = this.props.categories
     const { contextRef } = this.state
@@ -26,14 +26,17 @@ class AllProducts extends Component {
     const params = new URLSearchParams(search)
     const category = params.get('category')
     const query = params.get('search')
+    
 
-
+    // let's get category name -- this is temporary, one category only
+    if (categories.length && category) {
+      title = categories.filter(cat => cat.id === +category)[0].name
+    }
+    
     // filtering by... filters
-    // let categoryNames;
     let filteredProducts = products.filter(product => {
       if (!category) return true
       const categoryOfProduct = product.categories.map(category => category.id)
-      // categoryNames = categories.filter(cat => categoryOfProduct.includes(cat.id) ).map(cat => cat.name).join(', ')
       return categoryOfProduct.includes(+category)
     })
 
@@ -43,38 +46,34 @@ class AllProducts extends Component {
 
     filteredProducts = _.filter(filteredProducts, isMatch)
 
-    // console.log(categoryNames)
-
-
     return (
-
-    <div ref={this.handleContextRef}>
-      <Grid divided padded relaxed columns='equal'>
-        <Grid.Row>
-          <Grid.Column>
-            <Sticky context={contextRef} offset={40}>
-              <h1>Filters</h1>
-              <h3>Minimum rating</h3>
-              <Rating maxRating={5} clearable />
-              <h3>Price</h3>
-              <Input labelPosition='right' type='text' placeholder='Minimum'>
-                <Label basic>$</Label>
-                <input />
-              </Input>
-              <Input labelPosition='right' type='text' placeholder='Maximum'>
-                <Label basic>$</Label>
-                <input />
-              </Input>
-              <h3>Categories</h3>
-                  { categories.map(category => <div key={category.id}><Checkbox defaultChecked toggle /> {category.name}</div>) }
-            </Sticky>
-          </Grid.Column>
-          <Grid.Column width={13}>
-            <CardList products={ filteredProducts } search={query} title={ title } />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </div>
+      <div ref={this.handleContextRef}>
+        <Grid divided padded relaxed columns='equal'>
+          <Grid.Row>
+            <Grid.Column>
+              <Sticky context={contextRef} offset={40}>
+                <h1>Filters</h1>
+                <h3>Minimum rating</h3>
+                <Rating maxRating={5} clearable />
+                <h3>Price</h3>
+                <Input labelPosition='right' type='text' placeholder='Minimum'>
+                  <Label basic>$</Label>
+                  <input />
+                </Input>
+                <Input labelPosition='right' type='text' placeholder='Maximum'>
+                  <Label basic>$</Label>
+                  <input />
+                </Input>
+                <h3>Categories</h3>
+                    { categories.map(category => <div key={category.id}><Checkbox defaultChecked toggle /> {category.name}</div>) }
+              </Sticky>
+            </Grid.Column>
+            <Grid.Column width={13}>
+              <CardList products={ filteredProducts } search={query} title={ title } />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
     )
   }
 }
