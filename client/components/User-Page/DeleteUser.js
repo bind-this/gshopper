@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Button, Grid } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import { deleteUser } from '../../store'
 import { connect } from 'react-redux'
 
@@ -15,10 +15,15 @@ class DeleteUser extends Component {
     this.userId = evt.target.value
   }
 
+<<<<<<< HEAD
   handleSubmit(evt) {
     evt.preventDefault()
     this.props.deleteUser(this.userId)
     this.props.hideForm()
+=======
+  handleSubmit() {
+    this.props.deleteUser(userId)
+>>>>>>> master
   }
 
   render() {

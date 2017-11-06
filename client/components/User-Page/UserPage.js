@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React from 'react'
+=======
+import React, { Component } from 'react'
+>>>>>>> master
 import { Grid } from 'semantic-ui-react'
 import UserCard from './UserCard'
 import UserOrder from './UserOrder'

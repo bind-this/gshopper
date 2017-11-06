@@ -4,8 +4,17 @@ const { Review } = require('../db/models')
 // POST - create a new order /api/reviews/
 router.post('/', (req, res, next) => {
   Review.create(req.body)
-  .then(review => res.json(review))
-  .catch(next)
+    .then(review => res.json(review))
+    .catch(next)
+})
+
+// GET - get all reviews associated with product id
+router.get('/product-review/:id', (req, res, next) => {
+  Review.findAll({ where: { productId: req.params.id }, include: [{ all: true }] })
+    .then(reviews => {
+      res.json(reviews)
+    })
+    .catch(next)
 })
 
 // router.param to catch :Id
@@ -15,29 +24,33 @@ router.param('id', (req, res, next, reviewId) => {
   })
     .then(review => {
       if (!review) {
-        const err = Error('Review not found');
-        err.status = 404;
-        next(err);
+        const err = Error('Review not found')
+        err.status = 404
+        next(err)
+        return null
       } else {
-        req.review = review;
-        next();
+        req.review = review
+        next()
+        return null
       }
     })
     .catch(next)
-});
+})
 
 // PUT - update an existing order /api/reviews/:id
 router.put('/:id', (req, res, next) => {
-  req.review.update(req.body)
+  req.review
+    .update(req.body)
     .then(review => res.json(review))
-    .catch(next);
+    .catch(next)
 })
 
-  // DELETE - delete an existing review /api/reviews/:id
+// DELETE - delete an existing review /api/reviews/:id
 router.delete('/:id', (req, res, next) => {
-  req.review.destroy()
+  req.review
+    .destroy()
     .then(() => res.status(204).end())
-    .catch(next);
+    .catch(next)
 })
 
 module.exports = router

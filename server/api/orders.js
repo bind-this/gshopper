@@ -27,9 +27,11 @@ router.param('id', (req, res, next, orderId) => {
         const err = Error('Order not found')
         err.status = 404
         next(err)
+        return null
       } else {
         req.order = order
         next()
+        return null
       }
     })
     .catch(next)

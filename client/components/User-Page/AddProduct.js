@@ -20,10 +20,15 @@ class AddProduct extends Component {
     this.tempProduct.categories = [evt.target.value]
   }
 
+<<<<<<< HEAD
   handleSubmit(evt) {
     evt.preventDefault()
     this.props.addProduct(this.tempProduct)
     this.props.hideForm()
+=======
+  handleSubmit() {
+    this.props.addProduct(tempProduct)
+>>>>>>> master
   }
 
   render() {
