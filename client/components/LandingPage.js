@@ -1,35 +1,55 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Carousel from 'nuka-carousel'
+// import Carousel from 'nuka-carousel'
+import {
+  CarouselProvider,
+  Slider,
+  Slide,
+  ButtonBack,
+  ButtonNext,
+  Image,
+  DotGroup
+} from 'pure-react-carousel'
+import 'pure-react-carousel/dist/react-carousel.es.css'
+
 import { Icon, Menu } from 'semantic-ui-react'
 import history from '../history'
 
 function LandingPage(props) {
   //Pick ten apps starting from random location for carousel
   const start = Math.floor(Math.random() * 180) + 1
-  const products25 = props.products.slice(start, start + 10)
+  const products25 = props.products.slice(start, start + 20)
   const categories = props.categories
   return (
     <div>
-      <Carousel
-        wrapAround={true}
-        autoplay={true}
-        slidesToShow={5}
-        cellAlign="center"
-        cellSpacing={20}
-        style={{ height: '400px' }}
-        initialSlideHeight={400}
+      <CarouselProvider
+        naturalSlideWidth={100}
+        naturalSlideHeight={125}
+        totalSlides={20}
+        visibleSlides={5}
+        style={{ height: '320px' }}
       >
-        {products25.map(product => (
-          <img
-            key={product.id}
-            src={product.img}
-            onClick={() => history.push(`/products/${product.id}`)}
-            style={{ cursor: 'pointer' }}
-          />
-        ))}
-      </Carousel>
+        <Slider style={{ height: '320px' }}>
+          {products25.map((product, index) => (
+            <Slide index={index} key={product.id}>
+              <Image
+                hasMasterSpinner={true}
+                key={product.id}
+                src={product.img}
+                onClick={() => history.push(`/products/${product.id}`)}
+                style={{
+                  cursor: 'pointer',
+                  height: '280px',
+                  width: '280px',
+                  borderRadius: '40px'
+                }}
+              />
+            </Slide>
+          ))}
+        </Slider>
+        <DotGroup style={{ textAlign: 'center' }} />
+      </CarouselProvider>
       <br />
       <Menu icon="labeled" widths={12}>
         <Menu.Item onClick={() => history.push(`/products`)}>
