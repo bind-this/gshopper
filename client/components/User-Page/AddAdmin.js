@@ -3,21 +3,22 @@ import { Button } from 'semantic-ui-react'
 import { adminEdit } from '../../store'
 import { connect } from 'react-redux'
 
-let userId
-
 class AddAdmin extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.userId = null
   }
 
   handleChange(evt) {
-    userId = evt.target.value
+    this.userId = evt.target.value
   }
 
-  handleSubmit() {
-    this.props.adminEdit(userId)
+  handleSubmit(evt) {
+    evt.preventDefault()
+    this.props.adminEdit(this.userId)
+    this.props.hideForm()
   }
 
   render() {

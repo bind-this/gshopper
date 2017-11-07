@@ -5,12 +5,6 @@ import { fetchOrders, changingStatus } from '../../store'
 import OrderTable from './OrderAdminTable'
 import TableHeader from './TableHeader'
 
-let total = 0
-let orderStatus
-let filteredList
-let statusSubmit
-let notice
-
 class OrderAdmin extends Component {
   constructor(props) {
     super(props)
@@ -20,42 +14,47 @@ class OrderAdmin extends Component {
     this.filterSelect = this.filterSelect.bind(this)
     this.updateStatus = this.updateStatus.bind(this)
     this.submitUpdate = this.submitUpdate.bind(this)
+    this.orderStatus = null
+    this.filteredList = []
+    this.statusSubmit = null
+    this.notice = null
   }
 
   componentWillMount() {
-    notice = 'Loading...'
+    this.notice = 'Loading...'
   }
 
   componentDidMount() {
     !this.props.orders.length && this.props.fetchOrders()
-    notice = 'No Orders to Display'
+    this.notice = 'No Orders to Display'
   }
 
   filterSelect(evt) {
-    orderStatus = evt.target.value
-    this.setState({ orders: filteredList })
+    this.orderStatus = evt.target.value
+    this.setState({ orders: this.filteredList })
   }
 
   updateStatus(evt) {
-    statusSubmit = evt.target.value
+    this.statusSubmit = evt.target.value
   }
 
   submitUpdate(evt, orderId) {
-    this.props.changingStatus(orderId, { status: statusSubmit })
+    evt.preventDefault()
+    this.props.changingStatus(orderId, { status: this.statusSubmit })
   }
 
   render() {
-    filteredList = this.props.orders.filter(order => {
-      if (orderStatus) return order.status === orderStatus
+    this.filteredList = this.props.orders.filter(order => {
+      if (this.orderStatus) return order.status === this.orderStatus
       else return true
     })
     return (
       <div>
-        {filteredList.length < 1 ? (
+        {this.filteredList.length < 1 ? (
           <div>
             <form>
               <label>Filter by Order Status:</label>
-              <select onChange={this.filterSelect} name="order">
+              <select onChange={this.filterSelect.bind} name="order">
                 <option />
                 <option value="created">Created</option>
                 <option value="completed">Completed</option>
@@ -63,7 +62,7 @@ class OrderAdmin extends Component {
                 <option value="cancelled">Cancelled</option>
               </select>
             </form>
-            <h2> {notice} </h2>
+            <h2> {this.notice} </h2>
           </div>
         ) : (
           <div>
@@ -80,7 +79,8 @@ class OrderAdmin extends Component {
               </form>
             </div>
             <div>
-              {filteredList.map(order => {
+              {this.filteredList.map(order => {
+                let orderTotal = 0
                 return (
                   <div key={order.id}>
                     <Table celled padded>
@@ -88,7 +88,7 @@ class OrderAdmin extends Component {
                       {order.order_products.map(orderProd => {
                         return this.props.products.map(product => {
                           if (product.id === orderProd.productId) {
-                            total +=
+                            orderTotal +=
                               orderProd.quantity * orderProd.purchasePrice
                             return (
                               <OrderTable
@@ -101,7 +101,7 @@ class OrderAdmin extends Component {
                         })
                       })}
                     </Table>
-                    <h3>Order Total: ${total / 100}</h3>
+                    <h3>Order Total: ${orderTotal / 100}</h3>
                     <h4>Order Status : {order.status}</h4>
                     <form onSubmit={evt => this.submitUpdate(evt, order.id)}>
                       <label>Update Order Status</label>

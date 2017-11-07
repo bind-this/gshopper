@@ -57,14 +57,12 @@ router.put('/:id', (req, res, next) => {
 
 //POST - creates new product, assigns categories to product
 router.post('/', (req, res, next) => {
-  let product
   Product.create(req.body)
     .then(productInstance => {
-      product = productInstance
       return Promise.all(
         req.body.categories.map(id => Category.findById(id))
       ).then(resultArray => {
-        product.setCategories(resultArray)
+        productInstance.setCategories(resultArray)
         res.sendStatus(201)
       })
     })
