@@ -31,6 +31,25 @@ export const addProduct = product => () => {
     .catch(err => console.log(err))
 }
 
+export const addCategoryToProduct = categoryProduct => () => {
+  axios
+    .post('/api/products/category', categoryProduct)
+    .then()
+    .catch(err => console.log(err))
+}
+
+export const editProduct = (productId, product) => () =>
+  axios
+    .put(`/api/products/${productId}`, product)
+    .then()
+    .catch(err => console.log(err))
+
+export const deleteProduct = productId => () =>
+  axios
+    .delete(`/api/products/${productId}`)
+    .then()
+    .catch(err => console.log(err))
+
 /**
  * REDUCER
  */

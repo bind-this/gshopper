@@ -58,15 +58,20 @@ router.put('/:id', (req, res, next) => {
 //POST - creates new product, assigns categories to product
 router.post('/', (req, res, next) => {
   Product.create(req.body)
-    .then(productInstance => {
-      return Promise.all(
-        req.body.categories.map(id => Category.findById(id))
-      ).then(resultArray => {
-        productInstance.setCategories(resultArray)
-        res.sendStatus(201)
-      })
-    })
+    .then(product => res.status(201).json(product))
     .catch(next)
+})
+
+//POST - adds category to product
+router.post('/category', (req, res, next) => {
+  Product.findById(req.body.product).then(productInstance => {
+    return Category.findById(req.body.category)
+      .then(categoryInstance => {
+        productInstance.setCategories(categoryInstance)
+        res.sendStatus(200)
+      })
+      .catch(next)
+  })
 })
 
 module.exports = router

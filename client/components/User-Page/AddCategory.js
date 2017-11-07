@@ -13,7 +13,6 @@ class AddCategory extends Component {
 
   handleChange(evt) {
     this.tempCategory[evt.target.name] = evt.target.value
-    this.tempCategory[evt.target.name] = evt.target.value
   }
 
   handleSubmit(evt) {
