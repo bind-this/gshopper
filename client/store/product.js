@@ -13,10 +13,10 @@ const DELETE_PRODUCT = 'DELETE_PRODUCT'
 /**
  * ACTION CREATORS
  */
-const getProduct = product => ({type: GET_PRODUCT, product})
-const createProduct = product => ({type: CREATE_PRODUCT, product})
-const editProduct = product => ({type: EDIT_PRODUCT, product})
-const deleteProduct = product => ({type: DELETE_PRODUCT, product})
+export const getProduct = product => ({type: GET_PRODUCT, product})
+export const createProduct = product => ({type: CREATE_PRODUCT, product})
+export const editProduct = product => ({type: EDIT_PRODUCT, product})
+export const deleteProduct = product => ({type: DELETE_PRODUCT, product})
 
 /**
  * THUNK CREATORS
