@@ -1,8 +1,7 @@
-'use strict';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { makeReview } from '../../store';
-
+'use strict'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { makeReview, fetchProduct } from '../../store'
 
 class AddReview extends Component {
   constructor(props) {
@@ -26,40 +25,46 @@ class AddReview extends Component {
   handleSubmit(event) {
     event.preventDefault()
     this.props.makeReview(this.tempReview, this.props.product.id)
+    this.props.fetchProduct(this.props.product.id)
   }
 
   render() {
     //let user = this.props.user
-/* <div>{ user.orders && user.orders.some(order => order.order_products.map(obj => obj.prod.id).join(', ')  // .includes(this.props.product.id)) }</div> */
-
+    /* <div>{ user.orders && user.orders.some(order => order.order_products.map(obj => obj.prod.id).join(', ')  // .includes(this.props.product.id)) }</div> */
     return (
       <div>
-          <form onSubmit={this.handleSubmit} className="ui reply form" >
+        <form onSubmit={this.handleSubmit} className="ui reply form">
+          Submit Review
+          <textarea
+            type="text"
+            placeholder="submit review here"
+            className="field"
+            name="comment"
+            onChange={this.handleCommentChange}
+          />
+          <select
+            className="field"
+            required="required"
+            name="rating"
+            onChange={this.handleRatingChange}
+          >
+            <option />
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+          <button
+            type="submit"
+            className="ui blue labeled submit icon button"
+            style={{ padding: '1em' }}
+          >
             Submit Review
-            <textarea
-              type="text"
-              placeholder="submit review here"
-              className="field"
-              name="comment"
-              onChange={ this.handleCommentChange }
-            />
-            <select
-              className="field"
-              required="required"
-              name="rating"
-              onChange={ this.handleRatingChange }
-            >
-              <option />
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          <button type="submit" className="ui blue labeled submit icon button" >Submit Review</button>
-          </form>
+          </button>
+        </form>
       </div>
-    );
+    )
   }
 }
 
@@ -67,11 +72,11 @@ const mapStateToProps = state => ({
   review: state.review,
   user: state.user,
   product: state.product
-});
+})
 
 const mapDispatchToProps = dispatch => ({
-  makeReview: (review, productId) => dispatch(makeReview(review, productId))
-});
+  makeReview: (review, productId) => dispatch(makeReview(review, productId)),
+  fetchProduct: id => dispatch(fetchProduct(id))
+})
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
+export default connect(mapStateToProps, mapDispatchToProps)(AddReview)
