@@ -10,23 +10,23 @@ describe('Product model', () => {
     return db.sync({force: true})
   })
 
-  let quantityChecker
-  Product.create({
-    name: 'testProduct',
-    author: 'tester',
-    description: 'thisIsATestProduct',
-    price: 499,
-    quantity: 3
-  })
-  .then(product => {
-    quantityChecker = product
-  })
-
-  describe('quantity field', () => {
-    it('should be greater than zero', () => {
-      expect(quantityChecker.quantity).to.be.at.least(0)
-    })
-  })
+  // let quantityChecker
+  // Product.create({
+  //   name: 'testProduct',
+  //   author: 'tester',
+  //   description: 'thisIsATestProduct',
+  //   price: 499,
+  //   quantity: 3
+  // })
+  // .then(product => {
+  //   quantityChecker = product
+  // })
+  //
+  // describe('quantity field', () => {
+  //   it('should be greater than zero', () => {
+  //     expect(quantityChecker.quantity).to.be.at.least(0)
+  //   })
+  // })
 
   // describe('associations', () => {
   //   it('should have three associations', () => {
