@@ -5,7 +5,7 @@ secrets.js
 .DS_Store
 npm-debug.log
 yarn-error.log
-.idea/workspace.xml
+.idea
 
 # Webpack Semantic Files
 674f50d287a8c48dc19ba404d20fe713.eot
