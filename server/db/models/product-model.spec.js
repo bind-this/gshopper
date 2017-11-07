@@ -2,7 +2,8 @@
 
 const { expect, assert} = require('chai')
 const db = require('../index')
-const Product = db.model('product')
+// const Product = db.model('product')
+import { Product } from './'
 
 describe('Product model', () => {
   beforeEach( () => {

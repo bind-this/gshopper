@@ -2,7 +2,8 @@
 
 const { expect } = require('chai')
 const db = require('../index')
-const Review = db.model('review')
+// const Review = db.model('review')
+import { Review } from './'
 
 describe('Review model', () => {
   beforeEach(() => {

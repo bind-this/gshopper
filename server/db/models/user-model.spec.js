@@ -2,7 +2,8 @@
 
 const { expect, assert } = require('chai')
 const db = require('../index')
-const User = db.model('user')
+// const User = db.model('user')
+import { User } from './'
 
 describe('User model', () => {
   beforeEach(() => {
