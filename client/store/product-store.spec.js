@@ -31,7 +31,7 @@ describe('Product redux', () => {
 
   const testProdId
 
-  beforeEach(() => {
+  beforeEach( () => {
     mockAxios = new MockAdapter(axios)
     store = mockStore(initialState)
     // mockAxios.onPost('/api/products/').replyOnce(201, testProd)
@@ -40,7 +40,7 @@ describe('Product redux', () => {
       console.log(product)
       testProdId = product.id
       return testProdId
-    }
+    })
   })
 
   afterEach(() => {
