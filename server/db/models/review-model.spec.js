@@ -18,9 +18,9 @@ describe('Review model', () => {
     testReview = review
   })
 
-  describe('associations', () => {
-    it('should have two associations', () => {
-      expect(Object.keys(Review.associations)).to.deep.equal(['user', 'product'])
-    })
-  })
+  // describe('associations', () => {
+  //   it('should have two associations', () => {
+  //     expect(Object.keys(Review.associations)).to.deep.equal(['user', 'product'])
+  //   })
+  // })
 })

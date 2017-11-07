@@ -27,9 +27,9 @@ describe('Product model', () => {
     })
   })
 
-  describe('associations', () => {
-    it('should have three associations', () => {
-      expect(Object.keys(Product.associations)).to.deep.equal(['reviews', 'order_products', 'categories'])
-    })
-  })
+  // describe('associations', () => {
+  //   it('should have three associations', () => {
+  //     expect(Object.keys(Product.associations)).to.deep.equal(['reviews', 'order_products', 'categories'])
+  //   })
+  // })
 })
