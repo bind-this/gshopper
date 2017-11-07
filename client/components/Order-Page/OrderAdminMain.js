@@ -51,10 +51,10 @@ class OrderAdmin extends Component {
     return (
       <div>
         {this.filteredList.length < 1 ? (
-          <div>
+          <h3>
             <form>
-              <label>Filter by Order Status:</label>
-              <select onChange={this.filterSelect.bind} name="order">
+              <label>Filter by Order Status: {this.orderStatus}</label>
+              <select onChange={this.filterSelect.bind(this)} name="order">
                 <option />
                 <option value="created">Created</option>
                 <option value="completed">Completed</option>
@@ -62,11 +62,11 @@ class OrderAdmin extends Component {
                 <option value="cancelled">Cancelled</option>
               </select>
             </form>
-            <h2> {this.notice} </h2>
-          </div>
+            {this.notice}
+          </h3>
         ) : (
           <div>
-            <div>
+            <h3>
               <form>
                 <label>Filter by Order Status:</label>
                 <select onChange={this.filterSelect} name="order">
@@ -77,7 +77,7 @@ class OrderAdmin extends Component {
                   <option value="cancelled">cancelled</option>
                 </select>
               </form>
-            </div>
+            </h3>
             <div>
               {this.filteredList.map(order => {
                 let orderTotal = 0
