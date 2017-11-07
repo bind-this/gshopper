@@ -7,16 +7,6 @@ import EditReviewButton from './EditReviewButton';
 import DeleteReviewButton from './DeleteReviewButton';
 
 const MapReview = props => {
-  let user = props.user;
-  let visable = false;
-  visable =
-    user &&
-    user.orders &&
-    user.orders[0].order_products &&
-    user.orders.some(order =>
-      order.order_products.some(obj => obj.product.id === props.product.id)
-    );
-
   return (
     <div>
       {props.reviews &&
@@ -41,7 +31,7 @@ const MapReview = props => {
               </div>
               <div className="text">{review.comment}</div>
             </div>
-            { visable && review.user.id === props.user.id
+            { review.user.id === props.user.id
               ? <div className="ui buttons">
                   <EditReviewButton review={review.id} />
                   <DeleteReviewButton review={review.id} />
