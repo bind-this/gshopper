@@ -29,12 +29,9 @@ const checkoutSuccess = (
   changeCartItem,
   updateStatus
 ) => {
-  console.log('in billing', user)
   const currentOrder = user.orders.find(order => order.status === 'created')
-  console.log('currentOrder; ', currentOrder)
   currentOrder.order_products.map(lineItem => {
     // set order_product lines purchasePrice to current price
-    console.log(changeCartItem)
     changeCartItem({
       ...lineItem,
       purchasePrice: lineItem.product.price
