@@ -11,21 +11,35 @@ router.post('/', (req, res, next) => {
 
 // POST - add an item to cart
 router.post('/cart', (req, res, next) => {
-  Order.findOrCreate({
+  Order.findOne({
     where: {
       status: 'created',
-      userId: req.body.userId
+      $or: [
+        {
+          userId: req.body.userId,
+        },
+        {
+          sessionId: req.sessionID,
+        }
+      ]
     }
   })
-    .spread(order => {
-      req.body.orderId = order.id
-      return Order_Product.findOne({
-        where: {
-          productId: req.body.productId,
-          orderId: req.body.orderId
-        }
-      })
+  .then(foundOrder => {
+    if (!foundOrder) {
+      foundOrder = Order.create({
+          status: 'created',
+          userId: req.body.userId,
+          sessionId: req.sessionID
+      }).then(ord => console.log(ord))
+    }
+    req.body.orderId = foundOrder.id
+    return Order_Product.findOne({
+      where: {
+        productId: req.body.productId,
+        orderId: req.body.orderId
+      }
     })
+  })
     .then(oproduct => {
       if (!oproduct) {
         return Order_Product.create(req.body).then(result => {
@@ -43,10 +57,6 @@ router.post('/cart', (req, res, next) => {
     })
     .catch(next)
 
-  // Order.findOrCreate()
-  // Order_Product.create(req.body)
-  // .then(order_product => res.json(order_product))
-  // .catch(next)
 })
 
 // router.param to catch :Id
