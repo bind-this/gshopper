@@ -26,7 +26,11 @@ class Main extends Component {
     return (
       <div>
         <Menu size="large" borderless>
-          <Menu.Item fitted onClick={() => history.push('/')}>
+          <Menu.Item
+            fitted
+            onClick={() => history.push('/')}
+            style={{ background: 'white' }}
+          >
             <Image src="/logo.png" size="medium" style={{ padding: '5px' }} />
           </Menu.Item>
           <Menu.Menu position="right">
