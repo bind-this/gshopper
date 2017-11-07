@@ -3,27 +3,21 @@ import { Button } from 'semantic-ui-react'
 import { addCategory } from '../../store'
 import { connect } from 'react-redux'
 
+let tempCategory = {}
+
 class AddCategory extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.tempCategory = {}
   }
 
   handleChange(evt) {
-    this.tempCategory[evt.target.name] = evt.target.value
+    tempCategory[evt.target.name] = evt.target.value
   }
 
-<<<<<<< HEAD
-  handleSubmit(evt) {
-    evt.preventDefault()
-    this.props.addCategory(this.tempCategory)
-    this.props.hideForm()
-=======
   handleSubmit() {
     this.props.addCategory(tempCategory)
->>>>>>> master
   }
 
   render() {
@@ -48,7 +42,7 @@ class AddCategory extends Component {
 
 const mapState = state => {
   return {
-    categories: state.categories
+    user: state.user
   }
 }
 

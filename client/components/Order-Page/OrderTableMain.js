@@ -5,19 +5,17 @@ import { fetchOrders } from '../../store'
 import OrderTable from './OrderTable'
 import TableHeader from './TableHeader'
 
-class OrderTableMain extends Component {
-  constructor(props) {
-    super(props)
-    this.notice = null
-  }
+let total = 0
+let notice
 
+class OrderEdit extends Component {
   componentWillMount() {
-    this.notice = 'Loading...'
+    notice = 'Loading...'
   }
 
   componentDidMount() {
     !this.props.orders.length && this.props.fetchOrders()
-    this.notice = 'No Oders to Display'
+    notice = 'No Oders to Display'
   }
 
   render() {
@@ -27,14 +25,14 @@ class OrderTableMain extends Component {
     const filteredList = grabUserOrders.filter(
       order => order.status !== 'created'
     )
+
     return (
       <div>
         {filteredList.length < 1 ? (
-          <h2>{this.notice}</h2>
+          <h2>{notice}</h2>
         ) : (
           <div>
             {filteredList.map(order => {
-              let orderTotal = 0
               return (
                 <div key={order.id}>
                   <Table celled padded>
@@ -42,8 +40,7 @@ class OrderTableMain extends Component {
                     {order.order_products.map(orderProd => {
                       return this.props.products.map(product => {
                         if (product.id === orderProd.productId) {
-                          orderTotal +=
-                            orderProd.quantity * orderProd.purchasePrice
+                          total += orderProd.quantity * orderProd.purchasePrice
                           return (
                             <OrderTable
                               key={order.id}
@@ -55,7 +52,7 @@ class OrderTableMain extends Component {
                       })
                     })}
                   </Table>
-                  <h3>Order Total: ${orderTotal / 100}</h3>
+                  <h3>Order Total: ${total / 100}</h3>
                   <h4>Order Status : {order.status}</h4>
                   <h5>Order Placed : {order.createdAt.slice(0, 10)}</h5>
                 </div>
@@ -82,4 +79,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(OrderTableMain)
+export default connect(mapState, mapDispatch)(OrderEdit)

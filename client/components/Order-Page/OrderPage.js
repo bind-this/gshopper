@@ -20,7 +20,8 @@ class OrderPage extends Component {
 const mapState = state => {
   return {
     user: state.user,
-    orders: state.orders
+    orders: state.orders,
+    products: state.products
   }
 }
 

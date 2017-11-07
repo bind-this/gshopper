@@ -25,6 +25,7 @@ export const fetchProducts = () => dispatch =>
     .catch(err => console.log(err))
 
 export const addProduct = product => () => {
+  console.log('STORE', product)
   axios
     .post('/api/products', product)
     .then()
