@@ -1,5 +1,6 @@
 import React from 'react'
 import { Header, Table, Image } from 'semantic-ui-react'
+import history from '../../history'
 
 const OrderAdminTable = props => {
   return (
@@ -11,7 +12,7 @@ const OrderAdminTable = props => {
               height="75px"
               width="75px"
               src={props.product.img}
-              onClick={() => history.push(`/product/${props.product.id}`)}
+              onClick={() => history.push(`/products/${props.product.id}`)}
               style={{ cursor: 'pointer' }}
             />
           </Header>

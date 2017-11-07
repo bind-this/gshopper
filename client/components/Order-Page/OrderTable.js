@@ -11,7 +11,7 @@ const OrderTable = props => {
               height="75px"
               width="75px"
               src={props.product.img}
-              onClick={() => history.push(`/product/${props.product.id}`)}
+              onClick={() => history.push(`/products/${props.product.id}`)}
               style={{ cursor: 'pointer' }}
             />
           </Header>

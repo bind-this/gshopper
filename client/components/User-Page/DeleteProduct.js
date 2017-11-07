@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Button } from 'semantic-ui-react'
-import { adminEdit } from '../../store'
+import { deleteProduct } from '../../store'
 import { connect } from 'react-redux'
 
-class AddAdmin extends Component {
+class DeleteProduct extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -17,7 +17,7 @@ class AddAdmin extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault()
-    this.props.adminEdit(this.userId)
+    this.props.deleteProduct(this.userId)
     this.props.hideForm()
   }
 
@@ -27,15 +27,15 @@ class AddAdmin extends Component {
         <form onSubmit={this.handleSubmit}>
           <select name="user" required="required" onChange={this.handleChange}>
             <option>Select User</option>
-            {this.props.users.map(user => {
+            {this.props.products.map(product => {
               return (
-                <option value={user.id} key={user.id}>
-                  {user.email}
+                <option value={product.id} key={product.id}>
+                  {product.name}
                 </option>
               )
             })}
           </select>
-          <Button type="submit">Add Admin</Button>
+          <Button type="submit">Delete</Button>
         </form>
       </h3>
     )
@@ -44,14 +44,14 @@ class AddAdmin extends Component {
 
 const mapState = state => {
   return {
-    users: state.users
+    products: state.products
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    adminEdit: id => dispatch(adminEdit(id))
+    deleteProduct: id => dispatch(deleteProduct(id))
   }
 }
 
-export default connect(mapState, mapDispatch)(AddAdmin)
+export default connect(mapState, mapDispatch)(DeleteProduct)

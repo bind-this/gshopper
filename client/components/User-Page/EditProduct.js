@@ -1,23 +1,31 @@
 import React, { Component } from 'react'
 import { Card, Button, Grid } from 'semantic-ui-react'
-import { addProduct } from '../../store'
+import { editProduct } from '../../store'
 import { connect } from 'react-redux'
 
-class AddProduct extends Component {
+class EditProduct extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChangeProduct = this.handleChangeProduct.bind(this)
     this.tempProduct = {}
+    this.productId = ''
   }
 
   handleChange(evt) {
     this.tempProduct[evt.target.name] = evt.target.value
+    console.log(this.tempProduct)
+  }
+
+  handleChangeProduct(evt) {
+    this.productId = evt.target.value
+    console.log(this.productId)
   }
 
   handleSubmit(evt) {
     evt.preventDefault()
-    this.props.addProduct(this.tempProduct)
+    this.props.editProduct(this.productId, this.tempProduct)
     this.props.hideForm()
   }
 
@@ -27,12 +35,28 @@ class AddProduct extends Component {
         <Card.Content>
           <Grid padded>
             <Grid.Row>
-              <Grid.Column width={6}>
+              <Grid.Column width={9}>
                 <div>
+                  <h3>
+                    Choose Product
+                    <select
+                      name="product"
+                      required="required"
+                      onChange={this.handleChangeProduct}
+                    >
+                      <option>Select Category</option>
+                      {this.props.products.map(product => {
+                        return (
+                          <option value={product.id} key={product.id}>
+                            {product.name}
+                          </option>
+                        )
+                      })}
+                    </select>
+                  </h3>
                   <h3>
                     Name :{' '}
                     <input
-                      required="required"
                       type="text"
                       name="name"
                       placeholder="Name"
@@ -42,7 +66,6 @@ class AddProduct extends Component {
                   <h3>
                     Author :{' '}
                     <input
-                      required="required"
                       type="text"
                       name="author"
                       placeholder="Author"
@@ -52,7 +75,6 @@ class AddProduct extends Component {
                   <h3>
                     Description :{' '}
                     <input
-                      required="required"
                       type="text"
                       name="description"
                       placeholder="Description"
@@ -62,7 +84,6 @@ class AddProduct extends Component {
                   <h3>
                     Price :{' '}
                     <input
-                      required="required"
                       type="number"
                       name="price"
                       placeholder="Price"
@@ -76,7 +97,6 @@ class AddProduct extends Component {
                   <h3>
                     Quantity :{' '}
                     <input
-                      required="required"
                       type="number"
                       name="quantity"
                       placeholder="Quantity"
@@ -95,11 +115,7 @@ class AddProduct extends Component {
                   <h3>
                     Availability:
                     <br />
-                    <select
-                      name="available"
-                      required="required"
-                      onChange={this.handleChange}
-                    >
+                    <select name="available" onChange={this.handleChange}>
                       <option>Available</option>
                       <option value="true">True</option>
                       <option value="false">False</option>
@@ -120,15 +136,15 @@ class AddProduct extends Component {
 
 const mapState = state => {
   return {
-    user: state.user,
-    categories: state.categories
+    products: state.products
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    addProduct: product => dispatch(addProduct(product))
+    editProduct: (productId, product) =>
+      dispatch(editProduct(productId, product))
   }
 }
 
-export default connect(mapState, mapDispatch)(AddProduct)
+export default connect(mapState, mapDispatch)(EditProduct)
