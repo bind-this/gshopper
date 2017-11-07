@@ -39,7 +39,7 @@ class AllProducts extends Component {
 
     // filtering by... filters
     let filteredProducts = products.filter(product => {
-      if (!categoryFilters) return true
+      if (!categoryFilters.length) return true
       let categoriesOfProductId = product.categories.map(category => category.id)
       categoryFilters = new Set(categoryFilters)
       categoriesOfProductId = new Set(categoriesOfProductId);
