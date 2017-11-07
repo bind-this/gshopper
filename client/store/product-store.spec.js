@@ -28,19 +28,10 @@ describe('Product redux', () => {
     author: 'creator',
     price: 999
   }
-
-  const testProdId
-
+  
   beforeEach( () => {
     mockAxios = new MockAdapter(axios)
     store = mockStore(initialState)
-    // mockAxios.onPost('/api/products/').replyOnce(201, testProd)
-    store.dispatch(makeProduct(testProdV1))
-    .then( product => {
-      console.log(product)
-      testProdId = product.id
-      return testProdId
-    })
   })
 
   afterEach(() => {
@@ -60,12 +51,6 @@ describe('Product redux', () => {
   //   })
   // })
 
-  it('get product', () => {
-    mockAxios.onGet(`/api/products/${testProdId}`).replyOnce(200, {name: 'primaryApp'})
-    .then( () => {
-      const state = getState()
-    })
-  })
 
   // it('update product', () => {
   //
