@@ -20,7 +20,8 @@ class AllProducts extends Component {
   handleContextRef = contextRef => this.setState({ contextRef })
 
   handleFilterChange (data) {
-    history.push(location.pathname + '?category=' + data.value.join('&category='))
+    if (data.value.length === 0) history.push(location.pathname)
+    else history.push(location.pathname + '?category=' + data.value.join('&category='))
   }
 
   render() {
