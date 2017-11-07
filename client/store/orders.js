@@ -24,12 +24,12 @@ export const fetchOrders = () => dispatch =>
     .then(res => dispatch(getOrders(res.data || defaultOrders)))
     .catch(err => console.log(err))
 
-export const changingStatus = (orderId, status) => () => {
+export const changingStatus = (orderId, status) => dispatch =>
   axios
     .put(`/api/orders/${orderId}`, status)
-    .then()
+    .then(res => console.log('updated:', res))
     .catch(err => console.log(err))
-}
+
 /**
  * REDUCER
  */

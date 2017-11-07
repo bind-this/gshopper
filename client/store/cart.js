@@ -4,7 +4,7 @@ import axios from 'axios'
 /**
  * THUNK CREATORS
  */
-export const sendCartItem = cartItemId => () =>
+export const sendCartItem = cartItemId => dispatch =>
   axios
     .post('/api/order-products/cart', cartItemId)
     .then(
@@ -12,7 +12,7 @@ export const sendCartItem = cartItemId => () =>
     )
     .catch(err => console.log(err))
 
-export const removeCartItem = cartItem => () =>
+export const removeCartItem = cartItem => dispatch =>
   axios
     .delete('/api/order-products/' + cartItem.id)
     .then(
@@ -20,6 +20,11 @@ export const removeCartItem = cartItem => () =>
     )
     .catch(err => console.log(err))
 
+export const updateCartItem = cartItem => dispatch =>
+  axios
+    .put('/api/order-products/' + cartItem.id, cartItem)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
 /**
  * REDUCER
  */
