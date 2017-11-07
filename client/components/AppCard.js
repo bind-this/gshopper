@@ -32,7 +32,7 @@ class AppCard extends Component {
 
   render() {
     return (
-      <Card style={{width: 175}} raised>
+      <Card style={{ width: 175 }} raised>
         <Image
           height="175px"
           src={this.props.product.img}
@@ -64,10 +64,11 @@ class AppCard extends Component {
           <Button
             size="mini"
             floated="right"
+            content="Add"
+            icon="shop"
+            labelPosition="left"
             onClick={() => this.increase(this.props)}
-          >
-            Add To Cart
-          </Button>
+          />
         </Card.Content>
       </Card>
     )
