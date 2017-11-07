@@ -5,6 +5,16 @@ import { sendCartItem, me } from '../store'
 import { connect } from 'react-redux'
 
 class AppCard extends Component {
+  getAverageRating(product) {
+    console.log(product)
+    if (!product.reviews.length) return 3
+    let sum = 0
+    product.reviews
+      .map(review => review.rating)
+      .forEach(rating => (sum += rating))
+    return sum / product.reviews.length
+  }
+
   increase(item) {
     let quantity = 1
     let currentCart =
@@ -49,7 +59,12 @@ class AppCard extends Component {
           <Card.Meta>
             <span className="card-category">
               {this.props.product.categories[0].name}{' '}
-              <Rating icon="star" defaultRating={3} maxRating={5} disabled />
+              <Rating
+                icon="star"
+                maxRating={5}
+                rating={this.getAverageRating(this.props.product)}
+                disabled
+              />
             </span>
           </Card.Meta>
           <Card.Description>

@@ -1,8 +1,18 @@
 import React from 'react'
-import { Card, Label, Grid, Icon, Button } from 'semantic-ui-react'
+import {
+  Card,
+  Segment,
+  Label,
+  Grid,
+  Icon,
+  Button,
+  Header
+} from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 
+import { sendEmail } from '../store'
+
+import history from '../history'
 import Steps from './Steps'
 
 class Confirmation extends React.Component {
@@ -13,18 +23,34 @@ class Confirmation extends React.Component {
       subject: 'Order Confirmation',
       text: 'You placed an amazing order. Thank you for choosing Ethical Apps.'
     }
-    // axios
-    //   .post('/api/email', mailOptions)
-    //   .then(res => console.log(res))
-    //   .catch(err => console.error(err))
+
+    this.props.sendEmail(mailOptions)
   }
 
   render() {
     return (
-      <Grid centered columns={3}>
-        <Grid.Column width={10}>
-          <Steps />
-          YOU DID IT
+      <Grid
+        textAlign="center"
+        style={{ height: '100%' }}
+        verticalAlign="middle"
+      >
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <br />
+          <br />
+          <Segment raised>
+            <Header as="h2" textAlign="center">
+              Thanks{this.props.user.firstName &&
+                ' ' + this.props.user.firstName}!
+            </Header>
+            <Button
+              color="yellow"
+              fluid
+              size="large"
+              onClick={() => history.push('/products')}
+            >
+              Continue Shopping
+            </Button>
+          </Segment>
         </Grid.Column>
       </Grid>
     )
@@ -35,4 +61,6 @@ const mapState = state => ({
   user: state.user
 })
 
-export default connect(mapState)(Confirmation)
+const mapDispatch = { sendEmail }
+
+export default connect(mapState, mapDispatch)(Confirmation)
