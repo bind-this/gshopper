@@ -20,6 +20,11 @@ export const removeCartItem = cartItem => () =>
     )
     .catch(err => console.log(err))
 
+export const updateCartItem = cartItem => () =>
+  axios
+    .put('/api/order-products/' + cartItem.id, cartItem)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
 /**
  * REDUCER
  */

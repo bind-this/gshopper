@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { CardElement, injectStripe } from 'react-stripe-elements'
+import { connect } from 'react-redux'
+
+import { changeProduct, updateCartItem, changingStatus } from '../store'
 import history from '../history'
 
 const createOptions = () => ({
@@ -19,10 +22,31 @@ const createOptions = () => ({
   }
 })
 
-const checkoutSuccess = () => {
-  //order status => completed
-  //order_product purchasePrices get set
-  //product inventory get updated
+const checkoutSuccess = (
+  user,
+  changeProduct,
+  updateCartItem,
+  changingStatus
+) => {
+  console.log('in billing', user)
+  const currentOrder = user.orders.filter(order => order.status === 'created')
+
+  currentOrder.order_products.map(lineItem => {
+    // set order_product lines purchasePrice to current price
+    updateCartItem(
+      Object.assign({}, lineItem, {
+        purchasePrice: lineItem.product.price
+      })
+    )
+    // remove quanity of items from their inventory
+    changeProduct(
+      Object.assign({}, lineItem.product, {
+        quantity: lineItem.product.quantity - lineItem.quantity
+      })
+    )
+    //set current order status to completed
+    changingStatus(currentOrder.id, 'completed')
+  })
 }
 
 class _CardForm extends Component {
@@ -30,7 +54,12 @@ class _CardForm extends Component {
     ev.preventDefault()
     this.props.stripe.createToken().then(payload => {
       if (payload.token) {
-        checkoutSuccess()
+        checkoutSuccess(
+          this.props.user,
+          this.props.changeProduct,
+          this.props.updateCartItem,
+          this.props.changingStatus
+        )
         history.push('/confirmation')
       }
     })
@@ -47,4 +76,14 @@ class _CardForm extends Component {
     )
   }
 }
-export default injectStripe(_CardForm)
+
+const mapState = state => ({
+  user: state.user
+})
+
+const mapDispatch = dispatch => ({
+  changeProduct: product => dispatch(changeProduct(product)),
+  changeCartItem: cartItem => dispatch(updateCartItem(cartItem)),
+  changingStatus: (orderId, status) => dispatch(changingStatus(orderId, status))
+})
+export default connect(mapState, mapDispatch)(injectStripe(_CardForm))
