@@ -13,7 +13,7 @@ const defaultProducts = []
 /**
  * ACTION CREATORS
  */
-const getProducts = products => ({ type: GET_PRODUCTS, products })
+export const getProducts = products => ({ type: GET_PRODUCTS, products })
 
 /**
  * THUNK CREATORS
@@ -25,7 +25,6 @@ export const fetchProducts = () => dispatch =>
     .catch(err => console.log(err))
 
 export const addProduct = product => () => {
-  console.log('STORE', product)
   axios
     .post('/api/products', product)
     .then()
