@@ -25,7 +25,7 @@ class AddReview extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.makeReview(this.tempReview)
+    this.props.makeReview(this.tempReview, this.props.product.id)
   }
 
   render() {
@@ -70,7 +70,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  makeReview: review => dispatch(makeReview(review))
+  makeReview: (review, productId) => dispatch(makeReview(review, productId))
 });
 
 
