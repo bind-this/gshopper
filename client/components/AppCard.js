@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 
 class AppCard extends Component {
   getAverageRating(product) {
-    console.log(product)
     if (!product.reviews.length) return 3
     let sum = 0
     product.reviews
