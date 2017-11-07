@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { CardElement, injectStripe } from 'react-stripe-elements'
 import { connect } from 'react-redux'
 
-import { changeProduct, updateCartItem, changingStatus } from '../store'
+import { me, changeProduct, updateCartItem, changingStatus } from '../store'
 import history from '../history'
 
 const createOptions = () => ({
@@ -24,29 +24,30 @@ const createOptions = () => ({
 
 const checkoutSuccess = (
   user,
-  changeProduct,
-  updateCartItem,
-  changingStatus
+  getUser,
+  updateProduct,
+  changeCartItem,
+  updateStatus
 ) => {
   console.log('in billing', user)
-  const currentOrder = user.orders.filter(order => order.status === 'created')
-
+  const currentOrder = user.orders.find(order => order.status === 'created')
+  console.log('currentOrder; ', currentOrder)
   currentOrder.order_products.map(lineItem => {
     // set order_product lines purchasePrice to current price
-    updateCartItem(
-      Object.assign({}, lineItem, {
-        purchasePrice: lineItem.product.price
-      })
-    )
+    console.log(changeCartItem)
+    changeCartItem({
+      ...lineItem,
+      purchasePrice: lineItem.product.price
+    })
+
     // remove quanity of items from their inventory
-    changeProduct(
-      Object.assign({}, lineItem.product, {
-        quantity: lineItem.product.quantity - lineItem.quantity
-      })
-    )
-    //set current order status to completed
-    changingStatus(currentOrder.id, 'completed')
+    updateProduct({
+      ...lineItem.product,
+      quantity: lineItem.product.quantity - lineItem.quantity
+    })
   })
+  //set current order status to completed
+  updateStatus(currentOrder.id, { status: 'completed' }).then(() => getUser())
 }
 
 class _CardForm extends Component {
@@ -56,9 +57,10 @@ class _CardForm extends Component {
       if (payload.token) {
         checkoutSuccess(
           this.props.user,
-          this.props.changeProduct,
-          this.props.updateCartItem,
-          this.props.changingStatus
+          this.props.getUser,
+          this.props.updateProduct,
+          this.props.changeCartItem,
+          this.props.updateStatus
         )
         history.push('/confirmation')
       }
@@ -82,8 +84,9 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  changeProduct: product => dispatch(changeProduct(product)),
+  updateProduct: product => dispatch(changeProduct(product)),
   changeCartItem: cartItem => dispatch(updateCartItem(cartItem)),
-  changingStatus: (orderId, status) => dispatch(changingStatus(orderId, status))
+  updateStatus: (orderId, status) => dispatch(changingStatus(orderId, status)),
+  getUser: () => dispatch(me())
 })
-export default connect(mapState, mapDispatch)(injectStripe(_CardForm))
+export default injectStripe(connect(mapState, mapDispatch)(_CardForm))

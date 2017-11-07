@@ -13,7 +13,10 @@ class Confirmation extends React.Component {
       subject: 'Order Confirmation',
       text: 'You placed an amazing order. Thank you for choosing Ethical Apps.'
     }
-    axios.post('/api/email', mailOptions)
+    // axios
+    //   .post('/api/email', mailOptions)
+    //   .then(res => console.log(res))
+    //   .catch(err => console.error(err))
   }
 
   render() {
