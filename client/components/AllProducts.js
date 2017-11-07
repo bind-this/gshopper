@@ -37,7 +37,6 @@ class AllProducts extends Component {
 
     categoryFilters = categoryFilters.map(cat => +cat)
 
-    console.log({categoryFilters})
     // filtering by... filters
     let filteredProducts = products.filter(product => {
       if (!categoryFilters.length) return true
