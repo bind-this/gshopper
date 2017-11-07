@@ -88,7 +88,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchReview: reviewId => dispatch(fetchReview(reviewId)),
+  fetchReview: productId => dispatch(fetchReview(productId)),
   fetchProduct: productId => dispatch(fetchProduct(productId)),
   changeProduct: product => dispatch(changeProduct(product)),
   removeProduct: productId => dispatch(removeProduct(productId))

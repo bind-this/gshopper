@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 
+
 /**
  * ACTION TYPES
  */
@@ -20,6 +21,13 @@ export const fetchReview = (productId) =>
     axios.get(`/api/reviews/product-review/${productId}`)
       .then(res => dispatch(getReview(res.data)))
       .catch(err => console.log(err))
+
+export const makeReview = (review, productId) =>
+  dispatch =>
+    axios.post(`/api/reviews`, review)
+      .then(() => axios.get(`/api/reviews/product-review/${productId}`)
+      .then(res => dispatch(getReview(res.data)))
+      .catch(err => console.log(err)))
 
 /**
  * REDUCER
