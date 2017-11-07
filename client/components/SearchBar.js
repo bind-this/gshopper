@@ -43,7 +43,8 @@ class SearchBar extends Component {
   resetComponent = () =>
     this.setState({ isLoading: false, results: [], value: '' })
 
-  handleResultSelect = (__, { result }) => history.push(`/product/${result.id}`)
+  handleResultSelect = (__, { result }) =>
+    history.push(`/products/${result.id}`)
 
   handleKeyPress = target => {
     if (target.charCode === 13) {

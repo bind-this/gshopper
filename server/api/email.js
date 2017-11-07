@@ -1,9 +1,11 @@
 const router = require('express').Router()
 const nodemailer = require('nodemailer')
 
+const emailConfig = require('../../secrets')
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
-  auth: process.env.EMAIL_CONFIG
+  auth: emailConfig
 })
 
 router.post('/', (req, res, next) => {

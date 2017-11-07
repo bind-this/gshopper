@@ -52,6 +52,12 @@ export const updatingUser = (userId, updates) => dispatch => {
     .catch(err => console.log(err))
 }
 
+export const sendEmail = mailOptions => () =>
+  console.log('MAILMAILMAIL: ', mailOptions) ||
+  axios
+    .post('/api/email', mailOptions)
+    .then(res => console.log(res))
+    .catch(err => console.error(err))
 /**
  * REDUCER
  */
