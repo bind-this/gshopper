@@ -11,6 +11,7 @@ router.post('/', (req, res, next) => {
 
 // POST - add an item to cart
 router.post('/cart', (req, res, next) => {
+  console.log('first req.body', req.body)
   Order.findOne({
     where: {
       status: 'created',
@@ -26,32 +27,40 @@ router.post('/cart', (req, res, next) => {
   })
   .then(foundOrder => {
     if (!foundOrder) {
+      console.log('order not found, creating it')
       foundOrder = Order.create({
           status: 'created',
           userId: req.body.userId,
           sessionId: req.sessionID
-      }).then(ord => console.log(ord))
+      })
     }
-    req.body.orderId = foundOrder.id
-    return Order_Product.findOne({
-      where: {
-        productId: req.body.productId,
-        orderId: req.body.orderId
-      }
+    return foundOrder})
+    .then(foundOrder => {
+      req.body.orderId = foundOrder.id
+      console.log('orderId is', req.body.orderId)
+      return Order_Product.findOne({
+        where: {
+          productId: req.body.productId,
+          orderId: req.body.orderId
+        }
+      })
+
     })
-  })
     .then(oproduct => {
       if (!oproduct) {
+        console.log('creating db entry with', req.body)
         return Order_Product.create(req.body).then(result => {
           return result.toJSON()
         })
       } else {
+        console.log(oproduct)
         return oproduct.update(req.body).then(result => {
           return result.toJSON()
         })
       }
     })
     .then(result => {
+      console.log('sending results')
       res.json(result)
       return null
     })
