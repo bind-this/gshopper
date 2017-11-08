@@ -20,13 +20,15 @@ describe('Product redux', () => {
 
   const testProdV1 = {
     name: 'primaryApp',
-    price: 799
+    price: 799,
+    id: 1
   }
 
   const testProdV2 = {
     name: 'BetterPrimaryApp',
     author: 'creator',
-    price: 999
+    price: 999,
+    id: 1
   }
 
   beforeEach( () => {
@@ -43,18 +45,23 @@ describe('Product redux', () => {
   // delete product as well
   // name, author, description, price, quantity
 
-  // it('add product', () => {
-  //   mockAxios.onPost('/api/products/').replyOnce(201, testProd)
-  //   return store.dispatch(makeProduct(testProd))
-  //   .then( result => {
-  //     expect(result.product.price).to.be.equal(799)
-  //   })
-  // })
+  it('add product', () => {
+    mockAxios.onPost('/api/products/', testProdV1).replyOnce(201, testProdV1)
+    return store.dispatch(makeProduct(testProdV1))
+    .then( result => {
+      const newProduct = result.product
+      expect(newProduct.price).to.be.equal(799)
+    })
+  })
 
 
   // it('update product', () => {
-  //
-  // })
+  //   // mockAxios.onPut(`/api/products/1`).replyOnce(201)
+  //   return store.dispatch(changeProduct(testProdV2))
+  //   .then( result => {
+  //     console.log(result)
+  //   })
+
 
   // delete
 
