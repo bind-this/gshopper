@@ -22,10 +22,12 @@ class MapReview extends Component {
   }
 
   render() {
+    const sortedReviews = this.props.reviews.sort((review1, review2) => review1.id - review2.id)
+
     return (
       <div>
         {this.props.reviews &&
-          this.props.reviews.map(review => (
+          sortedReviews.map(review => (
             <div key={review.id}>
               {this.state.editId !== review.id ? (
                 <div className="comment">
