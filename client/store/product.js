@@ -34,10 +34,15 @@ export const makeProduct = (product) =>
       .catch(err => console.log(err))
 
 export const changeProduct = (product) =>
-  dispatch =>
+  dispatch => {
+      console.log('HERE')
+      console.log(product)
     axios.put(`/api/products/${product.id}`, product)
-      .then(res => dispatch(editProduct(res.data)))
-      .catch(err => console.log(err))
+      .then(res => {
+        console.log('TESTINGGGGGGGGGGGGGGGG')
+        dispatch(editProduct(res.data))
+      })
+      .catch(err => console.log(err)) }
 
 export const removeProduct = (productId) =>
   dispatch =>

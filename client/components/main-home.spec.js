@@ -1,0 +1,36 @@
+// main home tests
+
+import React from 'react'
+import { expect } from 'chai'
+import enzyme, {shallow} from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+
+const adapter = new Adapter()
+enzyme.configure({adapter})
+
+import sinon from 'sinon'
+
+import Main from './main'
+import SearchBar from './SearchBar'
+
+// check if mapStatetoprops is correct
+// check if it has a function
+// check if functions are bound correctly
+// check props passing
+// check if something is a form
+// check if forms have onchange or onsubmit functions
+
+// check for SearchBar
+describe('Main components', () => {
+  let Mainhome
+  beforeEach( () => {
+    Mainhome = shallow(<Main />)
+  })
+
+  it('has SearchBar', () => {
+    console.log(Mainhome)
+    expect(Mainhome.length).to.be.equal(1)
+  })
+
+})
+// check isLoggedIn boolean status and if rendered parts are there

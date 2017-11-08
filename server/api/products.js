@@ -6,6 +6,7 @@ const Category = require('../db/models/category')
 
 //PARAM - sets product instance to req.product
 router.param('id', (req, res, next, id) => {
+  console.log('testing route')
   Product.findById(id, { include: [{ all: true }] })
     .then(product => {
       if (!product) {
