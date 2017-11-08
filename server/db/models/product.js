@@ -1,5 +1,6 @@
-const Sequelize = require('sequelize');
-const db = require('../db');
+const Sequelize = require('sequelize')
+const db = require('../db')
+const Category = require('./category')
 
 const Product = db.define('product', {
   name: {
@@ -37,6 +38,16 @@ const Product = db.define('product', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
-});
+})
 
-module.exports = Product;
+Product.addCategory = function(productId, categoryId) {
+  return Product.findById(productId).then(productInstance => {
+    return Promise.all(
+      categoryId.map(id => Category.findById(id))
+    ).then(categoryInstance => {
+      return productInstance.setCategories(categoryInstance)
+    })
+  })
+}
+
+module.exports = Product
