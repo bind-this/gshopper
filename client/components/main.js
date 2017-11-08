@@ -25,8 +25,6 @@ class Main extends Component {
     const { children, tryLogout, isLoggedIn, user } = this.props
 
     const storage = JSON.parse(localStorage.getItem('cart'))
-    console.log('user', user)
-    console.log('local storage', storage)
 
     return (
       <div>
@@ -57,7 +55,13 @@ class Main extends Component {
                   </Label>
                 ) : (
                   <div>
-                  { !isLoggedIn ? storage && <Label color="teal">{storage.order_products.length}</Label> : '' }
+                    {!isLoggedIn
+                      ? storage && (
+                          <Label color="teal">
+                            {storage.order_products.length}
+                          </Label>
+                        )
+                      : ''}
                   </div>
                 )}
               </Menu.Item>
