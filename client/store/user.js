@@ -30,7 +30,14 @@ export const auth = (email, password, method) => dispatch =>
   axios
     .post(`/auth/${method}`, { email, password })
     .then(res => {
-      dispatch(getUser(res.data))
+      return axios
+        .post('/api/order-products/merge', {
+          user: res.data
+        })
+    })
+    .then(res => {
+      console.log('res back from merge', res)
+      dispatch(getUser(res))
       history.push('/')
     })
     .catch(error => dispatch(getUser({ error })))

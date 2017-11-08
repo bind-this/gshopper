@@ -23,6 +23,11 @@ class Main extends Component {
 
   render() {
     const { children, tryLogout, isLoggedIn, user } = this.props
+
+    const storage = JSON.parse(localStorage.getItem('cart'))
+    console.log('user', user)
+    console.log('local storage', storage)
+
     return (
       <div>
         <Menu size="large" borderless>
@@ -40,6 +45,8 @@ class Main extends Component {
                 <Icon size="big" name="shop" />
                 {user.id &&
                 user.orders &&
+                user.orders[0] &&
+                user.orders[0].status &&
                 user.orders.filter(order => order.status === 'created')
                   .length ? (
                   <Label color="teal">
@@ -49,7 +56,9 @@ class Main extends Component {
                     }
                   </Label>
                 ) : (
-                  ''
+                  <div>
+                  { !isLoggedIn ? storage && <Label color="teal">{storage.order_products.length}</Label> : '' }
+                  </div>
                 )}
               </Menu.Item>
             </Menu.Item>
