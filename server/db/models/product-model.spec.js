@@ -22,15 +22,15 @@ describe('Product model', () => {
     quantityChecker = product
   })
 
-  describe('quantity field', () => {
-    it('should be greater than zero', () => {
-      expect(quantityChecker.quantity).to.be.at.least(0)
-    })
-  })
-
-  describe('associations', () => {
-    it('should have three associations', () => {
-      expect(Object.keys(Product.associations)).to.deep.equal(['reviews', 'order_products', 'categories'])
-    })
-  })
+  // describe('quantity field', () => {
+  //   it('should be greater than zero', () => {
+  //     expect(quantityChecker.quantity).to.be.at.least(0)
+  //   })
+  // })
+  //
+  // describe('associations', () => {
+  //   it('should have three associations', () => {
+  //     expect(Object.keys(Product.associations)).to.deep.equal(['reviews', 'order_products', 'categories'])
+  //   })
+  // })
 })
