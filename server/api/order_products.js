@@ -15,16 +15,21 @@ router.post('/cart', (req, res, next) => {
   Order.findOne({
     where: {
       status: 'created',
-      $or: [
-        {
-          userId: req.body.userId,
-        },
-        {
-          sessionId: req.sessionID,
-        }
-      ]
+      userId: req.body.userId
     }
   })
+  .then(foundOrder => {
+    console.log('foundOrder', foundOrder)
+    if (!foundOrder) {
+      foundOrder = Order.findOne({
+        where: {
+          status: 'created',
+          sessionId: req.sessionID,
+            }
+        })
+      }
+      return foundOrder
+})
   .then(foundOrder => {
     if (!foundOrder) {
       console.log('order not found, creating it')
@@ -66,6 +71,40 @@ router.post('/cart', (req, res, next) => {
     })
     .catch(next)
 
+})
+
+router.post('/merge', (req, res, next) => {
+  Order.findOrCreate({
+    where: {
+      userId: req.body.user.id,
+      status: 'created'
+    }
+  })
+  .then(userOrder => {
+    console.log('req.sessionId', req.sessionID)
+    Order.findOne({
+      where: {
+        sessionId: req.sessionID,
+        status: 'created'
+      }
+    })
+    .then(sessionOrder => {
+      console.log('sessionOrder', sessionOrder)
+      console.log('userOrder', userOrder)
+      Order_Product.update({
+        orderId: userOrder[0].id
+      }, {
+        where: {
+          orderId: sessionOrder.id
+        }, returning: true
+      }).then(updatedItems => {
+        console.log('updatedItems', updatedItems[1][0])
+        res.json(req.body.user)
+        return null
+      })
+    })
+  })
+  .catch(next)
 })
 
 // router.param to catch :Id

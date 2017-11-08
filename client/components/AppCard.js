@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import { Card, Icon, Image, Rating, Button } from 'semantic-ui-react'
 import history from '../history'
-import { sendCartItem, me } from '../store'
+import { sendCartItem, me, getAnonCart } from '../store'
 import { connect } from 'react-redux'
+import axios from 'axios'
 
 class AppCard extends Component {
   increase(item) {
     let quantity = 1
     let currentCart =
       this.props.user.orders &&
+      this.props.user.orders.status &&
       this.props.user.orders.find(order => order.status === 'created')
     if (
       currentCart &&
@@ -25,9 +27,20 @@ class AppCard extends Component {
     const cartItem = {
       productId: item.product.id,
       quantity: quantity,
-      userId: this.props.user.id
+      userId: this.props.user.id || null
     }
     this.props.updateCartItem(cartItem)
+    this.getAnonCart()
+  }
+
+  getAnonCart () {
+    axios
+    .get('/api/orders/anon')
+    .then(res => {
+      localStorage.setItem('cart', JSON.stringify(res.data))
+      console.log('local storage is set to: ', localStorage.getItem('cart'))
+    })
+    .catch(err => console.log(err))
   }
 
   render() {
