@@ -1,56 +1,62 @@
 'use strict';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { makeReview, fetchProduct } from '../../store';
+import { editReview } from '../../store';
 
 class EditReviewForm extends Component {
   constructor(props) {
     super(props);
-    this.tempReview = {};
+    this.state = {
+      comment: this.props.review.comment,
+      rating: this.props.review.rating
+    };
     this.handleCommentChange = this.handleCommentChange.bind(this);
     this.handleRatingChange = this.handleRatingChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleCommentChange(event) {
-    this.tempReview[event.target.name] = event.target.value;
+    this.setState({ comment: event.target.value })
   }
 
   handleRatingChange(event) {
-    this.tempReview.userId = this.props.user.id;
-    this.tempReview.productId = this.props.product.id;
-    this.tempReview[event.target.name] = event.target.value;
+    this.setState({ rating: event.target.value })
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.makeReview(this.tempReview, this.props.product.id);
-    this.props.fetchProduct(this.props.product.id);
-    this.tempReview = {
-      comment: '',
-      rating: 0
-    }
+    this.props.handleClick(0)
+    this.props.editReview(this.state, this.props.review.id, this.props.product.id);
   }
 
   render() {
+    let review = this.props.review
+    let user = review.user
+
     return (
       <div>
-        <form onSubmit={this.handleSubmit} className="ui reply form">
-          Submit Review
+        <div className="comment">
+          <a className="avatar">
+            <img src={ user && user.img } />
+          </a>
+          <div className="content">
+            <a className="author">{ user && `${user.firstName} ${user.lastName}`}</a>
+          </div>
+        </div>
+        <form onSubmit={ this.handleSubmit } className="ui reply form">
           <textarea
             type="text"
-            placeholder="submit review here"
             className="field"
-            value={ this.tempReview.comment }
+            value={ this.state.comment }
             name="comment"
-            onChange={this.handleCommentChange}
+            onChange={ this.handleCommentChange }
           />
           <select
             className="field"
             required="required"
-            value={ this.tempReview.rating }
+            value={ this.state.rating }
             name="rating"
-            onChange={this.handleRatingChange}
+            onChange={ this.handleRatingChange }
           >
             <option />
             <option>1</option>
@@ -62,9 +68,9 @@ class EditReviewForm extends Component {
           <button
             type="submit"
             className="ui blue labeled submit icon button"
-            style={{ padding: '1em' }}
+            style={{ margin: '0.5em' }}
           >
-            Submit Review
+            Edit Review
           </button>
         </form>
       </div>
@@ -73,14 +79,12 @@ class EditReviewForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  review: state.review,
   user: state.user,
   product: state.product
 });
 
 const mapDispatchToProps = dispatch => ({
-  makeReview: (review, productId) => dispatch(makeReview(review, productId)),
-  fetchProduct: id => dispatch(fetchProduct(id))
+  editReview: (newReview, reviewId, productId) => dispatch(editReview(newReview, reviewId, productId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditReviewForm);

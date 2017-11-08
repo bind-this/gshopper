@@ -11,7 +11,7 @@ class DeleteReviewButton extends Component {
   }
 
   handleClick() {
-    this.props.deleteReview(this.props.review, this.props.product.id);
+    this.props.deleteReview(this.props.reviewId, this.props.product.id);
   }
 
   render() {
@@ -19,7 +19,7 @@ class DeleteReviewButton extends Component {
       <button
         type="submit"
         className="mini ui button"
-        style={{ padding: '1em' }}
+        style={{ margin: '0 0 0.5em 0' }}
         onClick={ () => this.handleClick() }
       >
         Delete
