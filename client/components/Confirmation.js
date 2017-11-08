@@ -1,19 +1,10 @@
 import React from 'react'
-import {
-  Card,
-  Segment,
-  Label,
-  Grid,
-  Icon,
-  Button,
-  Header
-} from 'semantic-ui-react'
+import { Segment, Grid, Button, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import { sendEmail } from '../store'
+import { sendEmail, me } from '../store'
 
 import history from '../history'
-import Steps from './Steps'
 
 class Confirmation extends React.Component {
   componentDidMount() {
@@ -23,7 +14,7 @@ class Confirmation extends React.Component {
       subject: 'Order Confirmation',
       text: 'You placed an amazing order. Thank you for choosing Ethical Apps.'
     }
-
+    this.props.getUser()
     this.props.sendEmail(mailOptions)
   }
 
@@ -61,6 +52,9 @@ const mapState = state => ({
   user: state.user
 })
 
-const mapDispatch = { sendEmail }
+const mapDispatch = dispatch => ({
+  sendEmail: () => sendEmail(),
+  getUser: () => dispatch(me())
+})
 
 export default connect(mapState, mapDispatch)(Confirmation)
