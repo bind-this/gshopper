@@ -28,12 +28,7 @@ class AddCategory extends Component {
         <br />
         <form onSubmit={this.handleSubmit}>
           Category:{' '}
-          <input
-            type="text"
-            name="name"
-            placeholder={'Category'}
-            onChange={this.handleChange}
-          />
+          <input type="text" name="name" placeholder={'Category'} onChange={this.handleChange} />
           <Button type="submit">Submit Info</Button>
         </form>
       </h3>

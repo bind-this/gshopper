@@ -4,6 +4,7 @@ import { Table } from 'semantic-ui-react'
 import { fetchOrders, changingStatus } from '../../store'
 import OrderTable from './OrderAdminTable'
 import TableHeader from './TableHeader'
+import OrderAdminDropDown from './OrderAdminDropDown'
 
 class OrderAdmin extends Component {
   constructor(props) {
@@ -54,13 +55,7 @@ class OrderAdmin extends Component {
           <h3>
             <form>
               <label>Filter by Order Status: {this.orderStatus}</label>
-              <select onChange={this.filterSelect.bind(this)} name="order">
-                <option />
-                <option value="created">Created</option>
-                <option value="completed">Completed</option>
-                <option value="processing">Processing</option>
-                <option value="cancelled">Cancelled</option>
-              </select>
+              <OrderAdminDropDown filterSelect={this.filterSelect.bind(this)} />
             </form>
             {this.notice}
           </h3>
@@ -69,13 +64,9 @@ class OrderAdmin extends Component {
             <h3>
               <form>
                 <label>Filter by Order Status:</label>
-                <select onChange={this.filterSelect} name="order">
-                  <option />
-                  <option value="created">Created</option>
-                  <option value="completed">Completed</option>
-                  <option value="processing">Processing</option>
-                  <option value="cancelled">cancelled</option>
-                </select>
+                <OrderAdminDropDown
+                  filterSelect={this.filterSelect.bind(this)}
+                />
               </form>
             </h3>
             <div>
@@ -105,13 +96,9 @@ class OrderAdmin extends Component {
                     <h4>Order Status : {order.status}</h4>
                     <form onSubmit={evt => this.submitUpdate(evt, order.id)}>
                       <label>Update Order Status</label>
-                      <select onChange={this.updateStatus} name="order">
-                        <option />
-                        <option value="created">Created</option>
-                        <option value="completed">Completed</option>
-                        <option value="processing">Processing</option>
-                        <option value="cancelled">cancelled</option>
-                      </select>
+                      <OrderAdminDropDown
+                        filterSelect={this.updateStatus.bind(this)}
+                      />
                       <button type="submit">Submit Change</button>
                     </form>
                     <h5>Order Placed : {order.createdAt.slice(0, 10)}</h5>

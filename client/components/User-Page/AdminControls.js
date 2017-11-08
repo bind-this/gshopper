@@ -14,121 +14,30 @@ class AdminControls extends Component {
   constructor() {
     super()
     this.state = {
-      newProductShow: false,
+      newProduct: false,
       editProduct: false,
-      deleteProductShow: false,
+      deleteProduct: false,
       productCategory: false,
-      newCategoryShow: false,
-      addAdminShow: false,
-      deleteUserShow: false
+      newCategory: false,
+      addAdmin: false,
+      deleteUser: false
     }
-    this.toggleNewProduct = this.toggleNewProduct.bind(this)
-    this.toggleEditProduct = this.toggleEditProduct.bind(this)
-    this.toggleDeleteProduct = this.toggleDeleteProduct.bind(this)
-    this.toggleNewCategory = this.toggleNewCategory.bind(this)
-    this.toggleAddAdmin = this.toggleAddAdmin.bind(this)
-    this.toggleDeleteUser = this.toggleDeleteUser.bind(this)
-    this.toggleProductCategory = this.toggleProductCategory.bind(this)
-    this.toggleAllFalse = this.toggleAllFalse.bind(this)
+    this.toggleAdminPanel = this.toggleAdminPanel.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchUsers()
   }
 
-  toggleNewProduct = () => {
+  toggleAdminPanel = value => {
     this.setState({
-      newProductShow: true,
-      editProduct: false,
-      deleteProductShow: false,
-      productCategory: false,
-      newCategoryShow: false,
-      addAdminShow: false,
-      deleteUserShow: false
-    })
-  }
-
-  toggleEditProduct = () => {
-    this.setState({
-      newProductShow: false,
-      editProduct: true,
-      deleteProductShow: false,
-      productCategory: false,
-      newCategoryShow: false,
-      addAdminShow: false,
-      deleteUserShow: false
-    })
-  }
-
-  toggleDeleteProduct = () => {
-    this.setState({
-      newProductShow: false,
-      editProduct: false,
-      deleteProductShow: true,
-      productCategory: false,
-      newCategoryShow: false,
-      addAdminShow: false,
-      deleteUserShow: false
-    })
-  }
-
-  toggleProductCategory = () => {
-    this.setState({
-      newProductShow: false,
-      editProduct: false,
-      deleteProductShow: false,
-      productCategory: true,
-      newCategoryShow: false,
-      addAdminShow: false,
-      deleteUserShow: false
-    })
-  }
-
-  toggleNewCategory = () => {
-    this.setState({
-      newProductShow: false,
-      editProduct: false,
-      deleteProductShow: false,
-      productCategory: false,
-      newCategoryShow: true,
-      addAdminShow: false,
-      deleteUserShow: false
-    })
-  }
-
-  toggleAddAdmin = () => {
-    this.setState({
-      newProductShow: false,
-      editProduct: false,
-      deleteProductShow: false,
-      productCategory: false,
-      newCategoryShow: false,
-      addAdminShow: true,
-      deleteUserShow: false
-    })
-  }
-
-  toggleDeleteUser = () => {
-    this.setState({
-      newProductShow: false,
-      editProduct: false,
-      deleteProductShow: false,
-      productCategory: false,
-      newCategoryShow: false,
-      addAdminShow: false,
-      deleteUserShow: true
-    })
-  }
-
-  toggleAllFalse = () => {
-    this.setState({
-      newProductShow: false,
-      editProduct: false,
-      deleteProductShow: false,
-      productCategory: false,
-      newCategoryShow: false,
-      addAdminShow: false,
-      deleteUserShow: false
+      newProduct: value === 'a',
+      editProduct: value === 'b',
+      deleteProduct: value === 'c',
+      productCategory: value === 'd',
+      newCategory: value === 'e',
+      addAdmin: value === 'f',
+      deleteUser: value === 'g'
     })
   }
 
@@ -136,63 +45,73 @@ class AdminControls extends Component {
     return (
       <div>
         <div>
-          <Button onClick={this.toggleNewProduct}>Add New Product</Button>
-          <Button onClick={this.toggleProductCategory}>
+          <Button onClick={() => this.toggleAdminPanel('a')}>
+            Add New Product
+          </Button>
+          <Button onClick={() => this.toggleAdminPanel('d')}>
             Add Category to Product
           </Button>
-          <Button onClick={this.toggleDeleteProduct}>Delete Product</Button>
-          <Button onClick={this.toggleEditProduct}>Edit Product</Button>
-          <Button onClick={this.toggleNewCategory}>
+          <Button onClick={() => this.toggleAdminPanel('c')}>
+            Delete Product
+          </Button>
+          <Button onClick={() => this.toggleAdminPanel('b')}>
+            Edit Product
+          </Button>
+          <Button onClick={() => this.toggleAdminPanel('e')}>
             Add New Product Category
           </Button>
-          <Button onClick={this.toggleAddAdmin}>Grant Admin Status</Button>
-          <Button onClick={this.toggleDeleteUser}>Delete a User</Button>
+          <Button onClick={() => this.toggleAdminPanel('f')}>
+            Grant Admin Status
+          </Button>
+          <Button onClick={() => this.toggleAdminPanel('g')}>
+            Delete a User
+          </Button>
         </div>
         <div>
-          {this.state.newProductShow ? (
-            <AddProduct hideForm={this.toggleAllFalse.bind(this)} />
+          {this.state.newProduct ? (
+            <AddProduct hideForm={this.toggleAdminPanel.bind(this)} />
           ) : (
             ''
           )}
         </div>
         <div>
           {this.state.editProduct ? (
-            <EditProduct hideForm={this.toggleAllFalse.bind(this)} />
+            <EditProduct hideForm={this.toggleAdminPanel.bind(this)} />
           ) : (
             ''
           )}
         </div>
         <div>
           {this.state.productCategory ? (
-            <ProductCategory hideForm={this.toggleAllFalse.bind(this)} />
+            <ProductCategory hideForm={this.toggleAdminPanel.bind(this)} />
           ) : (
             ''
           )}
         </div>
         <div>
-          {this.state.deleteProductShow ? (
-            <DeleteProduct hideForm={this.toggleAllFalse.bind(this)} />
+          {this.state.deleteProduct ? (
+            <DeleteProduct hideForm={this.toggleAdminPanel.bind(this)} />
           ) : (
             ''
           )}
         </div>
         <div>
-          {this.state.newCategoryShow ? (
-            <AddCategory hideForm={this.toggleAllFalse.bind(this)} />
+          {this.state.newCategory ? (
+            <AddCategory hideForm={this.toggleAdminPanel.bind(this)} />
           ) : (
             ''
           )}
         </div>
         <div>
-          {this.state.addAdminShow ? (
-            <AddAdmin hideForm={this.toggleAllFalse.bind(this)} />
+          {this.state.addAdmin ? (
+            <AddAdmin hideForm={this.toggleAdminPanel.bind(this)} />
           ) : (
             ''
           )}
         </div>
         <div>
-          {this.state.deleteUserShow ? (
-            <DeleteUser hideForm={this.toggleAllFalse.bind(this)} />
+          {this.state.deleteUser ? (
+            <DeleteUser hideForm={this.toggleAdminPanel.bind(this)} />
           ) : (
             ''
           )}
