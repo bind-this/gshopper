@@ -47,12 +47,13 @@ describe('Products redux', () => {
     })
 
     it('addProduct invokes posts', () => {
-      const spy = sinon.spy()
-      const postTest = {
+      const postTest = () => {
         name: 'postApp'
       }
+      const spy = sinon.spy(postTest)
       mockAxios.onPost('/api/products').replyOnce(201, postTest)
-      store.dispatch(addProduct(postTest), spy)
+      store.dispatch(addProduct(spy()))
+      sinon.assert.calledOnce(spy)
     })
 
     it('incorrect action type reaches default case', () => {
