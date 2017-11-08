@@ -42,7 +42,7 @@ class EditProduct extends Component {
                       required="required"
                       onChange={this.handleChangeProduct}
                     >
-                      <option>Select Category</option>
+                      <option>Select Product</option>
                       {this.props.products.map(product => {
                         return (
                           <option value={product.id} key={product.id}>
