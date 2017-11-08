@@ -9,15 +9,22 @@ class ProductCategory extends Component {
     this.handleChangeCategory = this.handleChangeCategory.bind(this)
     this.handleChangeProduct = this.handleChangeProduct.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.tempCategoryProduct = {}
+    this.tempCategoryProduct = {
+      category: [],
+      product: ''
+    }
   }
 
   handleChangeCategory(evt) {
-    this.tempCategoryProduct[evt.target.name] = evt.target.value
+    this.tempCategoryProduct[evt.target.name] = this.tempCategoryProduct[
+      evt.target.name
+    ].concat(evt.target.value)
+    console.log(this.tempCategoryProduct)
   }
 
   handleChangeProduct(evt) {
     this.tempCategoryProduct[evt.target.name] = evt.target.value
+    console.log(this.tempCategoryProduct)
   }
 
   handleSubmit(evt) {
@@ -30,6 +37,48 @@ class ProductCategory extends Component {
     return (
       <h3>
         <form onSubmit={this.handleSubmit}>
+          <select
+            name="category"
+            required="required"
+            onChange={this.handleChangeCategory}
+          >
+            <option>Select Category</option>
+            {this.props.categories.map(category => {
+              return (
+                <option value={category.id} key={category.id}>
+                  {category.name}
+                </option>
+              )
+            })}
+          </select>
+          <select
+            name="category"
+            required="required"
+            onChange={this.handleChangeCategory}
+          >
+            <option>Select Category</option>
+            {this.props.categories.map(category => {
+              return (
+                <option value={category.id} key={category.id}>
+                  {category.name}
+                </option>
+              )
+            })}
+          </select>
+          <select
+            name="category"
+            required="required"
+            onChange={this.handleChangeCategory}
+          >
+            <option>Select Category</option>
+            {this.props.categories.map(category => {
+              return (
+                <option value={category.id} key={category.id}>
+                  {category.name}
+                </option>
+              )
+            })}
+          </select>
           <select
             name="category"
             required="required"
