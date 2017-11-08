@@ -78,14 +78,6 @@ class SingleProduct extends Component {
               src={product.altImages && product.altImages[0]}
               style={{ borderRadius: '6%', padding: '3%' }}
             />
-            <Image
-              src={product.altImages && product.altImages[1]}
-              style={{ borderRadius: '6%', padding: '3%' }}
-            />
-            <Image
-              src={product.altImages && product.altImages[2]}
-              style={{ borderRadius: '6%', padding: '3%' }}
-            />
           </Grid.Column>
           <Grid.Column width={8}>
             <Segment.Group raised>

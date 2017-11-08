@@ -29,6 +29,13 @@ export const makeReview = (review, productId) =>
       .then(res => dispatch(getReview(res.data)))
       .catch(err => console.log(err))
 
+export const editReview = (newReview, reviewId, productId) =>
+  dispatch =>
+    axios.put(`/api/reviews/${reviewId}`, newReview)
+      .then(() => axios.get(`/api/reviews/product-review/${productId}`))
+      .then(res => dispatch(getReview(res.data)))
+      .catch(err => console.log(err))
+
 export const deleteReview = (reviewId, productId) =>
   dispatch =>
     axios.delete(`/api/reviews/${reviewId}`)

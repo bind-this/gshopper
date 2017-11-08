@@ -1,15 +1,21 @@
 'use strict';
 
 import React from 'react';
+import { connect } from 'react-redux';
 
-const EditReviewButton = () => (
-  <button
-    type="submit"
-    className="mini ui button"
-    style={{ padding: '1em' }}
-  >
-    Edit
-  </button>
-);
+const EditReviewButton = (props) => {
+    return (
+      <button
+        type="submit"
+        className="mini ui button"
+        style={{ margin: '0 0 0.5em 0' }}
+        onClick={ () => props.handleClick(props.review.id) }
+      >
+        Edit
+      </button>
+    );
+}
 
-export default EditReviewButton;
+const mapStateToProps = state => ({ product: state.product })
+
+export default connect(mapStateToProps)(EditReviewButton);

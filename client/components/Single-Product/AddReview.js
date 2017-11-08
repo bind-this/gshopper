@@ -25,7 +25,7 @@ class AddReview extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.makeReview(this.tempReview, this.props.product.id);
-    this.props.fetchProduct(this.props.product.id);
+    this.props.fetchProduct(this.props.product.id)
     this.tempReview = {
       comment: '',
       rating: 0
@@ -33,13 +33,22 @@ class AddReview extends Component {
   }
 
   render() {
+    let user = this.props.user
+
     return (
       <div>
+        <div className="comment">
+          <a className="avatar">
+            <img src={ user && user.img } />
+          </a>
+          <div className="content">
+            <a className="author">{ user && `${user.firstName} ${user.lastName}`}</a>
+          </div>
+        </div>
         <form onSubmit={this.handleSubmit} className="ui reply form">
-          Submit Review
           <textarea
             type="text"
-            placeholder="submit review here"
+            placeholder="write your review here"
             className="field"
             value={ this.tempReview.comment }
             name="comment"
@@ -62,7 +71,6 @@ class AddReview extends Component {
           <button
             type="submit"
             className="ui blue labeled submit icon button"
-            style={{ padding: '1em' }}
           >
             Submit Review
           </button>
@@ -73,14 +81,13 @@ class AddReview extends Component {
 }
 
 const mapStateToProps = state => ({
-  review: state.review,
   user: state.user,
   product: state.product
 });
 
 const mapDispatchToProps = dispatch => ({
   makeReview: (review, productId) => dispatch(makeReview(review, productId)),
-  fetchProduct: id => dispatch(fetchProduct(id))
+  fetchProduct: (id) => dispatch(fetchProduct(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
