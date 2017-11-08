@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { makeReview, fetchProduct } from '../../store';
 
-class AddReview extends Component {
+class EditReviewForm extends Component {
   constructor(props) {
     super(props);
     this.tempReview = {};
@@ -83,4 +83,4 @@ const mapDispatchToProps = dispatch => ({
   fetchProduct: id => dispatch(fetchProduct(id))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
+export default connect(mapStateToProps, mapDispatchToProps)(EditReviewForm);

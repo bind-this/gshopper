@@ -1,5 +1,5 @@
 import React from 'react'
-import { Label, Grid, Icon, Button } from 'semantic-ui-react'
+import { Label, Grid, Icon, Button, Segment, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import history from '../history'
 import Order from './Order'
@@ -42,7 +42,23 @@ function Cart(props) {
             />
           </div>
         ) : (
-          'Your cart is empty'
+          <div>
+            <br />
+            <br />
+            <Segment raised>
+              <Header as="h2" textAlign="center">
+                Your Cart is empty!
+              </Header>
+              <Button
+                color="yellow"
+                fluid
+                size="large"
+                onClick={() => history.push('/products')}
+              >
+                More Shopping!!
+              </Button>
+            </Segment>
+          </div>
         )}
       </Grid.Column>
     </Grid>

@@ -6,6 +6,15 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 
 class AppCard extends Component {
+  getAverageRating(product) {
+    if (!product.reviews.length) return 3
+    let sum = 0
+    product.reviews
+      .map(review => review.rating)
+      .forEach(rating => (sum += rating))
+    return sum / product.reviews.length
+  }
+
   increase(item) {
     let quantity = 1
     let currentCart =
@@ -45,7 +54,7 @@ class AppCard extends Component {
 
   render() {
     return (
-      <Card style={{width: 175}} raised>
+      <Card style={{ width: 175 }} raised>
         <Image
           height="175px"
           src={this.props.product.img}
@@ -62,7 +71,12 @@ class AppCard extends Component {
           <Card.Meta>
             <span className="card-category">
               {this.props.product.categories[0].name}{' '}
-              <Rating icon="star" defaultRating={3} maxRating={5} disabled />
+              <Rating
+                icon="star"
+                maxRating={5}
+                rating={this.getAverageRating(this.props.product)}
+                disabled
+              />
             </span>
           </Card.Meta>
           <Card.Description>
@@ -77,10 +91,11 @@ class AppCard extends Component {
           <Button
             size="mini"
             floated="right"
+            content="Add"
+            icon="shop"
+            labelPosition="left"
             onClick={() => this.increase(this.props)}
-          >
-            Add To Cart
-          </Button>
+          />
         </Card.Content>
       </Card>
     )
