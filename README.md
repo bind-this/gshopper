@@ -4,9 +4,9 @@ https://ethical-app-store.herokuapp.com/
 
 This is our app store. Our logo has a halo and rests upon a cloud bed, so one knows it is safe and secure. Throughout the store one will find a pleasant and contemporary user-interface, advanced shopping cart operations, and stable user session functionality. Welcome to Ethical App Store.
 
-# React, React-redux, Semantic UI used on front-end
-# Express, Sequelize, google OAuth used on back-end
-# Testing environment uses mocha, chai, sinon, enzyme
+React, React-redux, Semantic UI used on front-end
+Express, Sequelize, google OAuth used on back-end
+Testing environment uses mocha, chai, sinon, enzyme
 
 #####
 # Boilermaker
