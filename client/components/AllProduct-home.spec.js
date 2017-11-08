@@ -12,7 +12,7 @@ describe('All products home', () => {
   let allProductsHome
 
   beforeEach( () => {
-    allProductsHome = shallow(<AllProducts props='Filters'/>)
+    allProductsHome = shallow(<AllProducts location={'search'}/>)
   })
 
   // it('has bound functions', () => {
@@ -20,7 +20,7 @@ describe('All products home', () => {
   // })
   //
   // it('has a Filter title', () => {
-  //   expect(allProductshome).to.
+    // expect(allProductshome.find('h1').text()).to.be.equal('Filters')
   // })
 
 
