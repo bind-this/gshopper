@@ -5,7 +5,7 @@ const { Order } = require('../db/models')
 // POST - create a new order /api/order-products/
 router.post('/', (req, res, next) => {
   Order_Product.create(req.body)
-    .then(order_product => res.json(order_product))
+    .then(order_product => res.status(201).json(order_product))
     .catch(next)
 })
 
@@ -129,14 +129,14 @@ router.param('id', (req, res, next, orderProductId) => {
 
 // GET - find by Id /api/order-products/:id
 router.get('/:id', (req, res, next) => {
-  res.json(req.orderProduct)
+  res.status(200).json(req.orderProduct)
 })
 
 // PUT - update an existing order /api/orders/:id
 router.put('/:id', (req, res, next) => {
   req.orderProduct
     .update(req.body)
-    .then(orderProduct => res.json(orderProduct))
+    .then(orderProduct => res.status(201).json(orderProduct))
     .catch(next)
 })
 
