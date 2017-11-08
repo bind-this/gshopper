@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { CardElement, injectStripe } from 'react-stripe-elements'
 import { connect } from 'react-redux'
 
-import { me, changeProduct, updateCartItem, changingStatus } from '../store'
+import { changeProduct, updateCartItem, changingStatus } from '../store'
 import history from '../history'
 
 const createOptions = () => ({
@@ -44,7 +44,7 @@ const checkoutSuccess = (
     })
   })
   //set current order status to completed
-  updateStatus(currentOrder.id, { status: 'completed' }).then(() => getUser())
+  updateStatus(currentOrder.id, { status: 'completed' })
 }
 
 class _CardForm extends Component {
@@ -83,7 +83,6 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   updateProduct: product => dispatch(changeProduct(product)),
   changeCartItem: cartItem => dispatch(updateCartItem(cartItem)),
-  updateStatus: (orderId, status) => dispatch(changingStatus(orderId, status)),
-  getUser: () => dispatch(me())
+  updateStatus: (orderId, status) => dispatch(changingStatus(orderId, status))
 })
 export default injectStripe(connect(mapState, mapDispatch)(_CardForm))
