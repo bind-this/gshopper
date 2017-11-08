@@ -5,15 +5,13 @@ import { sendCartItem, me } from '../store'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
-function getAnonCart () {
+function getAnonCart() {
   axios
-  .get('/api/orders/anon')
-  .then(res => {
-    console.log(res.data)
-    localStorage.setItem('cart', JSON.stringify(res.data))
-    console.log('local storage is set to: ', localStorage.getItem('cart'))
-  })
-  .catch(err => console.log(err))
+    .get('/api/orders/anon')
+    .then(res => {
+      localStorage.setItem('cart', JSON.stringify(res.data))
+    })
+    .catch(err => console.log(err))
 }
 
 function getAverageRating(product) {
@@ -26,7 +24,6 @@ function getAverageRating(product) {
 }
 
 class AppCard extends Component {
-
   increase(item) {
     let quantity = 1
     let currentCart =
@@ -51,7 +48,6 @@ class AppCard extends Component {
       userId: this.props.user.id || null
     }
     this.props.updateCartItem(cartItem)
-
   }
 
   render() {
