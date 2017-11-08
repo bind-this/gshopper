@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 import history from '../history'
 
-class AllProducts extends Component {
+export class AllProducts extends Component {
 
   constructor(props) {
     super(props);
@@ -34,7 +34,7 @@ class AllProducts extends Component {
     // this.setState({[evt.target.name]: evt.target.value})
     history.push(location.pathname + '?' + evt.target.name + '=' + evt.target.value * 100)
   }
-  
+
   render() {
     let title = 'All Products'
     const products = this.props.products
