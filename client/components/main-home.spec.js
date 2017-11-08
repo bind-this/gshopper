@@ -2,11 +2,11 @@
 
 import React from 'react'
 import { expect } from 'chai'
-import enzyme, {shallow} from 'enzyme'
+import enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 const adapter = new Adapter()
-enzyme.configure({adapter})
+enzyme.configure({ adapter })
 
 import sinon from 'sinon'
 
@@ -23,15 +23,13 @@ import SearchBar from './SearchBar'
 // check for SearchBar
 describe('Main components', () => {
   let Mainhome
-  beforeEach( () => {
+  beforeEach(() => {
     Mainhome = shallow(<Main />)
   })
 
   it('has SearchBar', () => {
-    console.log(Mainhome)
     expect(Mainhome.length).to.be.equal(1)
   })
-
 })
 // check isLoggedIn boolean status and if rendered parts are there
 
