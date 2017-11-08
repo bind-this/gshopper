@@ -44,6 +44,14 @@ export const logout = () => dispatch =>
     })
     .catch(err => console.log(err))
 
+export const updatingUser = (userId, updates) => dispatch => {
+  axios
+    .put(`/api/users/${userId}`, updates)
+    .then(() => axios.get('/auth/me'))
+    .then(res => dispatch(getUser(res.data || defaultUser)))
+    .catch(err => console.log(err))
+}
+
 export const sendEmail = mailOptions => () =>
   console.log('MAILMAILMAIL: ', mailOptions) ||
   axios

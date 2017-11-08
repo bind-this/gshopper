@@ -35,16 +35,9 @@ export const deleteUser = userId => () => {
     .catch(err => console.log(err))
 }
 
-export const updatingUser = (userId, updates) => () => {
-  axios
-    .put(`/api/users/update/${userId}`, updates)
-    .then()
-    .catch(err => console.log(err))
-}
-
 export const adminEdit = userId => () => {
   axios
-    .put(`/api/users/update/${userId}`, { admin: true })
+    .put(`/api/users/${userId}`, { admin: true })
     .then()
     .catch(err => console.log(err))
 }

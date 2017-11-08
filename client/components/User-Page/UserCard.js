@@ -4,38 +4,37 @@ import { UserEdit } from './UserEdit'
 import { updatingUser } from '../../store'
 import { connect } from 'react-redux'
 
-const tempUser = {}
-
 class UserCard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      bool: false
+      showHideUserEdit: false
     }
-    this.onToggle = this.onToggle.bind(this)
+    this.toggleUserEdit = this.toggleUserEdit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.tempUser = {}
   }
 
-  onToggle = () => {
-    this.setState({ bool: !this.state.bool })
+  toggleUserEdit = () => {
+    this.setState({ showHideUserEdit: !this.state.showHideUserEdit })
   }
 
   handleChange(evt) {
-    tempUser[evt.target.name] = evt.target.value
+    this.tempUser[evt.target.name] = evt.target.value
   }
 
   handleSubmit(evt) {
     evt.preventDefault()
-    this.props.updatingUser(this.props.user.id, tempUser)
-    window.location.reload()
+    this.props.updatingUser(this.props.user.id, this.tempUser)
+    this.toggleUserEdit()
   }
 
   render() {
     const user = this.props.user
     return (
       <Card fluid raised>
-        {this.state.bool ? (
+        {this.state.showHideUserEdit ? (
           <UserEdit
             handleSubmit={this.handleSubmit.bind(this)}
             handleChange={this.handleChange.bind(this)}
@@ -68,8 +67,10 @@ class UserCard extends Component {
             </Grid>
           </Card.Content>
         )}
-        <Button onClick={this.onToggle}>
-          {this.state.bool ? 'Return to User Profile' : 'Edit Profile'}
+        <Button onClick={this.toggleUserEdit}>
+          {this.state.showHideUserEdit
+            ? 'Return to User Profile'
+            : 'Edit Profile'}
         </Button>
       </Card>
     )
