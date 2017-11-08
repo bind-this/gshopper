@@ -3,21 +3,22 @@ import { Button } from 'semantic-ui-react'
 import { deleteUser } from '../../store'
 import { connect } from 'react-redux'
 
-let userId
-
 class DeleteUser extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.userId = null
   }
 
   handleChange(evt) {
-    userId = evt.target.value
+    this.userId = evt.target.value
   }
 
-  handleSubmit() {
-    this.props.deleteUser(userId)
+  handleSubmit(evt) {
+    evt.preventDefault()
+    this.props.deleteUser(this.userId)
+    this.props.hideForm()
   }
 
   render() {
