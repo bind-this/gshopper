@@ -3,21 +3,32 @@ import { Card, Icon, Image, Rating, Button } from 'semantic-ui-react'
 import history from '../history'
 import { sendCartItem, me } from '../store'
 import { connect } from 'react-redux'
+import axios from 'axios'
+
+function getAnonCart() {
+  axios
+    .get('/api/orders/anon')
+    .then(res => {
+      localStorage.setItem('cart', JSON.stringify(res.data))
+    })
+    .catch(err => console.log(err))
+}
+
+function getAverageRating(product) {
+  if (!product.reviews.length) return 3
+  let sum = 0
+  product.reviews
+    .map(review => review.rating)
+    .forEach(rating => (sum += rating))
+  return sum / product.reviews.length
+}
 
 class AppCard extends Component {
-  getAverageRating(product) {
-    if (!product.reviews.length) return 3
-    let sum = 0
-    product.reviews
-      .map(review => review.rating)
-      .forEach(rating => (sum += rating))
-    return sum / product.reviews.length
-  }
-
   increase(item) {
     let quantity = 1
     let currentCart =
       this.props.user.orders &&
+      this.props.user.orders.status &&
       this.props.user.orders.find(order => order.status === 'created')
     if (
       currentCart &&
@@ -34,7 +45,7 @@ class AppCard extends Component {
     const cartItem = {
       productId: item.product.id,
       quantity: quantity,
-      userId: this.props.user.id
+      userId: this.props.user.id || null
     }
     this.props.updateCartItem(cartItem)
   }
@@ -61,7 +72,7 @@ class AppCard extends Component {
               <Rating
                 icon="star"
                 maxRating={5}
-                rating={this.getAverageRating(this.props.product)}
+                rating={getAverageRating(this.props.product)}
                 disabled
               />
             </span>
@@ -97,7 +108,8 @@ const mapDispatch = dispatch => {
   return {
     updateCartItem: cartItem => {
       dispatch(sendCartItem(cartItem)).then(() => {
-        dispatch(me())
+        getAnonCart()
+        return dispatch(me())
       })
     }
   }

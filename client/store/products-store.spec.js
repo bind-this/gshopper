@@ -5,7 +5,6 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import configureMockStore from 'redux-mock-store'
 import thunkMiddleware from 'redux-thunk'
-import history from '../history'
 import sinon from 'sinon'
 import { getProducts, fetchProducts, addProduct } from './products'
 
@@ -18,12 +17,12 @@ describe('Products redux', () => {
 
   const initialState = []
 
-  beforeEach( () => {
+  beforeEach(() => {
     mockAxios = new MockAdapter(axios)
     store = mockStore(initialState)
   })
 
-  afterEach( () => {
+  afterEach(() => {
     mockAxios.restore()
     store.clearActions()
   })
@@ -39,11 +38,9 @@ describe('Products redux', () => {
   })
 
   describe('thunks', () => {
-
     it('fetchProducts eventually dispatches the GET_PRODUCTS action', () => {
-      mockAxios.onGet('/api/products/').replyOnce(200, {name: 'betterApp'})
-      return store.dispatch(fetchProducts())
-      .then( () => {
+      mockAxios.onGet('/api/products/').replyOnce(200, { name: 'betterApp' })
+      return store.dispatch(fetchProducts()).then(() => {
         const actions = store.getActions()
         expect(actions[0].type).to.be.equal('GET_PRODUCTS')
       })
@@ -59,18 +56,19 @@ describe('Products redux', () => {
     })
 
     it('incorrect action type reaches default case', () => {
-      const getIncorrectProducts = products => ({type: 'WRONG_TYPE', products})
+      const getIncorrectProducts = products => ({
+        type: 'WRONG_TYPE',
+        products
+      })
       const badThunk = () => dispatch =>
-        axios.get('/api/products/')
-        .then(res => dispatch(getIncorrectProducts(res.data)))
-      mockAxios.onGet('/api/products/').replyOnce(200, {name: 'badApp'})
-      return store.dispatch(badThunk())
-      .then( () => {
+        axios
+          .get('/api/products/')
+          .then(res => dispatch(getIncorrectProducts(res.data)))
+      mockAxios.onGet('/api/products/').replyOnce(200, { name: 'badApp' })
+      return store.dispatch(badThunk()).then(() => {
         const state = store.getState()
         expect(state).to.equal(initialState)
       })
     })
-
   })
-
 })

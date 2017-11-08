@@ -32,7 +32,7 @@ describe('User model', () => {
   //     expect(testUser.password).to.be.not.equal('testpw')
   //   })
   // })
-
+  //
   // describe('associations', () => {
   //   it('should have two associations', () => {
   //     expect(Object.keys(User.associations)).to.deep.equal(['orders', 'reviews'])

@@ -6,6 +6,7 @@ const Category = require('../db/models/category')
 
 //PARAM - sets product instance to req.product
 router.param('id', (req, res, next, id) => {
+  console.log('testing route')
   Product.findById(id, { include: [{ all: true }] })
     .then(product => {
       if (!product) {
@@ -57,18 +58,21 @@ router.put('/:id', (req, res, next) => {
 
 //POST - creates new product, assigns categories to product
 router.post('/', (req, res, next) => {
-  let product
   Product.create(req.body)
-    .then(productInstance => {
-      product = productInstance
-      return Promise.all(
-        req.body.categories.map(id => Category.findById(id))
-      ).then(resultArray => {
-        product.setCategories(resultArray)
-        res.sendStatus(201)
-      })
-    })
+    .then(product => res.status(201).json(product))
     .catch(next)
+})
+
+//POST - adds category to product
+router.post('/category', (req, res, next) => {
+  Product.findById(req.body.product).then(productInstance => {
+    return Category.findById(req.body.category)
+      .then(categoryInstance => {
+        productInstance.setCategories(categoryInstance)
+        res.sendStatus(200)
+      })
+      .catch(next)
+  })
 })
 
 module.exports = router

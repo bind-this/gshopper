@@ -13,10 +13,10 @@ const DELETE_PRODUCT = 'DELETE_PRODUCT'
 /**
  * ACTION CREATORS
  */
-const getProduct = product => ({type: GET_PRODUCT, product})
-const createProduct = product => ({type: CREATE_PRODUCT, product})
-const editProduct = product => ({type: EDIT_PRODUCT, product})
-const deleteProduct = product => ({type: DELETE_PRODUCT, product})
+const getProduct = product => ({ type: GET_PRODUCT, product })
+const createProduct = product => ({ type: CREATE_PRODUCT, product })
+const editProduct = product => ({ type: EDIT_PRODUCT, product })
+const deleteProduct = product => ({ type: DELETE_PRODUCT, product })
 
 /**
  * THUNK CREATORS
@@ -34,10 +34,15 @@ export const makeProduct = (product) =>
       .catch(err => console.log(err))
 
 export const changeProduct = (product) =>
-  dispatch =>
+  dispatch => {
+      console.log('HERE')
+      console.log(product)
     axios.put(`/api/products/${product.id}`, product)
-      .then(res => dispatch(editProduct(res.data)))
-      .catch(err => console.log(err))
+      .then(res => {
+        console.log('TESTINGGGGGGGGGGGGGGGG')
+        dispatch(editProduct(res.data))
+      })
+      .catch(err => console.log(err)) }
 
 export const removeProduct = (productId) =>
   dispatch =>
@@ -50,7 +55,6 @@ export const removeProduct = (productId) =>
  */
 export default (state = {}, action) => {
   switch (action.type) {
-
     case GET_PRODUCT:
     case CREATE_PRODUCT:
     case EDIT_PRODUCT:

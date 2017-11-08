@@ -8,6 +8,15 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
+router.get('/anon', (req, res, next) => {
+  Order.find({
+    where: { sessionId: req.sessionID },
+    include: [{ all: true, nested: true }]
+  })
+  .then(order => res.json(order))
+  .catch(next)
+})
+
 // POST - create a new order /api/orders/
 router.post('/', (req, res, next) => {
   Order.create(req.body)

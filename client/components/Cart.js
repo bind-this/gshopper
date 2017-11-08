@@ -4,16 +4,22 @@ import { connect } from 'react-redux'
 import history from '../history'
 import Order from './Order'
 import Steps from './Steps'
+import axios from 'axios'
 
 function Cart(props) {
   let order = ''
-  if (
+
+  if (!props.user.id && localStorage.getItem('cart')) {
+    order = JSON.parse(localStorage.getItem('cart')).order_products
+  }
+  else if (
     props.user.orders &&
     props.user.orders.filter(order => order.status === 'created').length
   ) {
     order = props.user.orders.filter(order => order.status === 'created')[0]
       .order_products
   }
+
   return (
     <Grid centered columns={3}>
       <Grid.Column width={10}>

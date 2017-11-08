@@ -30,6 +30,12 @@ export const auth = (email, password, method) => dispatch =>
   axios
     .post(`/auth/${method}`, { email, password })
     .then(res => {
+      return axios.post('/api/order-products/merge', {
+        user: res.data
+      })
+    })
+    .then(res => {
+      console.log('res back from merge', res)
       dispatch(getUser(res.data))
       history.push('/')
     })
@@ -43,6 +49,14 @@ export const logout = () => dispatch =>
       history.push('/login')
     })
     .catch(err => console.log(err))
+
+export const updatingUser = (userId, updates) => dispatch => {
+  axios
+    .put(`/api/users/${userId}`, updates)
+    .then(() => axios.get('/auth/me'))
+    .then(res => dispatch(getUser(res.data || defaultUser)))
+    .catch(err => console.log(err))
+}
 
 export const sendEmail = mailOptions => () =>
   console.log('MAILMAILMAIL: ', mailOptions) ||

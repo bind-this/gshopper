@@ -76,7 +76,7 @@ class SingleProduct extends Component {
           <Grid.Column width={4}>
             <Image
               src={product.altImages && product.altImages[0]}
-              style={{ borderRadius: '6%', padding: '3%' }}
+              style={{ borderRadius: '40px', padding: '3%' }}
             />
           </Grid.Column>
           <Grid.Column width={8}>

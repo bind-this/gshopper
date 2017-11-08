@@ -5,48 +5,106 @@ const { Order } = require('../db/models')
 // POST - create a new order /api/order-products/
 router.post('/', (req, res, next) => {
   Order_Product.create(req.body)
-    .then(order_product => res.json(order_product))
+    .then(order_product => res.status(201).json(order_product))
     .catch(next)
 })
 
 // POST - add an item to cart
 router.post('/cart', (req, res, next) => {
-  Order.findOrCreate({
+  console.log('first req.body', req.body)
+  Order.findOne({
     where: {
       status: 'created',
       userId: req.body.userId
     }
   })
-    .spread(order => {
-      req.body.orderId = order.id
+  .then(foundOrder => {
+    console.log('foundOrder', foundOrder)
+    if (!foundOrder) {
+      foundOrder = Order.findOne({
+        where: {
+          status: 'created',
+          sessionId: req.sessionID,
+            }
+        })
+      }
+      return foundOrder
+})
+  .then(foundOrder => {
+    if (!foundOrder) {
+      console.log('order not found, creating it')
+      foundOrder = Order.create({
+          status: 'created',
+          userId: req.body.userId,
+          sessionId: req.sessionID
+      })
+    }
+    return foundOrder})
+    .then(foundOrder => {
+      req.body.orderId = foundOrder.id
+      console.log('orderId is', req.body.orderId)
       return Order_Product.findOne({
         where: {
           productId: req.body.productId,
           orderId: req.body.orderId
         }
       })
+
     })
     .then(oproduct => {
       if (!oproduct) {
+        console.log('creating db entry with', req.body)
         return Order_Product.create(req.body).then(result => {
           return result.toJSON()
         })
       } else {
+        console.log(oproduct)
         return oproduct.update(req.body).then(result => {
           return result.toJSON()
         })
       }
     })
     .then(result => {
+      console.log('sending results')
       res.json(result)
       return null
     })
     .catch(next)
 
-  // Order.findOrCreate()
-  // Order_Product.create(req.body)
-  // .then(order_product => res.json(order_product))
-  // .catch(next)
+})
+
+router.post('/merge', (req, res, next) => {
+  Order.findOrCreate({
+    where: {
+      userId: req.body.user.id,
+      status: 'created'
+    }
+  })
+  .then(userOrder => {
+    console.log('req.sessionId', req.sessionID)
+    Order.findOne({
+      where: {
+        sessionId: req.sessionID,
+        status: 'created'
+      }
+    })
+    .then(sessionOrder => {
+      console.log('sessionOrder', sessionOrder)
+      console.log('userOrder', userOrder)
+      Order_Product.update({
+        orderId: userOrder[0].id
+      }, {
+        where: {
+          orderId: sessionOrder.id
+        }, returning: true
+      }).then(updatedItems => {
+        console.log('updatedItems', updatedItems[1][0])
+        res.json(req.body.user)
+        return null
+      })
+    })
+  })
+  .catch(next)
 })
 
 // router.param to catch :Id
@@ -71,14 +129,14 @@ router.param('id', (req, res, next, orderProductId) => {
 
 // GET - find by Id /api/order-products/:id
 router.get('/:id', (req, res, next) => {
-  res.json(req.orderProduct)
+  res.status(200).json(req.orderProduct)
 })
 
 // PUT - update an existing order /api/orders/:id
 router.put('/:id', (req, res, next) => {
   req.orderProduct
     .update(req.body)
-    .then(orderProduct => res.json(orderProduct))
+    .then(orderProduct => res.status(201).json(orderProduct))
     .catch(next)
 })
 
