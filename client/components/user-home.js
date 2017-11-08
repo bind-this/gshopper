@@ -1,24 +1,40 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-
+import { connect } from 'react-redux'
+import { Segment, Grid, Button, Header } from 'semantic-ui-react'
 /**
  * COMPONENT
  */
-export const UserHome = (props) => {
-  const {email} = props
+export const UserHome = props => {
+  const { email } = props
 
   return (
-    <div>
-      <h3>Welcome, {email}</h3>
-    </div>
+    <Grid textAlign="center" style={{ height: '100%' }} verticalAlign="middle">
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <br />
+        <br />
+        <Segment raised>
+          <Header as="h2" textAlign="center">
+            Hey, {email}!
+          </Header>
+          <Button
+            color="yellow"
+            fluid
+            size="large"
+            onClick={() => history.push('/products')}
+          >
+            Let's Shop!
+          </Button>
+        </Segment>
+      </Grid.Column>
+    </Grid>
   )
 }
 
 /**
  * CONTAINER
  */
-const mapState = (state) => {
+const mapState = state => {
   return {
     email: state.user.email
   }
