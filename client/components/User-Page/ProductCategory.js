@@ -18,7 +18,6 @@ class ProductCategory extends Component {
 
   handleChangeProduct(evt) {
     this.tempCategoryProduct[evt.target.name] = evt.target.value
-    console.log(this.tempCategoryProduct)
   }
 
   handleSubmit(evt) {

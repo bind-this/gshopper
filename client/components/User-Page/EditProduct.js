@@ -15,12 +15,10 @@ class EditProduct extends Component {
 
   handleChange(evt) {
     this.tempProduct[evt.target.name] = evt.target.value
-    console.log(this.tempProduct)
   }
 
   handleChangeProduct(evt) {
     this.productId = evt.target.value
-    console.log(this.productId)
   }
 
   handleSubmit(evt) {
